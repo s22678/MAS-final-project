@@ -11,28 +11,36 @@ public class PatientCard implements Serializable {
     private static final long serialVersionUID = 1L;
     private Person patient;
     private List<Treatment> patientHistory = new ArrayList<>();
-    private static List<PatientCard> patientCardExtent = new ArrayList<>();
+    private static List<PatientCard> extent = new ArrayList<>();
 
     public PatientCard() {
-        patientCardExtent.add(this);
+        extent.add(this);
     }
 
-    public static void saveBeds(ObjectOutputStream stream) throws IOException {
+    public static void save(ObjectOutputStream stream) throws IOException {
         try {
-            stream.writeObject(patientCardExtent);
+            stream.writeObject(extent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadBeds(ObjectInputStream stream) throws IOException {
+    public static void load(ObjectInputStream stream) throws IOException {
         try {
-            patientCardExtent = (ArrayList<PatientCard>) stream.readObject();
+            extent = (ArrayList<PatientCard>) stream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void printExtent() {
+        System.out.println(extent);
+    }
+
+    public static List<PatientCard> getExtent() {
+        return extent;
     }
 
     public Person getPatient() {
@@ -42,6 +50,10 @@ public class PatientCard implements Serializable {
     public void setPatient(Person patient) {
         if(this.patient == null) {
             this.patient = patient;
+        }
+
+        if (patient.getPatientCard() == null) {
+            patient.setPatientCard(this);
         }
     }
 

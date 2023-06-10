@@ -4,42 +4,53 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Treatment implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static List<Treatment> treatmentExtent = new ArrayList<>();
+    private static List<Treatment> extent = new ArrayList<>();
     private PatientCard patientCard;
     private Person doctor;
     private Person patient;
     private List<String> prescribedMedicine = new ArrayList<>();
     private boolean isOperationNeeded;
-    private LocalDate treatmentStart;
-    private LocalDate treatmentEnd;
+    private LocalDateTime treatmentStart;
+    private LocalDateTime treatmentEnd;
     private String afterTreatmentHealtState;
 
-    public Treatment() {
-        treatmentExtent.add(this);
+    public Treatment(Person doctor, Person patient) {
+        if (setPerson(doctor, PersonRole.DOCTOR) && setPerson(patient, PersonRole.PATIENT)) {
+            treatmentStart = LocalDateTime.now();
+            extent.add(this);
+        }
     }
 
-    public static void saveTreatments(ObjectOutputStream stream) throws IOException {
+    public static void save(ObjectOutputStream stream) throws IOException {
         try {
-            stream.writeObject(treatmentExtent);
+            stream.writeObject(extent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadTreatments(ObjectInputStream stream) throws IOException {
+    public static void load(ObjectInputStream stream) throws IOException {
         try {
-            treatmentExtent = (List<Treatment>) stream.readObject();
+            extent = (List<Treatment>) stream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void printExtent() {
+        System.out.println(extent);
+    }
+
+    public static List<Treatment> getExtent() {
+        return extent;
     }
 
     public PatientCard getPatientCard() {
@@ -53,14 +64,17 @@ public class Treatment implements Serializable {
         }
     }
 
-    public void startTreatment(Person doctor, Person patient) {
-        treatmentStart = LocalDate.now();
-        setPerson(doctor, PersonRole.DOCTOR);
-        setPerson(patient, PersonRole.PATIENT);
+    public boolean startTreatment(Person doctor, Person patient) {
+        treatmentStart = LocalDateTime.now();
+        if (setPerson(doctor, PersonRole.DOCTOR) && setPerson(patient, PersonRole.PATIENT)) {
+            return true;
+        }
+
+        return false;
     }
 
     public void finishTreatment() {
-        treatmentEnd = LocalDate.now();
+        treatmentEnd = LocalDateTime.now();
         setPatientCard();
         patient.setPatientTreatments(null);
         setOperationNeeded(false);
@@ -76,20 +90,30 @@ public class Treatment implements Serializable {
         return doctor;
     }
 
-    public void setPerson(Person person, PersonRole role) {
-        if (patient == null && role == PersonRole.PATIENT) {
-            patient = person;
-            if (patient.getPatientTreatment() == null) {
-                patient.setPatientTreatments(this);
-            }
+    public boolean setPerson(Person person, PersonRole role) {
+        if (person == null) {
+            if (role == PersonRole.PATIENT) patient = null;
+            if (role == PersonRole.DOCTOR) doctor = null;
+            return true;
         }
+        if (role == person.getRole()) {
+            if (role == PersonRole.PATIENT && patient == null) {
+                patient = person;
+                if (patient.getPatientTreatment() == null) {
+                    patient.setPatientTreatments(this);
+                    return true;
+                }
+            }
 
-        if (doctor == null && role == PersonRole.DOCTOR) {
-            doctor = person;
-            if (!doctor.getDoctorTreatments().contains(this)) {
-                doctor.addDoctorTreatments(this);
+            if (role == PersonRole.DOCTOR && doctor == null) {
+                doctor = person;
+                if (!doctor.getDoctorTreatments().contains(this)) {
+                    doctor.addDoctorTreatments(this);
+                    return true;
+                }
             }
         }
+        return false;
     }
 
     public List<String> getPrescribedMedicine() {
@@ -114,19 +138,19 @@ public class Treatment implements Serializable {
         isOperationNeeded = operationNeeded;
     }
 
-    public LocalDate getTreatmentStart() {
+    public LocalDateTime getTreatmentStart() {
         return treatmentStart;
     }
 
-    public void setTreatmentStart(LocalDate treatmentStart) {
+    public void setTreatmentStart(LocalDateTime treatmentStart) {
         this.treatmentStart = treatmentStart;
     }
 
-    public LocalDate getTreatmentEnd() {
+    public LocalDateTime getTreatmentEnd() {
         return treatmentEnd;
     }
 
-    public void setTreatmentEnd(LocalDate treatmentEnd) {
+    public void setTreatmentEnd(LocalDateTime treatmentEnd) {
         this.treatmentEnd = treatmentEnd;
     }
 
@@ -140,14 +164,25 @@ public class Treatment implements Serializable {
 
     @Override
     public String toString() {
-        return "Treatment{" +
-                ", doctor=" + doctor.getFirstName() + " " + doctor.getLastName() +
-                ", patient=" + patient.getFirstName() + " " + patient.getLastName() +
-//                ", prescribedMedicine=" + prescribedMedicine +
-//                ", isOperationNeeded=" + isOperationNeeded +
-//                ", treatmentStart=" + treatmentStart +
-//                ", treatmentEnd=" + treatmentEnd +
-//                ", afterTreatmentHealtState='" + afterTreatmentHealtState + '\'' +
-                '}';
+        if (treatmentStart == null && treatmentEnd == null) {
+            return "Treatment not started";
+        }
+
+        if (treatmentStart != null && treatmentEnd == null) {
+            String result = "";
+            if (prescribedMedicine.size() > 0) result = ", prescribedMedicine=" + prescribedMedicine;
+            return "Treatment{" +
+                    ", doctor=" + doctor.getFirstName() + " " + doctor.getLastName() +
+                    ", patient=" + patient.getFirstName() + " " + patient.getLastName() +
+                    result +
+                    ", isOperationNeeded=" + isOperationNeeded +
+                    ", treatmentStart=" + treatmentStart +
+                    '}';
+        }
+
+        if (treatmentStart != null && treatmentEnd != null) {
+            return "Treatment over; Treatment start: " + treatmentStart + " Treatment end: " + treatmentEnd + " afterTreatmentHealtState: " + afterTreatmentHealtState;
+        }
+        return "";
     }
 }

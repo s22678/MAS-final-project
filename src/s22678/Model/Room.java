@@ -11,7 +11,7 @@ import java.util.List;
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
     private static int maxBedCapacity = 5;
-    private static List<Room> roomExtent = new ArrayList<>();
+    private static List<Room> extent = new ArrayList<>();
     private int roomNumber;
     private List<Bed> beds = new ArrayList<>();
 
@@ -19,24 +19,32 @@ public class Room implements Serializable {
         return maxBedCapacity;
     }
 
-    public static void saveRooms(ObjectOutputStream stream) throws IOException {
+    public static void save(ObjectOutputStream stream) throws IOException {
         try {
             stream.writeObject(maxBedCapacity);
-            stream.writeObject(roomExtent);
+            stream.writeObject(extent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadRooms(ObjectInputStream stream) throws IOException {
+    public static void load(ObjectInputStream stream) throws IOException {
         try {
             maxBedCapacity = (int) stream.readObject();
-            roomExtent = (List<Room>) stream.readObject();
+            extent = (List<Room>) stream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void printExtent() {
+        System.out.println(extent);
+    }
+
+    public static List<Room> getExtent() {
+        return extent;
     }
 
     public int getRoomNumber() {
@@ -49,12 +57,14 @@ public class Room implements Serializable {
         } else {
             this.roomNumber = getNewRoomNumber();
         }
-        beds.add(new Bed());
-        roomExtent.add(this);
+        Bed bed = new Bed();
+        beds.add(bed);
+        bed.setRoom(this);
+        extent.add(this);
     }
 
     public boolean doesRoomWithRoomNumberExist(int roomNumber) {
-        for (Room room : roomExtent) {
+        for (Room room : extent) {
             if (room.getRoomNumber() == roomNumber) {
                 return true;
             }
@@ -79,7 +89,7 @@ public class Room implements Serializable {
     private int getNewRoomNumber() {
         int newNumber = 0;
 
-        for (Room room : roomExtent) {
+        for (Room room : extent) {
             if (room.roomNumber > newNumber) {
                 newNumber = room.roomNumber;
             }

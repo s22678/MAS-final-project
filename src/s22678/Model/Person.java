@@ -5,13 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static HashMap<Integer, Person> personExtent = new HashMap<>();
+    private static HashMap<Integer, Person> extent = new HashMap<>();
     private static int minTrainingsRequired;
     private String firstName;
     private String lastName;
@@ -21,19 +22,19 @@ public class Person implements Serializable {
     private Patient patient;
     private PersonRole currentRole;
 
-    public static void savePersons(ObjectOutputStream stream) throws IOException {
+    public static void save(ObjectOutputStream stream) throws IOException {
         try {
             stream.writeObject(minTrainingsRequired);
-            stream.writeObject(personExtent);
+            stream.writeObject(extent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadPersons(ObjectInputStream stream) throws IOException {
+    public static void load(ObjectInputStream stream) throws IOException {
         try {
             minTrainingsRequired = (int) stream.readObject();
-            personExtent = (HashMap<Integer, Person>) stream.readObject();
+            extent = (HashMap<Integer, Person>) stream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -41,8 +42,12 @@ public class Person implements Serializable {
         }
     }
 
+    public static HashMap<Integer, Person> getExtent() {
+        return extent;
+    }
+
     public static Person getPersonByFullName(String firstName, String lastName) {
-        for (Person person : personExtent.values()) {
+        for (Person person : extent.values()) {
             if (person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
                 return person;
             }
@@ -51,7 +56,7 @@ public class Person implements Serializable {
     }
 
     public static Person getPersonByFullNameandPesel(Integer Pesel, String firstName, String lastName) {
-        for (Person person : personExtent.values()) {
+        for (Person person : extent.values()) {
             if (person.PESEL == Pesel && person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
                 return person;
             }
@@ -78,16 +83,14 @@ public class Person implements Serializable {
         return minTrainingsRequired;
     }
 
-    public static void printPersonExtent() {
-        for (Integer PESEL : personExtent.keySet()) {
-            System.out.println("PESEL: " + PESEL + " Osoba: " + personExtent.get(PESEL));
+    public static void printExtent() {
+        for (Integer PESEL : extent.keySet()) {
+            System.out.println("PESEL: " + PESEL + " Osoba: " + extent.get(PESEL));
         }
     }
 
     public void removeFromExtent(int PESEL) {
-        if (personExtent.containsKey(PESEL)) {
-            personExtent.remove(PESEL);
-        }
+        extent.remove(PESEL);
     }
 
     public String getLastName() {
@@ -125,7 +128,7 @@ public class Person implements Serializable {
             this.firstName = firstName;
             this.lastName = lastName;
             this.address = address;
-            personExtent.put(PESEL, this);
+            extent.put(PESEL, this);
         }
     }
 
@@ -136,7 +139,7 @@ public class Person implements Serializable {
             this.firstName = firstName;
             this.lastName = lastName;
             this.address = address;
-            personExtent.put(PESEL, this);
+            extent.put(PESEL, this);
         }
     }
 
@@ -149,10 +152,22 @@ public class Person implements Serializable {
         return false;
     }
 
+    public boolean addPatientRoleToPerson(String bloodType) {
+        if (this.patient == null) {
+            currentRole = PersonRole.PATIENT;
+            PatientCard patientCard = new PatientCard();
+            this.patient = new Patient(bloodType);
+            this.patient.setPatientCard(patientCard);
+            return true;
+        }
+        return false;
+    }
+
     public boolean addPatientRoleToPerson(String bloodType, PatientCard patientCard) {
         if (this.patient == null) {
-            this.patient = new Patient(bloodType, patientCard);
             currentRole = PersonRole.PATIENT;
+            this.patient = new Patient(bloodType);
+            this.patient.setPatientCard(patientCard);
             return true;
         }
         return false;
@@ -161,6 +176,20 @@ public class Person implements Serializable {
     public Bed getPatientBed() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.bed;
+        }
+        return null;
+    }
+
+    private String getDoctorSpecialization() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getSpecialization();
+        }
+        return "";
+    }
+
+    private EnumSet<DoctorField> getFields() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getFields();
         }
         return null;
     }
@@ -189,8 +218,8 @@ public class Person implements Serializable {
         return false;
     }
 
-    public String getRole() {
-        return currentRole.toString();
+    public PersonRole getRole() {
+        return currentRole;
     }
 
     public List<Treatment> getDoctorTreatments() {
@@ -232,6 +261,16 @@ public class Person implements Serializable {
         return null;
     }
 
+    public void setPatientCard(PatientCard patientCard) {
+        if (patient.getPatientCard() == null) {
+            patient.patientCard = patientCard;
+        }
+
+        if (patientCard.getPatient() == null) {
+            patientCard.setPatient(Person.this);
+        }
+    }
+
     private String getPatientBloodType() {
         return patient.getBloodType();
     }
@@ -254,7 +293,7 @@ public class Person implements Serializable {
                 '}';
     }
 
-    class Doctor {
+    class Doctor implements Serializable {
         private int salary;
         private String specialization;
         private EnumSet<DoctorField> fields;
@@ -270,11 +309,11 @@ public class Person implements Serializable {
             }
         }
 
-        public String getSpecialization() {
+        private String getSpecialization() {
             return specialization;
         }
 
-        public EnumSet<DoctorField> getFields() {
+        private EnumSet<DoctorField> getFields() {
             return fields;
         }
 
@@ -301,12 +340,12 @@ public class Person implements Serializable {
         }
 
         public void removeTreatment(Treatment treatment) {
-            if (treatment.getPerson(PersonRole.DOCTOR) != null){
-                treatment.setPerson(null, PersonRole.DOCTOR);
+            if(treatments.contains(treatment)) {
+                treatments.remove(treatment);
             }
 
-            if(!treatments.contains(treatment)) {
-                treatments.remove(treatment);
+            if (treatment.getPerson(PersonRole.DOCTOR) != null){
+                treatment.setPerson(null, PersonRole.DOCTOR);
             }
         }
 
@@ -341,12 +380,12 @@ public class Person implements Serializable {
         }
     }
 
-    class Patient {
+    class Patient implements Serializable {
         private String bloodType;
         private Treatment treatment;
         private Bed bed;
         private PatientCard patientCard;
-        private LocalDate admissionDate;
+        private LocalDateTime admissionDate;
 
         private boolean isAdult() {
             return Person.this.getAge() >= 18;
@@ -356,9 +395,12 @@ public class Person implements Serializable {
             return bloodType;
         }
 
-        private Patient(String bloodType, PatientCard patientCard) {
-            this.admissionDate = LocalDate.now();
+        private Patient(String bloodType) {
+            this.admissionDate = LocalDateTime.now();
             this.bloodType = bloodType;
+        }
+
+        private void setPatientCard(PatientCard patientCard) {
             if (this.patientCard == null) {
                 this.patientCard = patientCard;
             }

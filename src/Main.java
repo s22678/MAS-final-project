@@ -1,74 +1,177 @@
 import s22678.Model.*;
+import s22678.View.MainView;
+
+import javax.swing.*;
+import java.io.*;
+import java.util.List;
 
 public class Main {
+    private final static boolean save = false;
+    private final static boolean load = false;
+    private final static String fileDir = ".\\save";
+    private final static String extentBedFile = fileDir + "\\Bed.tmp";
+    private final static String extentPatientCardFile = fileDir + "\\PatientCard.tmp";
+    private final static String extentPersonFile = fileDir + "\\Person.tmp";
+    private final static String extentRoomFile = fileDir + "\\Room.tmp";
+    private final static String extentTreatmentFile = fileDir + "\\Treatment.tmp";
+
+    private final static String mydir = System.getProperty("user.dir");
     public static void main(String[] args) {
-        // Add rooms
-        final Room room1 = new Room(1);
-        final Room room2 = new Room(2);
+        System.out.println(mydir);
+        setup(save);
+        SwingUtilities.invokeLater(() -> {
+            MainView menu = new MainView();
+            menu.setVisible(true);
+        });
+    }
 
-        final Bed bed1 = new Bed();
-        final Bed bed2 = new Bed();
-        final Bed bed3 = new Bed();
-        final Bed bed4 = new Bed();
-        final Bed bed5 = new Bed();
-        final Bed bed6 = new Bed();
+    public static void setup(boolean save) {
+        if (save) {
+            // Add rooms
+            final Room room1 = new Room(1);
+//            final Room room2 = new Room(2);
 
-        room1.addBed(bed1);
-        room1.addBed(bed2);
-        room1.addBed(bed3);
-        room2.addBed(bed4);
-        room2.addBed(bed5);
-        room2.addBed(bed6);
+            final Bed bed1 = new Bed();
+            final Bed bed2 = new Bed();
+//            final Bed bed3 = new Bed();
+//            final Bed bed4 = new Bed();
+//            final Bed bed5 = new Bed();
+//            final Bed bed6 = new Bed();
 
-        Person doctor1 = new Person(23223, "Jan", "Kowalski", "Ziemowita 5", 3000, "ortopeda", DoctorField.SURGEON);
+            room1.addBed(bed1);
+            room1.addBed(bed2);
+//            room1.addBed(bed3);
+//            room2.addBed(bed4);
+//            room2.addBed(bed5);
+//            room2.addBed(bed6);
 
-        PatientCard patientCard1 = new PatientCard();
-        Person patient1 = new Person(43343, "Kornel", "Sikora", "Klonowa 7", "A+", patientCard1);
-        PatientCard patientCard2 = new PatientCard();
-        Person patient2 = new Person(5663, "Kordian", "Kołodziej", "Lipowa 12", "A+", patientCard2);
-        PatientCard patientCard3 = new PatientCard();
-        Person patient3 = new Person(82572, "Piotr", "Wiśniewski", "Słoneczna 22", "A+", patientCard3);
-        PatientCard patientCard4 = new PatientCard();
-        Person patient4 = new Person(82562, "Miron", "Mazurek", "Polna 15", "A+", patientCard4);
-        PatientCard patientCard5 = new PatientCard();
-        Person patient5 = new Person(86256565, "Bronisław", "Błaszczyk", "Akacjowa 9", "B+", patientCard5);
-        PatientCard patientCard6 = new PatientCard();
-        Person patient6 = new Person(2569425, "Alex", "Adamska", "Topolowa 4", "B+", patientCard6);
-        PatientCard patientCard7 = new PatientCard();
-        Person patient7 = new Person(624725773, "Jarosław", "Zieliński", "Dębowa 17", "B+", patientCard7);
-        PatientCard patientCard8 = new PatientCard();
-        Person patient8 = new Person(43736373, "Krzysztof", "Zalewski", "Brzozowa 3", "B+", patientCard8);
-        PatientCard patientCard9 = new PatientCard();
-        Person patient9 = new Person(6373673, "Roman", "Lis", "Wąska 11", "B+", patientCard9);
-        PatientCard patientCard10 = new PatientCard();
-        Person patient10 = new Person(663732, "Kacper", "Makowski", "Jesienna 8", "B+", patientCard10);
+            final Person doctor1 = new Person(23223, "Jan", "Kowalski", "Ziemowita 5", 3000, "ortopeda", DoctorField.SURGEON);
 
-        Treatment treatment1 = new Treatment();
-        Treatment treatment2 = new Treatment();
-        Treatment treatment3 = new Treatment();
-        Treatment treatment4 = new Treatment();
-        Treatment treatment5 = new Treatment();
-        Treatment treatment6 = new Treatment();
-        Treatment treatment7 = new Treatment();
-        Treatment treatment8 = new Treatment();
-        Treatment treatment9 = new Treatment();
-        Treatment treatment10 = new Treatment();
-        treatment1.startTreatment(doctor1, patient1);
-        treatment2.startTreatment(doctor1, patient2);
-        treatment3.startTreatment(doctor1, patient3);
-        treatment4.startTreatment(doctor1, patient4);
-        treatment5.startTreatment(doctor1, patient5);
-        treatment6.startTreatment(doctor1, patient6);
-        treatment7.startTreatment(doctor1, patient7);
-        treatment8.startTreatment(doctor1, patient8);
-        treatment9.startTreatment(doctor1, patient9);
-        treatment10.startTreatment(doctor1, patient10);
+            final Person doctor2 = new Person(763353, "Radosław", "Szymczak", "Gdańska 3", 5000, "internista", DoctorField.DIAGNOSTICIAN);
+            doctor2.addPatientRoleToPerson("0-");
+            System.out.println(doctor2);
 
-        System.out.println(treatment1);
-        treatment1.setOperationNeeded(true);
-        System.out.println(patient1);
-        System.out.println(doctor1);
-        treatment1.finishTreatment();
-        System.out.println(patient1.getPatientCard());
+            PatientCard patientCard1 = new PatientCard();
+            final Person patient1 = new Person(43343, "Kornel", "Sikora", "Klonowa 7", "A+", patientCard1);
+            PatientCard patientCard2 = new PatientCard();
+            final Person patient2 = new Person(5663, "Kordian", "Kołodziej", "Lipowa 12", "A+", patientCard2);
+            PatientCard patientCard3 = new PatientCard();
+            final Person patient3 = new Person(82572, "Piotr", "Wiśniewski", "Słoneczna 22", "A+", patientCard3);
+            PatientCard patientCard4 = new PatientCard();
+            final Person patient4 = new Person(82562, "Miron", "Mazurek", "Polna 15", "A+", patientCard4);
+            PatientCard patientCard5 = new PatientCard();
+            final Person patient5 = new Person(86256565, "Bronisław", "Błaszczyk", "Akacjowa 9", "B+", patientCard5);
+            PatientCard patientCard6 = new PatientCard();
+            final Person patient6 = new Person(2569425, "Alex", "Adamska", "Topolowa 4", "B+", patientCard6);
+            PatientCard patientCard7 = new PatientCard();
+            final Person patient7 = new Person(624725773, "Jarosław", "Zieliński", "Dębowa 17", "B+", patientCard7);
+            PatientCard patientCard8 = new PatientCard();
+            final Person patient8 = new Person(43736373, "Krzysztof", "Zalewski", "Brzozowa 3", "B+", patientCard8);
+            PatientCard patientCard9 = new PatientCard();
+            final Person patient9 = new Person(6373673, "Roman", "Lis", "Wąska 11", "B+", patientCard9);
+            PatientCard patientCard10 = new PatientCard();
+            final Person patient10 = new Person(663732, "Kacper", "Makowski", "Jesienna 8", "B+", patientCard10);
+
+            Treatment treatment1 = new Treatment(doctor1, patient1);
+            Treatment treatment2 = new Treatment(doctor2, patient2);
+            Treatment treatment3 = new Treatment(doctor1, patient3);
+//            Treatment treatment4 = new Treatment(doctor1, patient4);
+//            Treatment treatment5 = new Treatment(doctor1, patient5);
+//            Treatment treatment6 = new Treatment(doctor1, patient6);
+//            Treatment treatment7 = new Treatment(doctor1, patient7);
+//            Treatment treatment8 = new Treatment(doctor1, patient8);
+//            Treatment treatment9 = new Treatment(doctor1, patient9);
+//            Treatment treatment10 = new Treatment(doctor1, patient10);
+
+            System.out.println(treatment1);
+            treatment1.setOperationNeeded(true);
+            treatment3.setOperationNeeded(true);
+            System.out.println(patient1);
+            System.out.println(doctor1);
+            if (treatment2.getTreatmentStart() != null) {
+                treatment2.finishTreatment();
+            }
+            treatment1.finishTreatment();
+            System.out.println(patient1.getPatientCard());
+
+            System.out.println("Zapis instancji...");
+            try {
+                System.out.println("Zapis łóżek");
+                ObjectOutputStream outExtentBedFile = new ObjectOutputStream(new FileOutputStream(extentBedFile));
+                Bed.save(outExtentBedFile);
+                outExtentBedFile.close();
+
+                System.out.println("Zapis kart pacjentów");
+                ObjectOutputStream outExtentPatientCardFile = new ObjectOutputStream(new FileOutputStream(extentPatientCardFile));
+                PatientCard.save(outExtentPatientCardFile);
+                outExtentPatientCardFile.close();
+
+                System.out.println("Zapis pacjentów i lekarzy");
+                ObjectOutputStream outExtentPersonFile = new ObjectOutputStream(new FileOutputStream(extentPersonFile));
+                Person.save(outExtentPersonFile);
+                outExtentPersonFile.close();
+
+                System.out.println("Zapis pokojów");
+                ObjectOutputStream outExtentRoomFile = new ObjectOutputStream(new FileOutputStream(extentRoomFile));
+                Room.save(outExtentRoomFile);
+                outExtentRoomFile.close();
+
+                System.out.println("Zapis leczeń");
+                ObjectOutputStream outExtentTreatmentFile = new ObjectOutputStream(new FileOutputStream(extentTreatmentFile));
+                Treatment.save(outExtentTreatmentFile);
+                outExtentTreatmentFile.close();
+
+                System.out.println("Instancje zapisane");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (load){
+            try {
+                System.out.println("Odczyt łóżek");
+                ObjectInputStream inExtentBedFile = new ObjectInputStream(new FileInputStream(extentBedFile));
+                Bed.load(inExtentBedFile);
+                inExtentBedFile.close();
+
+                System.out.println("Odczyt kart pacjentów");
+                ObjectInputStream inExtentPatientCardFile = new ObjectInputStream(new FileInputStream(extentPatientCardFile));
+                PatientCard.load(inExtentPatientCardFile);
+                inExtentPatientCardFile.close();
+
+                System.out.println("Odczyt pacjentów i lekarzy");
+                ObjectInputStream inExtentPersonFile = new ObjectInputStream(new FileInputStream(extentPersonFile));
+                Person.load(inExtentPersonFile);
+                inExtentPersonFile.close();
+
+                System.out.println("Odczyt pokojów");
+                ObjectInputStream inExtentRoomFile = new ObjectInputStream(new FileInputStream(extentRoomFile));
+                Room.load(inExtentRoomFile);
+                inExtentRoomFile.close();
+
+                System.out.println("Odczyt leczeń");
+                ObjectInputStream inExtentTreatmentFile = new ObjectInputStream(new FileInputStream(extentTreatmentFile));
+                Treatment.load(inExtentTreatmentFile);
+                inExtentTreatmentFile.close();
+
+                System.out.println("Instancje odczytane");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("łóżka");
+            List<Bed> beds = Bed.getExtent();
+            System.out.println(beds);
+
+            System.out.println("karty pacjenta");
+            PatientCard.printExtent();
+            System.out.println("osoby");
+            Person.printExtent();
+            System.out.println("pokoje");
+            Room.printExtent();
+            System.out.println("leczenia");
+            List<Treatment> treatments = Treatment.getExtent();
+            System.out.println("koniec");
+        }
     }
 }

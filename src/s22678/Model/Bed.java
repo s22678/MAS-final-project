@@ -9,22 +9,22 @@ import java.util.List;
 
 public class Bed implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static List<Bed> bedExtent = new ArrayList<>();
+    private static List<Bed> extent = new ArrayList<>();
     private boolean occupied;
     private Person patient;
     private Room room;
 
-    public static void saveBeds(ObjectOutputStream stream) throws IOException {
+    public static void save(ObjectOutputStream stream) throws IOException {
         try {
-            stream.writeObject(bedExtent);
+            stream.writeObject(extent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadBeds(ObjectInputStream stream) throws IOException {
+    public static void load(ObjectInputStream stream) throws IOException {
         try {
-            bedExtent = (ArrayList<Bed>) stream.readObject();
+            extent = (ArrayList<Bed>) stream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -32,9 +32,17 @@ public class Bed implements Serializable {
         }
     }
 
+    public static void printExtent() {
+        System.out.println(extent);
+    }
+
+    public static List<Bed> getExtent() {
+        return extent;
+    }
+
     public Bed() {
         occupied = false;
-        bedExtent.add(this);
+        extent.add(this);
     }
 
     public Room getRoom() {
@@ -80,7 +88,7 @@ public class Bed implements Serializable {
     }
 
     public static Bed getAvailableBed() {
-        for (Bed bed : bedExtent) {
+        for (Bed bed : extent) {
             if (!bed.isOccupied()) {
                 return bed;
             }
@@ -90,10 +98,15 @@ public class Bed implements Serializable {
 
     @Override
     public String toString() {
+        if (occupied) {
+            return "Bed{" +
+                    "occupied=" + occupied +
+                ", patient=" + patient.getFirstName() + " " + patient.getLastName() +
+                ", room=" + room.getRoomNumber() +
+                    '}';
+        }
         return "Bed{" +
                 "occupied=" + occupied +
-//                ", patient=" + patient.getFirstName() + " " + patient.getLastName() +
-//                ", room=" + room.getRoomNumber() +
                 '}';
     }
 }
