@@ -1,17 +1,14 @@
-package s22678.lib;
+package s22678.Controller;
 
 import s22678.Model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class SerializeUtils {
+public class MainController {
     private final static String fileDir = ".\\save";
     private final static String fileName = fileDir + "\\File.dat";
 
-    public static void save() {
+    public static void save(String absolutePath) {
         try {
             ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(fileName));
 
@@ -27,7 +24,7 @@ public class SerializeUtils {
         }
     }
 
-    public static void load() {
+    public static void load(String absolutePath) {
         try {
             ObjectInputStream stream = new ObjectInputStream(new FileInputStream(fileName));
 

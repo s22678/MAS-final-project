@@ -1,24 +1,19 @@
 import s22678.Model.*;
-import s22678.View.MainView;
+import s22678.View.Main.MainView;
+import s22678.Controller.MainController;
 
 import javax.swing.*;
-import java.io.*;
 import java.util.List;
 
 public class Main {
-    private final static boolean save = false;
+    private final static boolean save = true;
     private final static boolean load = false;
     private final static String fileDir = ".\\save";
-    private final static String extentBedFile = fileDir + "\\Bed.tmp";
-    private final static String extentPatientCardFile = fileDir + "\\PatientCard.tmp";
-    private final static String extentPersonFile = fileDir + "\\Person.tmp";
-    private final static String extentRoomFile = fileDir + "\\Room.tmp";
-    private final static String extentTreatmentFile = fileDir + "\\Treatment.tmp";
 
     private final static String mydir = System.getProperty("user.dir");
     public static void main(String[] args) {
         System.out.println(mydir);
-        setup(save);
+//        setup(save);
         SwingUtilities.invokeLater(() -> {
             MainView menu = new MainView();
             menu.setVisible(true);
@@ -95,74 +90,15 @@ public class Main {
             System.out.println(patient1.getPatientCard());
 
             System.out.println("Zapis instancji...");
-            try {
-                System.out.println("Zapis łóżek");
-                ObjectOutputStream outExtentBedFile = new ObjectOutputStream(new FileOutputStream(extentBedFile));
-                Bed.save(outExtentBedFile);
-                outExtentBedFile.close();
-
-                System.out.println("Zapis kart pacjentów");
-                ObjectOutputStream outExtentPatientCardFile = new ObjectOutputStream(new FileOutputStream(extentPatientCardFile));
-                PatientCard.save(outExtentPatientCardFile);
-                outExtentPatientCardFile.close();
-
-                System.out.println("Zapis pacjentów i lekarzy");
-                ObjectOutputStream outExtentPersonFile = new ObjectOutputStream(new FileOutputStream(extentPersonFile));
-                Person.save(outExtentPersonFile);
-                outExtentPersonFile.close();
-
-                System.out.println("Zapis pokojów");
-                ObjectOutputStream outExtentRoomFile = new ObjectOutputStream(new FileOutputStream(extentRoomFile));
-                Room.save(outExtentRoomFile);
-                outExtentRoomFile.close();
-
-                System.out.println("Zapis leczeń");
-                ObjectOutputStream outExtentTreatmentFile = new ObjectOutputStream(new FileOutputStream(extentTreatmentFile));
-                Treatment.save(outExtentTreatmentFile);
-                outExtentTreatmentFile.close();
-
-                System.out.println("Instancje zapisane");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainController.save(fileDir + "\\File.dat");
         }
 
         if (load){
-            try {
-                System.out.println("Odczyt łóżek");
-                ObjectInputStream inExtentBedFile = new ObjectInputStream(new FileInputStream(extentBedFile));
-                Bed.load(inExtentBedFile);
-                inExtentBedFile.close();
-
-                System.out.println("Odczyt kart pacjentów");
-                ObjectInputStream inExtentPatientCardFile = new ObjectInputStream(new FileInputStream(extentPatientCardFile));
-                PatientCard.load(inExtentPatientCardFile);
-                inExtentPatientCardFile.close();
-
-                System.out.println("Odczyt pacjentów i lekarzy");
-                ObjectInputStream inExtentPersonFile = new ObjectInputStream(new FileInputStream(extentPersonFile));
-                Person.load(inExtentPersonFile);
-                inExtentPersonFile.close();
-
-                System.out.println("Odczyt pokojów");
-                ObjectInputStream inExtentRoomFile = new ObjectInputStream(new FileInputStream(extentRoomFile));
-                Room.load(inExtentRoomFile);
-                inExtentRoomFile.close();
-
-                System.out.println("Odczyt leczeń");
-                ObjectInputStream inExtentTreatmentFile = new ObjectInputStream(new FileInputStream(extentTreatmentFile));
-                Treatment.load(inExtentTreatmentFile);
-                inExtentTreatmentFile.close();
-
-                System.out.println("Instancje odczytane");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainController.load(fileDir + "\\File.dat");
 
             System.out.println("łóżka");
             List<Bed> beds = Bed.getExtent();
             System.out.println(beds);
-
             System.out.println("karty pacjenta");
             PatientCard.printExtent();
             System.out.println("osoby");
@@ -171,6 +107,7 @@ public class Main {
             Room.printExtent();
             System.out.println("leczenia");
             List<Treatment> treatments = Treatment.getExtent();
+            System.out.println(treatments);
             System.out.println("koniec");
         }
     }

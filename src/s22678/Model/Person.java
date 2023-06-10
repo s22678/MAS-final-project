@@ -31,6 +31,11 @@ public class Person implements Serializable {
         }
     }
 
+    public String[] getTableData() {
+        String[] data = {getFirstName(), getLastName(), getAdmissionDate().toString()};
+        return data;
+    }
+
     public static void load(ObjectInputStream stream) throws IOException {
         try {
             minTrainingsRequired = (int) stream.readObject();
@@ -262,7 +267,7 @@ public class Person implements Serializable {
     }
 
     public void setPatientCard(PatientCard patientCard) {
-        if (patient.getPatientCard() == null) {
+        if (patient.getPatientCard() == null && currentRole == PersonRole.PATIENT) {
             patient.patientCard = patientCard;
         }
 
@@ -271,8 +276,18 @@ public class Person implements Serializable {
         }
     }
 
-    private String getPatientBloodType() {
-        return patient.getBloodType();
+    public String getPatientBloodType() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.getBloodType();
+        }
+        return null;
+    }
+
+    public LocalDateTime getAdmissionDate() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.getAdmissionDate();
+        }
+        return null;
     }
 
     @Override
@@ -389,6 +404,10 @@ public class Person implements Serializable {
 
         private boolean isAdult() {
             return Person.this.getAge() >= 18;
+        }
+
+        private LocalDateTime getAdmissionDate() {
+            return admissionDate;
         }
 
         private String getBloodType() {
