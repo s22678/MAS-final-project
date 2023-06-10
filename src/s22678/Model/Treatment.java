@@ -1,10 +1,16 @@
 package s22678.Model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Treatment {
+public class Treatment implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private static List<Treatment> treatmentExtent = new ArrayList<>();
     private PatientCard patientCard;
     private Person doctor;
     private Person patient;
@@ -15,21 +21,52 @@ public class Treatment {
     private String afterTreatmentHealtState;
 
     public Treatment() {
+        treatmentExtent.add(this);
+    }
+
+    public static void saveTreatments(ObjectOutputStream stream) throws IOException {
+        try {
+            stream.writeObject(treatmentExtent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadTreatments(ObjectInputStream stream) throws IOException {
+        try {
+            treatmentExtent = (List<Treatment>) stream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public PatientCard getPatientCard() {
         return patientCard;
     }
 
-    public void setPatientCard(PatientCard patientCard) {
+    public void setPatientCard() {
         if(this.patientCard == null) {
-            this.patientCard = patientCard;
-            patientCard.addToPatientHistory(this);
+            this.patientCard = patient.getPatientCard();
+            patientCard.addTreatmentToPatientHistory(this);
         }
     }
 
-    public void startTreatment() {
+    public void startTreatment(Person doctor, Person patient) {
         treatmentStart = LocalDate.now();
+        setPerson(doctor, PersonRole.DOCTOR);
+        setPerson(patient, PersonRole.PATIENT);
+    }
+
+    public void finishTreatment() {
+        treatmentEnd = LocalDate.now();
+        setPatientCard();
+        patient.setPatientTreatments(null);
+        setOperationNeeded(false);
+        patient = null;
+        doctor.removeDoctorTreatments(this);
+        doctor = null;
     }
 
     public Person getPerson(PersonRole role) {
@@ -40,7 +77,19 @@ public class Treatment {
     }
 
     public void setPerson(Person person, PersonRole role) {
-        if
+        if (patient == null && role == PersonRole.PATIENT) {
+            patient = person;
+            if (patient.getPatientTreatment() == null) {
+                patient.setPatientTreatments(this);
+            }
+        }
+
+        if (doctor == null && role == PersonRole.DOCTOR) {
+            doctor = person;
+            if (!doctor.getDoctorTreatments().contains(this)) {
+                doctor.addDoctorTreatments(this);
+            }
+        }
     }
 
     public List<String> getPrescribedMedicine() {
@@ -56,6 +105,12 @@ public class Treatment {
     }
 
     public void setOperationNeeded(boolean operationNeeded) {
+        if (operationNeeded) {
+            Bed availableBed = Bed.getAvailableBed();
+            patient.setPatientBed(availableBed);
+        } else {
+            patient.getPatientBed().freeBed();
+        }
         isOperationNeeded = operationNeeded;
     }
 
@@ -81,5 +136,18 @@ public class Treatment {
 
     public void setAfterTreatmentHealtState(String afterTreatmentHealtState) {
         this.afterTreatmentHealtState = afterTreatmentHealtState;
+    }
+
+    @Override
+    public String toString() {
+        return "Treatment{" +
+                ", doctor=" + doctor.getFirstName() + " " + doctor.getLastName() +
+                ", patient=" + patient.getFirstName() + " " + patient.getLastName() +
+//                ", prescribedMedicine=" + prescribedMedicine +
+//                ", isOperationNeeded=" + isOperationNeeded +
+//                ", treatmentStart=" + treatmentStart +
+//                ", treatmentEnd=" + treatmentEnd +
+//                ", afterTreatmentHealtState='" + afterTreatmentHealtState + '\'' +
+                '}';
     }
 }
