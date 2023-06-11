@@ -87,8 +87,8 @@ public class MainMenuBar extends JMenuBar {
         JMenuItem showPatientItem = new JMenuItem("List Patients");
         showPatientItem.setFont(serifFont);
         showPatientItem.addActionListener(e -> {
-            System.out.println("changing view to patientListPanel");
-            MainView.getCardLayout().show(MainView.getMainPanel(), "patientListPanel");
+            System.out.println("changing view to listPatientPanel");
+            MainView.getCardLayout().show(MainView.getMainPanel(), "listPatientPanel");
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
         addPatientItem.setFont(serifFont);
@@ -106,8 +106,8 @@ public class MainMenuBar extends JMenuBar {
         JMenuItem showDoctorItem = new JMenuItem("List Doctors");
         showDoctorItem.setFont(serifFont);
         showDoctorItem.addActionListener(e -> {
-            System.out.println("changing view to doctorListPanel");
-            MainView.getCardLayout().show(MainView.getMainPanel(), "doctorListPanel");
+            System.out.println("changing view to listDoctorPanel");
+            MainView.getCardLayout().show(MainView.getMainPanel(), "listDoctorPanel");
         });
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
         addDoctorItem.setFont(serifFont);
