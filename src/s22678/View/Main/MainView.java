@@ -1,5 +1,6 @@
 package s22678.View.Main;
 
+import s22678.View.Doctor.List.ListDoctorPanel;
 import s22678.View.Patient.List.ListPatientPanel;
 
 import javax.swing.*;
@@ -22,9 +23,11 @@ public class MainView extends JFrame {
         mainPanel.setLayout(cardLayout);
 
         JPanel patientListPanel = new ListPatientPanel();
+        JPanel doctorListPanel = new ListDoctorPanel();
         JPanel defaultPanel = new DefaultPanel();
 
         mainPanel.add("patientListPanel", patientListPanel);
+        mainPanel.add("doctorListPanel", doctorListPanel);
         mainPanel.add("defaultPanel", defaultPanel);
 
         add(mainPanel);

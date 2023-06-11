@@ -15,21 +15,11 @@ public class Bed implements Serializable {
     private Room room;
 
     public static void save(ObjectOutputStream stream) throws IOException {
-        try {
-            stream.writeObject(extent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stream.writeObject(extent);
     }
 
-    public static void load(ObjectInputStream stream) throws IOException {
-        try {
-            extent = (ArrayList<Bed>) stream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public static void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<Bed>) stream.readObject();
     }
 
     public static void printExtent() {

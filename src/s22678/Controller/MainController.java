@@ -8,9 +8,8 @@ public class MainController {
     private final static String fileDir = ".\\save";
     private final static String fileName = fileDir + "\\File.dat";
 
-    public static void save(String absolutePath) {
-        try {
-            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(fileName));
+    public static void save(String absolutePath) throws IOException {
+            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(absolutePath));
 
             Bed.save(stream);
             PatientCard.save(stream);
@@ -19,14 +18,10 @@ public class MainController {
             Treatment.save(stream);
 
             stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    public static void load(String absolutePath) {
-        try {
-            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(fileName));
+    public static void load(String absolutePath) throws IOException, ClassNotFoundException {
+            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(absolutePath));
 
             Bed.load(stream);
             PatientCard.load(stream);
@@ -35,8 +30,5 @@ public class MainController {
             Treatment.load(stream);
 
             stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

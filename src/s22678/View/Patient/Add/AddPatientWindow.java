@@ -5,18 +5,13 @@ import s22678.Model.Person;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.DateTimeException;
 
 import static s22678.View.Main.MainView.serifFont;
 
 public class AddPatientWindow extends JFrame {
     public static final int textFieldHeight = 50;
     public static final int textFieldWidth = 200;
-    private static JTextField PESELTextField;
-    private static JTextField firstNameTextField;
-    private static JTextField lastNameTextField;
-    private static JTextField addressTextField;
-    private static JTextField bloodTypeTextField;
-    private static JFrame frame;
 
     public AddPatientWindow() {
         setTitle("Add Patient");
@@ -27,33 +22,41 @@ public class AddPatientWindow extends JFrame {
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
 
-        GridLayout labelLayout = new GridLayout(5 ,1);
+        GridLayout labelLayout = new GridLayout(8 ,1);
         labelLayout.setVgap(40);
         JPanel labelContainer = new JPanel(labelLayout);
 
-        GridLayout textFieldLayout = new GridLayout(5 ,1);
+        GridLayout textFieldLayout = new GridLayout(8 ,1);
         textFieldLayout.setVgap(40);
         JPanel textFieldContainer = new JPanel(textFieldLayout);
 
-        PESELTextField = new JTextField();
+        JTextField PESELTextField = new JTextField();
         PESELTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         PESELTextField.setFont(serifFont);
 
-        firstNameTextField = new JTextField();
+        JTextField firstNameTextField = new JTextField();
         firstNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         firstNameTextField.setFont(serifFont);
 
-        lastNameTextField = new JTextField();
+        JTextField lastNameTextField = new JTextField();
         lastNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         lastNameTextField.setFont(serifFont);
 
-        addressTextField = new JTextField();
+        JTextField addressTextField = new JTextField();
         addressTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         addressTextField.setFont(serifFont);
 
-        bloodTypeTextField = new JTextField();
+        JTextField bloodTypeTextField = new JTextField();
         bloodTypeTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         bloodTypeTextField.setFont(serifFont);
+
+        JTextField parentsInfoTextField = new JTextField();
+        parentsInfoTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+        parentsInfoTextField.setFont(serifFont);
+
+        JTextField parentsContactInfoTextField = new JTextField();
+        parentsContactInfoTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+        parentsContactInfoTextField.setFont(serifFont);
 
         JLabel PESELLabel = new JLabel("PESEL", SwingConstants.CENTER);
         PESELLabel.setFont(serifFont);
@@ -70,17 +73,33 @@ public class AddPatientWindow extends JFrame {
         JLabel bloodTypeLabel = new JLabel("Blood Type", SwingConstants.CENTER);
         bloodTypeLabel.setFont(serifFont);
 
-        labelContainer.add(PESELLabel);
-        labelContainer.add(firstNameLabel);
-        labelContainer.add(lastNameLabel);
-        labelContainer.add(addressLabel);
-        labelContainer.add(bloodTypeLabel);
+        JLabel parentsInfoLabel = new JLabel("Parents Info", SwingConstants.CENTER);
+        parentsInfoLabel.setFont(serifFont);
+
+        JLabel parentsContactLabel = new JLabel("Parents Contact Info", SwingConstants.CENTER);
+        parentsContactLabel.setFont(serifFont);
+
+        JRadioButton isContagiousRadioButton = new JRadioButton("Is contagious?");
+        isContagiousRadioButton.setFont(serifFont);
+        isContagiousRadioButton.setSize(70, 70);
+        isContagiousRadioButton.setHorizontalAlignment(JRadioButton.CENTER);
 
         textFieldContainer.add(PESELTextField);
         textFieldContainer.add(firstNameTextField);
         textFieldContainer.add(lastNameTextField);
         textFieldContainer.add(addressTextField);
         textFieldContainer.add(bloodTypeTextField);
+        textFieldContainer.add(parentsInfoTextField);
+        textFieldContainer.add(parentsContactInfoTextField);
+
+        labelContainer.add(PESELLabel);
+        labelContainer.add(firstNameLabel);
+        labelContainer.add(lastNameLabel);
+        labelContainer.add(addressLabel);
+        labelContainer.add(bloodTypeLabel);
+        labelContainer.add(parentsInfoLabel);
+        labelContainer.add(parentsContactLabel);
+        labelContainer.add(isContagiousRadioButton);
 
         GridLayout buttonContainerLayout = new GridLayout();
         buttonContainerLayout.setHgap(30);
@@ -88,15 +107,28 @@ public class AddPatientWindow extends JFrame {
 
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
-            new Person(Integer.parseInt(PESELTextField.getText()), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), new PatientCard());
-        });
-
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> {
+            if (!Person.parsePESEL(PESELTextField.getText())) {
+                JOptionPane.showMessageDialog(this,
+                        "incorrect PESEL format",
+                        "PESEL error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else if (!Person.parseTextFields(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
+                JOptionPane.showMessageDialog(this,
+                        "incorrect patient info format - cannot be shorter than 2 characters",
+                        "Input Data error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
+                if (!person.isPatientAdult()) {
+                    person.setPatientParentsInfo(parentsInfoTextField.getText());
+                    person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());
+                }
+                JOptionPane.showMessageDialog(this,
+                        "Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
+            }
         });
 
         buttonPanel.add(addButton);
-        buttonPanel.add(cancelButton);
 
         masterPanel.add(labelContainer);
         masterPanel.add(textFieldContainer);
@@ -105,29 +137,5 @@ public class AddPatientWindow extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
-    }
-
-    public static JFrame getFrame() {
-        return frame;
-    }
-
-    public static JTextField getPESELTextField() {
-        return PESELTextField;
-    }
-
-    public static JTextField getFirstNameTextField() {
-        return firstNameTextField;
-    }
-
-    public static JTextField getLastNameTextField() {
-        return lastNameTextField;
-    }
-
-    public static JTextField getAddressTextField() {
-        return addressTextField;
-    }
-
-    public static JTextField getBloodTypeTextField() {
-        return bloodTypeTextField;
     }
 }

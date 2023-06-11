@@ -2,6 +2,7 @@ package s22678.View.Main;
 
 import s22678.Controller.MainController;
 import s22678.Model.*;
+import s22678.View.Doctor.Add.AddDoctorWindow;
 import s22678.View.Patient.Add.AddPatientWindow;
 
 import javax.swing.*;
@@ -29,7 +30,11 @@ public class MainMenuBar extends JMenuBar {
                         File selectedFile = fileChooser.getSelectedFile();
                         // Process the selected file
                         System.out.println("Selected load file: " + selectedFile.getAbsolutePath());
-                        MainController.load(selectedFile.getAbsolutePath());
+                        try {
+                            MainController.load(selectedFile.getAbsolutePath());
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, "can't load the file - bad format or not enough significant permissions", "File Load Error", JOptionPane.ERROR_MESSAGE);
+                        }
 
                         System.out.println("łóżka");
                         java.util.List<Bed> beds = Bed.getExtent();
@@ -59,7 +64,11 @@ public class MainMenuBar extends JMenuBar {
                         File selectedFile = fileChooser.getSelectedFile();
                         // Process the selected file
                         System.out.println("Selected save file: " + selectedFile.getAbsolutePath());
-                        MainController.save(selectedFile.getAbsolutePath());
+                        try {
+                            MainController.save(selectedFile.getAbsolutePath());
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, "can't save the file - bad format or not enough significant permissions", "File Save Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
         );
@@ -74,7 +83,7 @@ public class MainMenuBar extends JMenuBar {
         // Patient menu
         JMenu patientMenu = new JMenu("Patient");
         patientMenu.setFont(serifFont);
-        JMenuItem showPatientItem = new JMenuItem("Show Patients");
+        JMenuItem showPatientItem = new JMenuItem("List Patients");
         showPatientItem.setFont(serifFont);
         showPatientItem.addActionListener(e -> {
             System.out.println("changing view");
@@ -86,34 +95,60 @@ public class MainMenuBar extends JMenuBar {
             JFrame addPatientWindow = new AddPatientWindow();
             addPatientWindow.setVisible(true);
         });
-        JMenuItem removePatientItem = new JMenuItem("Remove Patient");
-        removePatientItem.setFont(serifFont);
 
         patientMenu.add(showPatientItem);
         patientMenu.add(addPatientItem);
-        patientMenu.add(removePatientItem);
 
         // Doctor menu
         JMenu doctorMenu = new JMenu("Doctor");
-        JMenuItem showDoctorItem = new JMenuItem("Show Doctor");
-        showDoctorItem.setFont(serifFont);
         doctorMenu.setFont(serifFont);
+        JMenuItem showDoctorItem = new JMenuItem("List Doctors");
+        showDoctorItem.setFont(serifFont);
+        showDoctorItem.addActionListener(e -> {
+            System.out.println("changing view");
+            MainView.getCardLayout().show(MainView.getMainPanel(), "doctorListPanel");
+        });
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
         addDoctorItem.setFont(serifFont);
-        JMenuItem removeDoctorItem = new JMenuItem("Remove Doctor");
-        removeDoctorItem.setFont(serifFont);
-        JMenuItem manageDoctor = new JMenuItem("Manage Doctor");
-        manageDoctor.setFont(serifFont);
+        addDoctorItem.addActionListener(e -> {
+            JFrame addDoctorWindow = new AddDoctorWindow();
+            addDoctorWindow.setVisible(true);
+        });
 
         doctorMenu.add(showDoctorItem);
         doctorMenu.add(addDoctorItem);
-        doctorMenu.add(removeDoctorItem);
-        doctorMenu.add(manageDoctor);
+
+        // Equipment menu
+        JMenu equipmentMenu = new JMenu("Equipment");
+        equipmentMenu.setFont(serifFont);
+        JMenuItem showRoomItem = new JMenuItem("List Rooms and Beds");
+        showDoctorItem.setFont(serifFont);
+        showDoctorItem.addActionListener(e -> {
+            System.out.println("changing view");
+            MainView.getCardLayout().show(MainView.getMainPanel(), "equipmentListPanel");
+        });
+        JMenuItem addRoomItem = new JMenuItem("Add Room");
+        addRoomItem.setFont(serifFont);
+        addRoomItem.addActionListener(e -> {
+            JFrame addDoctorWindow = new AddDoctorWindow();
+            addDoctorWindow.setVisible(true);
+        });
+        JMenuItem addBedItem = new JMenuItem("Add Bed");
+        addBedItem.setFont(serifFont);
+        addBedItem.addActionListener(e -> {
+            JFrame addDoctorWindow = new AddDoctorWindow();
+            addDoctorWindow.setVisible(true);
+        });
+
+        equipmentMenu.add(showRoomItem);
+        equipmentMenu.add(addRoomItem);
+        equipmentMenu.add(addBedItem);
 
         // Add menus to the menu bar
         add(fileMenu);
         add(patientMenu);
         add(doctorMenu);
+        add(equipmentMenu);
 
         // Set the menu bar
     }

@@ -18,21 +18,11 @@ public class PatientCard implements Serializable {
     }
 
     public static void save(ObjectOutputStream stream) throws IOException {
-        try {
-            stream.writeObject(extent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stream.writeObject(extent);
     }
 
-    public static void load(ObjectInputStream stream) throws IOException {
-        try {
-            extent = (ArrayList<PatientCard>) stream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public static void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<PatientCard>) stream.readObject();
     }
 
     public static void printExtent() {

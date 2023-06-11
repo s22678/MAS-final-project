@@ -12,42 +12,70 @@ import java.util.*;
 
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static HashMap<Integer, Person> extent = new HashMap<>();
+    private static HashMap<String, Person> extent = new HashMap<>();
     private static int minTrainingsRequired;
     private String firstName;
     private String lastName;
-    private int PESEL;
+    private String PESEL;
     private String address;
     private Doctor doctor;
     private Patient patient;
     private PersonRole currentRole;
 
-    public static void save(ObjectOutputStream stream) throws IOException {
-        try {
-            stream.writeObject(minTrainingsRequired);
-            stream.writeObject(extent);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    public static boolean parseTextFields(String... textFields) {
+        for(String field : textFields) {
+            if (field.length() < 2) {
+                System.out.println("Bad input data: " + field.length());
+                return false;
+            }
         }
+        return true;
     }
 
-    public String[] getTableData() {
+
+    public static boolean parsePESEL(String PESEL) {
+        if (PESEL.length() != 11) {
+            System.out.println("Incorrect PESEL length: " + PESEL.length());
+            return false;
+        }
+
+        String birthDay = PESEL.substring(0, 6);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        try {
+            LocalDate.parse(birthDay, formatter);
+        } catch (Exception e) {
+            System.out.println("Error while parsing PESSEL - incorrect data: " + birthDay);
+            return false;
+        }
+        return true;
+    }
+
+    public static void save(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(minTrainingsRequired);
+        stream.writeObject(extent);
+    }
+
+    public static void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        minTrainingsRequired = (int) stream.readObject();
+        extent = (HashMap<String, Person>) stream.readObject();
+    }
+
+    public String[] getPatientTableData() {
         String[] data = {getFirstName(), getLastName(), getAdmissionDate().toString()};
         return data;
     }
 
-    public static void load(ObjectInputStream stream) throws IOException {
-        try {
-            minTrainingsRequired = (int) stream.readObject();
-            extent = (HashMap<Integer, Person>) stream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+    public String[] getDoctorTableData() {
+        String tmp = "";
+        for (DoctorField field : getDoctorFields()) {
+            tmp = tmp + " " + field.toString();
         }
+        String[] data = {getFirstName(), getLastName(), tmp};
+        return data;
     }
 
-    public static HashMap<Integer, Person> getExtent() {
+    public static HashMap<String, Person> getExtent() {
         return extent;
     }
 
@@ -60,9 +88,9 @@ public class Person implements Serializable {
         return null;
     }
 
-    public static Person getPersonByFullNameandPesel(Integer Pesel, String firstName, String lastName) {
+    public static Person getPersonByFullNameandPesel(String PESEL, String firstName, String lastName) {
         for (Person person : extent.values()) {
-            if (person.PESEL == Pesel && person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
+            if (person.PESEL == PESEL && person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
                 return person;
             }
         }
@@ -70,8 +98,7 @@ public class Person implements Serializable {
     }
 
     public LocalDate getBirthDay() {
-        String peselString = Integer.toString(getPESEL());
-        String birthDay = peselString.substring(0, 6);
+        String birthDay = getPESEL().substring(0, 6);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         return LocalDate.parse(birthDay, formatter);
     }
@@ -89,7 +116,7 @@ public class Person implements Serializable {
     }
 
     public static void printExtent() {
-        for (Integer PESEL : extent.keySet()) {
+        for (String PESEL : extent.keySet()) {
             System.out.println("PESEL: " + PESEL + " Osoba: " + extent.get(PESEL));
         }
     }
@@ -110,7 +137,7 @@ public class Person implements Serializable {
         return firstName;
     }
 
-    public int getPESEL() {
+    public String getPESEL() {
         return PESEL;
     }
 
@@ -127,7 +154,7 @@ public class Person implements Serializable {
     }
 
     // Add doctor
-    public Person(int PESEL, String firstName, String lastName, String address, int salary, String specialization, DoctorField... doctorFields) {
+    public Person(String PESEL, String firstName, String lastName, String address, int salary, String specialization, DoctorField... doctorFields) {
         if(addDoctorRoleToPerson(salary, specialization, doctorFields)) {
             this.PESEL = PESEL;
             this.firstName = firstName;
@@ -138,8 +165,8 @@ public class Person implements Serializable {
     }
 
     // Add Patient
-    public Person(int PESEL, String firstName, String lastName, String address, String bloodType, PatientCard patientCard) {
-        if(addPatientRoleToPerson(bloodType, patientCard)) {
+    public Person(String PESEL, String firstName, String lastName, String address, String bloodType, boolean isContagious, PatientCard patientCard) {
+        if(addPatientRoleToPerson(bloodType, isContagious, patientCard)) {
             this.PESEL = PESEL;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -157,21 +184,21 @@ public class Person implements Serializable {
         return false;
     }
 
-    public boolean addPatientRoleToPerson(String bloodType) {
+    public boolean addPatientRoleToPerson(String bloodType, boolean isContagious) {
         if (this.patient == null) {
             currentRole = PersonRole.PATIENT;
             PatientCard patientCard = new PatientCard();
-            this.patient = new Patient(bloodType);
+            this.patient = new Patient(bloodType, isContagious);
             this.patient.setPatientCard(patientCard);
             return true;
         }
         return false;
     }
 
-    public boolean addPatientRoleToPerson(String bloodType, PatientCard patientCard) {
+    public boolean addPatientRoleToPerson(String bloodType, boolean isContagious, PatientCard patientCard) {
         if (this.patient == null) {
             currentRole = PersonRole.PATIENT;
-            this.patient = new Patient(bloodType);
+            this.patient = new Patient(bloodType, isContagious);
             this.patient.setPatientCard(patientCard);
             return true;
         }
@@ -180,9 +207,35 @@ public class Person implements Serializable {
 
     public Bed getPatientBed() {
         if (currentRole == PersonRole.PATIENT) {
-            return patient.bed;
+            return patient.getBed();
         }
         return null;
+    }
+
+    public String getPatientParentsInfo() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.getParentsInfo();
+        }
+        return "";
+    }
+
+    public void setPatientParentsInfo(String parentsInfo) {
+        if (currentRole == PersonRole.PATIENT) {
+            patient.setParentsInfo(parentsInfo);
+        }
+    }
+
+    public String getPatientParentsContactInfo() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.getParentsContactInfo();
+        }
+        return "";
+    }
+
+    public void setPatientParentsContactInfo(String parentsContactInfo) {
+        if (currentRole == PersonRole.PATIENT) {
+                patient.setParentsContactInfo(parentsContactInfo);
+        }
     }
 
     private String getDoctorSpecialization() {
@@ -192,7 +245,7 @@ public class Person implements Serializable {
         return "";
     }
 
-    private EnumSet<DoctorField> getFields() {
+    private EnumSet<DoctorField> getDoctorFields() {
         if (currentRole == PersonRole.DOCTOR) {
             return doctor.getFields();
         }
@@ -266,6 +319,13 @@ public class Person implements Serializable {
         return null;
     }
 
+    public boolean isContagious() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.isContagious();
+        }
+        return false;
+    }
+
     public void setPatientCard(PatientCard patientCard) {
         if (patient.getPatientCard() == null && currentRole == PersonRole.PATIENT) {
             patient.patientCard = patientCard;
@@ -281,6 +341,13 @@ public class Person implements Serializable {
             return patient.getBloodType();
         }
         return null;
+    }
+
+    public boolean isPatientAdult() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.isAdult();
+        }
+        return true;
     }
 
     public LocalDateTime getAdmissionDate() {
@@ -401,6 +468,33 @@ public class Person implements Serializable {
         private Bed bed;
         private PatientCard patientCard;
         private LocalDateTime admissionDate;
+        private boolean isContagious;
+        private String parentsInfo;
+        private String parentsContactInfo;
+
+        private String getParentsInfo() {
+            return parentsInfo;
+        }
+
+        private void setParentsInfo(String parentsInfo) {
+            this.parentsInfo = parentsInfo;
+        }
+
+        private String getParentsContactInfo() {
+            return parentsContactInfo;
+        }
+
+        private void setParentsContactInfo(String parentsContactInfo) {
+            this.parentsContactInfo = parentsContactInfo;
+        }
+
+        private boolean isContagious() {
+            return isContagious;
+        }
+
+        private Bed getBed() {
+            return bed;
+        }
 
         private boolean isAdult() {
             return Person.this.getAge() >= 18;
@@ -414,9 +508,10 @@ public class Person implements Serializable {
             return bloodType;
         }
 
-        private Patient(String bloodType) {
+        private Patient(String bloodType, boolean isContagious) {
             this.admissionDate = LocalDateTime.now();
             this.bloodType = bloodType;
+            this.isContagious = isContagious;
         }
 
         private void setPatientCard(PatientCard patientCard) {

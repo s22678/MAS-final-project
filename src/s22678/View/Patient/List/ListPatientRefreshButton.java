@@ -13,7 +13,7 @@ public class ListPatientRefreshButton extends JButton {
             ListPatientTable.getDefaultTableModel().setRowCount(0);
             for (Person person : Person.getExtent().values()) {
                 if (person.getRole() == PersonRole.PATIENT)
-                    ListPatientTable.getDefaultTableModel().addRow(person.getTableData());
+                    ListPatientTable.getDefaultTableModel().addRow(person.getPatientTableData());
             }
         });
     }
