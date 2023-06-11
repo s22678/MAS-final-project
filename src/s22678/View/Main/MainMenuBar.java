@@ -2,6 +2,7 @@ package s22678.View.Main;
 
 import s22678.Controller.MainController;
 import s22678.Model.*;
+import s22678.View.Patient.Add.AddPatientWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +10,9 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 
+import static s22678.View.Main.MainView.fontSize;
+
 public class MainMenuBar extends JMenuBar {
-    private static final int fontSize = 30;
     public MainMenuBar() {
         // Create menu bar
 //    JMenuBar menuBar = new JMenuBar();
@@ -79,19 +81,16 @@ public class MainMenuBar extends JMenuBar {
         JMenuItem showPatientItem = new JMenuItem("Show Patients");
         showPatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
         showPatientItem.addActionListener(e -> {
-
+            System.out.println("changing view");
+            MainView.getCardLayout().show(MainView.getMainPanel(), "patientListPanel");
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
         addPatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
         addPatientItem.addActionListener(e -> {
-            System.out.println("changing view");
-            MainView.cardLayout.show(MainView.mainPanel, "patientListPanel");
+            JFrame addPatientWindow = new AddPatientWindow();
+            addPatientWindow.setVisible(true);
         });
         JMenuItem removePatientItem = new JMenuItem("Remove Patient");
-        removePatientItem.addActionListener(e -> {
-            System.out.println("changing view");
-            MainView.cardLayout.show(MainView.mainPanel, "defaultPanel");
-        });
         removePatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
 
         patientMenu.add(showPatientItem);

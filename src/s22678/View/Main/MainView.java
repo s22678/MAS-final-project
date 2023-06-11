@@ -1,15 +1,16 @@
 package s22678.View.Main;
 
-import s22678.View.Patient.ListPatientPanel;
+import s22678.View.Patient.List.ListPatientPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
-    public static CardLayout cardLayout;
-    public static JPanel mainPanel;
+    public static final int fontSize = 30;
+    private static CardLayout cardLayout;
+    private static JPanel mainPanel;
     public MainView() {
-        setTitle("Management System");
+        setTitle("Hospital Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1536, 864);
         setLocationRelativeTo(null);
@@ -27,6 +28,14 @@ public class MainView extends JFrame {
         add(mainPanel);
         setJMenuBar(new MainMenuBar());
         setVisible(true);
+    }
+
+    public static CardLayout getCardLayout() {
+        return cardLayout;
+    }
+
+    public static JPanel getMainPanel() {
+        return mainPanel;
     }
 }
 
