@@ -3,8 +3,10 @@ package s22678.View.Main;
 import s22678.Controller.MainController;
 import s22678.Model.*;
 import s22678.View.Doctor.Add.AddDoctorWindow;
+import s22678.View.Doctor.List.ListDoctorActionListener;
 import s22678.View.Equipment.Add.AddBedWindow;
 import s22678.View.Patient.Add.AddPatientWindow;
+import s22678.View.Patient.List.ListPatientActionListener;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -89,6 +91,7 @@ public class MainMenuBar extends JMenuBar {
         showPatientItem.addActionListener(e -> {
             System.out.println("changing view to listPatientPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listPatientPanel");
+            ListPatientActionListener.action();
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
         addPatientItem.setFont(serifFont);
@@ -108,6 +111,7 @@ public class MainMenuBar extends JMenuBar {
         showDoctorItem.addActionListener(e -> {
             System.out.println("changing view to listDoctorPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listDoctorPanel");
+            ListDoctorActionListener.action();
         });
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
         addDoctorItem.setFont(serifFont);

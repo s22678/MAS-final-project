@@ -62,7 +62,7 @@ public class Person implements Serializable {
     }
 
     public String[] getPatientTableData() {
-        String[] data = {getFirstName(), getLastName(), getAdmissionDate().toString()};
+        String[] data = {getPESEL(), getFirstName(), getLastName(), getAdmissionDate().toString()};
         return data;
     }
 
@@ -71,7 +71,7 @@ public class Person implements Serializable {
         for (DoctorField field : getDoctorFields()) {
             tmp = tmp + " " + field.toString();
         }
-        String[] data = {getFirstName(), getLastName(), tmp};
+        String[] data = {getPESEL(), getFirstName(), getLastName(), tmp};
         return data;
     }
 
@@ -319,7 +319,7 @@ public class Person implements Serializable {
         return null;
     }
 
-    public boolean isContagious() {
+    public boolean isPatientContagious() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.isContagious();
         }

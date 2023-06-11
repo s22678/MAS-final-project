@@ -15,7 +15,7 @@ public class ListPatientTable extends JTable {
         setFont(sansSerifFont);
         getTableHeader().setFont(sansSerifFont);
         getTableHeader().setResizingAllowed(true);
-        String[] columnNames = {"First Name", "Last Name", "Admission Date"};
+        String[] columnNames = {"PESEL", "First Name", "Last Name", "Admission Date"};
         tableModel = new DefaultTableModel(columnNames, 0);
         setModel(tableModel);
 

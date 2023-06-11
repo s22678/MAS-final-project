@@ -10,11 +10,7 @@ public class ListDoctorRefreshButton extends JButton {
         super(buttonName);
 
         addActionListener(e -> {
-            ListDoctorTable.getDefaultTableModel().setRowCount(0);
-            for (Person person : Person.getExtent().values()) {
-                if (person.getRole() == PersonRole.DOCTOR)
-                    ListDoctorTable.getDefaultTableModel().addRow(person.getDoctorTableData());
-            }
+            ListDoctorActionListener.action();
         });
     }
 }
