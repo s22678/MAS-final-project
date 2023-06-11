@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 
+import static s22678.View.Main.MainView.serifFont;
+
 public class MainViewBackup extends JFrame {
     private static final int fontSize = 30;
     public MainViewBackup() {
@@ -22,11 +24,11 @@ public class MainViewBackup extends JFrame {
 
         // Create file menu
         JMenu fileMenu = new JMenu("File");
-        fileMenu.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        fileMenu.setFont(serifFont);
         fileMenu.setMnemonic(KeyEvent.ALT_DOWN_MASK | KeyEvent.getExtendedKeyCodeForChar('F'));
 
         JMenuItem loadItem = new JMenuItem("Load");
-        loadItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        loadItem.setFont(serifFont);
         loadItem.setMnemonic(KeyEvent.VK_L);
         loadItem.addActionListener((event) -> {
                     JFileChooser fileChooser = new JFileChooser();
@@ -56,7 +58,7 @@ public class MainViewBackup extends JFrame {
         fileMenu.add(loadItem);
 
         JMenuItem saveItem = new JMenuItem("Save");
-        saveItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        saveItem.setFont(serifFont);
         saveItem.setMnemonic(KeyEvent.VK_S);
         saveItem.addActionListener((event) -> {
                     JFileChooser fileChooser = new JFileChooser();
@@ -73,23 +75,23 @@ public class MainViewBackup extends JFrame {
         fileMenu.add(saveItem);
 
         JMenuItem exitItem = new JMenuItem("Exit");
-        exitItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        exitItem.setFont(serifFont);
         exitItem.setMnemonic(KeyEvent.VK_Q);
         exitItem.addActionListener((event) -> System.exit(0));
         fileMenu.add(exitItem);
 
         // Create patient menu
         JMenu patientMenu = new JMenu("Patient");
-        patientMenu.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        patientMenu.setFont(serifFont);
         JMenuItem showPatientItem = new JMenuItem("Show Patients");
-        showPatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        showPatientItem.setFont(serifFont);
         showPatientItem.addActionListener(e -> {
 
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
-        addPatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        addPatientItem.setFont(serifFont);
         JMenuItem removePatientItem = new JMenuItem("Remove Patient");
-        removePatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        removePatientItem.setFont(serifFont);
 
         patientMenu.add(showPatientItem);
         patientMenu.add(addPatientItem);
@@ -97,15 +99,15 @@ public class MainViewBackup extends JFrame {
 
         // Create doctor menu
         JMenu doctorMenu = new JMenu("Doctor");
+        doctorMenu.setFont(serifFont);
         JMenuItem showDoctorItem = new JMenuItem("Show Doctor");
-        showDoctorItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
-        doctorMenu.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        showDoctorItem.setFont(serifFont);
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
-        addDoctorItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        addDoctorItem.setFont(serifFont);
         JMenuItem removeDoctorItem = new JMenuItem("Remove Doctor");
-        removeDoctorItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        removeDoctorItem.setFont(serifFont);
         JMenuItem manageDoctor = new JMenuItem("Manage Doctor");
-        manageDoctor.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        manageDoctor.setFont(serifFont);
 
         doctorMenu.add(showDoctorItem);
         doctorMenu.add(addDoctorItem);

@@ -5,16 +5,15 @@ import s22678.Model.PersonRole;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
-import static s22678.View.Main.MainView.fontSize;
+import static s22678.View.Main.MainView.sansSerifFont;
 
 public class ListPatientTable extends JTable {
     private static DefaultTableModel tableModel;
     public ListPatientTable() {
         setRowHeight(this.getRowHeight() + 35);
-        setFont(new Font("SansSerif", Font.PLAIN, fontSize));
-        getTableHeader().setFont(new Font("SansSerif", Font.PLAIN, fontSize));
+        setFont(sansSerifFont);
+        getTableHeader().setFont(sansSerifFont);
         getTableHeader().setResizingAllowed(true);
         String[] columnNames = {"First Name", "Last Name", "Admission Date"};
         tableModel = new DefaultTableModel(columnNames, 0);

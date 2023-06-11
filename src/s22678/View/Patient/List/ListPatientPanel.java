@@ -9,7 +9,10 @@ public class ListPatientPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(new ListPatientTable());
 
-        JPanel buttonContainer = new JPanel(new GridLayout(1, 2));
+        GridLayout buttonContainerLayout = new GridLayout(1, 2);
+        buttonContainerLayout.setHgap(30);
+        JPanel buttonContainer = new JPanel(buttonContainerLayout);
+
         JButton refreshButton = new ListPatientRefreshButton("Refresh");
         JButton closeButton = new ListPatientCloseButton("Close");
 

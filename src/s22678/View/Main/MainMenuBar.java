@@ -5,25 +5,21 @@ import s22678.Model.*;
 import s22678.View.Patient.Add.AddPatientWindow;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 
-import static s22678.View.Main.MainView.fontSize;
+import static s22678.View.Main.MainView.serifFont;
 
 public class MainMenuBar extends JMenuBar {
     public MainMenuBar() {
-        // Create menu bar
-//    JMenuBar menuBar = new JMenuBar();
-
-        // Create file menu
+        // File menu
         JMenu fileMenu = new JMenu("File");
-        fileMenu.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        fileMenu.setFont(serifFont);
         fileMenu.setMnemonic(KeyEvent.ALT_DOWN_MASK | KeyEvent.getExtendedKeyCodeForChar('F'));
 
         JMenuItem loadItem = new JMenuItem("Load");
-        loadItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        loadItem.setFont(serifFont);
         loadItem.setMnemonic(KeyEvent.VK_L);
         loadItem.addActionListener((event) -> {
                     JFileChooser fileChooser = new JFileChooser();
@@ -53,7 +49,7 @@ public class MainMenuBar extends JMenuBar {
         fileMenu.add(loadItem);
 
         JMenuItem saveItem = new JMenuItem("Save");
-        saveItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        saveItem.setFont(serifFont);
         saveItem.setMnemonic(KeyEvent.VK_S);
         saveItem.addActionListener((event) -> {
                     JFileChooser fileChooser = new JFileChooser();
@@ -70,44 +66,44 @@ public class MainMenuBar extends JMenuBar {
         fileMenu.add(saveItem);
 
         JMenuItem exitItem = new JMenuItem("Exit");
-        exitItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        exitItem.setFont(serifFont);
         exitItem.setMnemonic(KeyEvent.VK_Q);
         exitItem.addActionListener((event) -> System.exit(0));
         fileMenu.add(exitItem);
 
-        // Create patient menu
+        // Patient menu
         JMenu patientMenu = new JMenu("Patient");
-        patientMenu.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        patientMenu.setFont(serifFont);
         JMenuItem showPatientItem = new JMenuItem("Show Patients");
-        showPatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        showPatientItem.setFont(serifFont);
         showPatientItem.addActionListener(e -> {
             System.out.println("changing view");
             MainView.getCardLayout().show(MainView.getMainPanel(), "patientListPanel");
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
-        addPatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        addPatientItem.setFont(serifFont);
         addPatientItem.addActionListener(e -> {
             JFrame addPatientWindow = new AddPatientWindow();
             addPatientWindow.setVisible(true);
         });
         JMenuItem removePatientItem = new JMenuItem("Remove Patient");
-        removePatientItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        removePatientItem.setFont(serifFont);
 
         patientMenu.add(showPatientItem);
         patientMenu.add(addPatientItem);
         patientMenu.add(removePatientItem);
 
-        // Create doctor menu
+        // Doctor menu
         JMenu doctorMenu = new JMenu("Doctor");
         JMenuItem showDoctorItem = new JMenuItem("Show Doctor");
-        showDoctorItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
-        doctorMenu.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        showDoctorItem.setFont(serifFont);
+        doctorMenu.setFont(serifFont);
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
-        addDoctorItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        addDoctorItem.setFont(serifFont);
         JMenuItem removeDoctorItem = new JMenuItem("Remove Doctor");
-        removeDoctorItem.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        removeDoctorItem.setFont(serifFont);
         JMenuItem manageDoctor = new JMenuItem("Manage Doctor");
-        manageDoctor.setFont(new Font("Serif,", Font.PLAIN, fontSize));
+        manageDoctor.setFont(serifFont);
 
         doctorMenu.add(showDoctorItem);
         doctorMenu.add(addDoctorItem);

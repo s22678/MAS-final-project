@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class MainView extends JFrame {
     public static final int fontSize = 30;
+    public static final Font serifFont = new Font("Serif,", Font.PLAIN, fontSize);
+    public static final Font sansSerifFont = new Font("SansSerif,", Font.PLAIN, fontSize);
     private static CardLayout cardLayout;
     private static JPanel mainPanel;
     public MainView() {
