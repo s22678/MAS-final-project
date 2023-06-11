@@ -107,11 +107,17 @@ public class AddDoctorWindow extends JFrame {
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
             if (!Person.parsePESEL(PESELTextField.getText())) {
-                JOptionPane.showMessageDialog(this, "incorrect PESEL format", "PESEL Error", JOptionPane.ERROR_MESSAGE);
+                JLabel label = new JLabel("incorrect PESEL format");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "PESEL Error", JOptionPane.ERROR_MESSAGE);
             } else if (!Person.parseTextFields(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText())) {
-                JOptionPane.showMessageDialog(this, "incorrect doctor info format - cannot be shorter than 2 characters", "Input Data Error", JOptionPane.ERROR_MESSAGE);
+                JLabel label = new JLabel("incorrect doctor info format - cannot be shorter than 2 characters");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
             } else if (fields.getSelectedIndices().length < 1) {
-                JOptionPane.showMessageDialog(this, "at least 1 field must be selected", "Field Select Error", JOptionPane.ERROR_MESSAGE);
+                JLabel label = new JLabel("at least 1 field must be selected");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "Field Select Error", JOptionPane.ERROR_MESSAGE);
             }else {
                 DoctorField[] selectedFields = new DoctorField[fields.getSelectedIndices().length];
                 for(int i = 0; i < fields.getSelectedIndices().length; i++) {
@@ -119,7 +125,10 @@ public class AddDoctorWindow extends JFrame {
                 }
 
                 new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), Integer.parseInt(salaryTextField.getText()), specializationTextField.getText(), selectedFields);
-                JOptionPane.showMessageDialog(this, "Doctor " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
+
+                JLabel label = new JLabel("Doctor " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label);
             }
         });
 

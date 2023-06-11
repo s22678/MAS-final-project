@@ -108,23 +108,22 @@ public class AddPatientWindow extends JFrame {
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
             if (!Person.parsePESEL(PESELTextField.getText())) {
-                JOptionPane.showMessageDialog(this,
-                        "incorrect PESEL format",
-                        "PESEL error",
-                        JOptionPane.ERROR_MESSAGE);
+                JLabel label = new JLabel("incorrect PESEL format");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "PESEL error", JOptionPane.ERROR_MESSAGE);
             } else if (!Person.parseTextFields(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
-                JOptionPane.showMessageDialog(this,
-                        "incorrect patient info format - cannot be shorter than 2 characters",
-                        "Input Data error",
-                        JOptionPane.ERROR_MESSAGE);
+                JLabel label = new JLabel("incorrect patient info format - cannot be shorter than 2 characters");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else {
                 Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
                 if (!person.isPatientAdult()) {
                     person.setPatientParentsInfo(parentsInfoTextField.getText());
                     person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());
                 }
-                JOptionPane.showMessageDialog(this,
-                        "Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
+                JLabel label = new JLabel("Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label);
             }
         });
 

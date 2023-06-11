@@ -2,6 +2,7 @@ package s22678.View.Main;
 
 import s22678.View.Doctor.List.ListDoctorPanel;
 import s22678.View.Equipment.List.ListRoomAndBedPanel;
+import s22678.View.Main.Menu.MainMenuBar;
 import s22678.View.Patient.List.ListPatientPanel;
 
 import javax.swing.*;
