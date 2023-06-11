@@ -1,6 +1,7 @@
 package s22678.View.Main;
 
 import s22678.View.Doctor.List.ListDoctorPanel;
+import s22678.View.Equipment.List.ListRoomAndBedPanel;
 import s22678.View.Patient.List.ListPatientPanel;
 
 import javax.swing.*;
@@ -22,12 +23,14 @@ public class MainView extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(cardLayout);
 
-        JPanel patientListPanel = new ListPatientPanel();
-        JPanel doctorListPanel = new ListDoctorPanel();
+        JPanel listPatientPanel = new ListPatientPanel();
+        JPanel listDoctorPanel = new ListDoctorPanel();
+        JPanel listRoomAndBedPanel = new ListRoomAndBedPanel();
         JPanel defaultPanel = new DefaultPanel();
 
-        mainPanel.add("patientListPanel", patientListPanel);
-        mainPanel.add("doctorListPanel", doctorListPanel);
+        mainPanel.add("listPatientPanel", listPatientPanel);
+        mainPanel.add("listDoctorPanel", listDoctorPanel);
+        mainPanel.add("listRoomAndBedPanel", listRoomAndBedPanel);
         mainPanel.add("defaultPanel", defaultPanel);
 
         add(mainPanel);

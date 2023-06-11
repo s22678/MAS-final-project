@@ -23,7 +23,7 @@ public class Main {
     public static void setup(boolean save) {
         if (save) {
             // Add rooms
-            final Room room1 = new Room(1);
+            final Room room1 = new Room();
 //            final Room room2 = new Room(2);
 
             final Bed bed1 = new Bed();

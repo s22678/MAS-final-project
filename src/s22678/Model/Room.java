@@ -15,6 +15,15 @@ public class Room implements Serializable {
     private int roomNumber;
     private List<Bed> beds = new ArrayList<>();
 
+    public static Room findByNumber(int number) {
+        for (Room room : getExtent()) {
+            if (room.getRoomNumber() == number) {
+                return room;
+            }
+        }
+        return null;
+    }
+
     public static int getMaxBedCapacity() {
         return maxBedCapacity;
     }
@@ -41,12 +50,8 @@ public class Room implements Serializable {
         return this.roomNumber;
     }
 
-    public Room(int roomNumber) {
-        if (!doesRoomWithRoomNumberExist(roomNumber)) {
-            this.roomNumber = roomNumber;
-        } else {
-            this.roomNumber = getNewRoomNumber();
-        }
+    public Room() {
+        this.roomNumber = getNewRoomNumber();
         Bed bed = new Bed();
         beds.add(bed);
         bed.setRoom(this);
@@ -62,14 +67,16 @@ public class Room implements Serializable {
         return false;
     }
 
-    public void addBed(Bed bed) {
+    public boolean addBed(Bed bed) {
         if (!beds.contains(bed) && beds.size() < maxBedCapacity) {
             beds.add(bed);
-        }
 
-        if (bed.getRoom() == null) {
-            bed.setRoom(this);
+            if (bed.getRoom() == null) {
+                bed.setRoom(this);
+            }
+            return true;
         }
+        return false;
     }
 
     public List<Bed> getBeds() {

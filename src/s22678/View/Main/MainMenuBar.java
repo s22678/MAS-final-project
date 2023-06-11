@@ -3,6 +3,7 @@ package s22678.View.Main;
 import s22678.Controller.MainController;
 import s22678.Model.*;
 import s22678.View.Doctor.Add.AddDoctorWindow;
+import s22678.View.Equipment.Add.AddBedWindow;
 import s22678.View.Patient.Add.AddPatientWindow;
 
 import javax.swing.*;
@@ -86,7 +87,7 @@ public class MainMenuBar extends JMenuBar {
         JMenuItem showPatientItem = new JMenuItem("List Patients");
         showPatientItem.setFont(serifFont);
         showPatientItem.addActionListener(e -> {
-            System.out.println("changing view");
+            System.out.println("changing view to patientListPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "patientListPanel");
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
@@ -105,7 +106,7 @@ public class MainMenuBar extends JMenuBar {
         JMenuItem showDoctorItem = new JMenuItem("List Doctors");
         showDoctorItem.setFont(serifFont);
         showDoctorItem.addActionListener(e -> {
-            System.out.println("changing view");
+            System.out.println("changing view to doctorListPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "doctorListPanel");
         });
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
@@ -122,22 +123,22 @@ public class MainMenuBar extends JMenuBar {
         JMenu equipmentMenu = new JMenu("Equipment");
         equipmentMenu.setFont(serifFont);
         JMenuItem showRoomItem = new JMenuItem("List Rooms and Beds");
-        showDoctorItem.setFont(serifFont);
-        showDoctorItem.addActionListener(e -> {
-            System.out.println("changing view");
-            MainView.getCardLayout().show(MainView.getMainPanel(), "equipmentListPanel");
+        showRoomItem.setFont(serifFont);
+        showRoomItem.addActionListener(e -> {
+            System.out.println("changing view to listRoomAndBedPanel");
+            MainView.getCardLayout().show(MainView.getMainPanel(), "listRoomAndBedPanel");
         });
         JMenuItem addRoomItem = new JMenuItem("Add Room");
         addRoomItem.setFont(serifFont);
         addRoomItem.addActionListener(e -> {
-            JFrame addDoctorWindow = new AddDoctorWindow();
-            addDoctorWindow.setVisible(true);
+            Room room = new Room();
+            JOptionPane.showMessageDialog(this, "Room nr: " + room.getRoomNumber() + " added");
         });
         JMenuItem addBedItem = new JMenuItem("Add Bed");
         addBedItem.setFont(serifFont);
         addBedItem.addActionListener(e -> {
-            JFrame addDoctorWindow = new AddDoctorWindow();
-            addDoctorWindow.setVisible(true);
+            JFrame addBedWindow = new AddBedWindow();
+            addBedWindow.setVisible(true);
         });
 
         equipmentMenu.add(showRoomItem);

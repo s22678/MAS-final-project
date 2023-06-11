@@ -9,7 +9,7 @@ public class ListDoctorCloseButton extends JButton {
         super(buttonName);
 
         addActionListener(e -> {
-            System.out.println("changing view");
+            System.out.println("changing view to defaultPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "defaultPanel");
         });
     }
