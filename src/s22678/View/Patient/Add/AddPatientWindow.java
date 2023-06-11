@@ -15,7 +15,6 @@ public class AddPatientWindow extends JFrame {
 
     public AddPatientWindow() {
         setTitle("Add Patient");
-//        setLayout();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1536, 864);
         setLocationRelativeTo(null);
