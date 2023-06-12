@@ -67,11 +67,7 @@ public class Person implements Serializable {
     }
 
     public String[] getDoctorTableData() {
-        String tmp = "";
-        for (DoctorField field : getDoctorFields()) {
-            tmp = tmp + " " + field.toString();
-        }
-        String[] data = {getPESEL(), getFirstName(), getLastName(), tmp};
+        String[] data = {getPESEL(), getFirstName(), getLastName(), getDoctorSpecialization()};
         return data;
     }
 
@@ -238,14 +234,28 @@ public class Person implements Serializable {
         }
     }
 
-    private String getDoctorSpecialization() {
+    public String getDoctorSpecialization() {
         if (currentRole == PersonRole.DOCTOR) {
             return doctor.getSpecialization();
         }
-        return "";
+        return "not a doctor";
     }
 
-    private EnumSet<DoctorField> getDoctorFields() {
+    public int getDoctorSalary() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getSalary();
+        }
+        return 0;
+    }
+
+    public List<String> getDoctorSuccessfulOperations() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getSuccessfulOperations();
+        }
+        return null;
+    }
+
+    public EnumSet<DoctorField> getDoctorFields() {
         if (currentRole == PersonRole.DOCTOR) {
             return doctor.getFields();
         }
@@ -385,6 +395,7 @@ public class Person implements Serializable {
 
         private Doctor(int salary, String specialization, DoctorField... doctorFields) {
             this.salary = salary;
+            this.specialization = specialization;
             fields = EnumSet.noneOf(DoctorField.class);
             for (DoctorField field : doctorFields) {
                 fields.add(field);

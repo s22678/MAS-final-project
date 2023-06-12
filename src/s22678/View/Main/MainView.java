@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
+    public static final int screenWidth = 1536;
+    public static final int screenHeight = 864;
     public static final int fontSize = 30;
     public static final Font serifFont = new Font("Serif,", Font.PLAIN, fontSize);
     public static final Font sansSerifFont = new Font("SansSerif,", Font.PLAIN, fontSize);
@@ -17,7 +19,7 @@ public class MainView extends JFrame {
     public MainView() {
         setTitle("Hospital Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1536, 864);
+        setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();

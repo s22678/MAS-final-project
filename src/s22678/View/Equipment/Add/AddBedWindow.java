@@ -8,7 +8,7 @@ import s22678.Model.Room;
 import javax.swing.*;
 import java.awt.*;
 
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.*;
 
 public class AddBedWindow extends JFrame {
     public static final int textFieldHeight = 50;
@@ -18,7 +18,7 @@ public class AddBedWindow extends JFrame {
         setTitle("Add Bed");
 //        setLayout();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1536, 864);
+        setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));

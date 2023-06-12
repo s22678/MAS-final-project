@@ -1,36 +1,40 @@
 package s22678.View.Doctor.Show;
 
+import s22678.Model.DoctorField;
 import s22678.Model.Person;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.*;
 
 public class ShowDoctorWindow extends JFrame {
     public ShowDoctorWindow(String pesel, String firstName, String lastName) {
         setTitle("Show Details for: dr " + firstName + " " + lastName);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(800, 600);
+        setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(1, 4));
+        setLayout(new GridLayout(2, 1));
 
         Person doctor = Person.getPersonByFullNameandPesel(pesel, firstName, lastName);
 
-        GridLayout masterLayout = new GridLayout(8 ,1);
-        masterLayout.setVgap(40);
+        JPanel textPanel = new JPanel(new GridLayout(1, 4));
+        JPanel treatmentPanel = new JPanel();
+
+        GridLayout masterGridLayout = new GridLayout(8 ,1);
+        masterGridLayout.setVgap(40);
 
         // First column label description
-        JPanel firstDescriptionLabelColumn = new JPanel(masterLayout);
+        JPanel firstDescriptionLabelColumn = new JPanel(masterGridLayout);
 
         // Second column label description
-        JPanel secondDescriptionLabelColumn = new JPanel(masterLayout);
+        JPanel secondDescriptionLabelColumn = new JPanel(masterGridLayout);
 
         // First column label data
-        JPanel firstDataLabelColumn = new JPanel(masterLayout);
+        JPanel firstDataLabelColumn = new JPanel(masterGridLayout);
 
         // Second column label data
-        JPanel secondDataLabelColumn = new JPanel(masterLayout);
+        JPanel secondDataLabelColumn = new JPanel(masterGridLayout);
 
         // firstName label description
         JLabel firstNameDescriptionLabel = new JLabel("Name:");
@@ -76,38 +80,60 @@ public class ShowDoctorWindow extends JFrame {
 
         // specialization label description
         JLabel specializationDescriptionLabel = new JLabel("Specialization:");
+        specializationDescriptionLabel.setFont(serifFont);
 
-        add(firstDescriptionLabelColumn);
-        add(firstDataLabelColumn);
-        add(secondDescriptionLabelColumn);
-        add(secondDataLabelColumn);
+        // add specialization label description to JPanel
+        secondDescriptionLabelColumn.add(specializationDescriptionLabel);
 
+        // specialization label data
+        JLabel specializationDataLabel = new JLabel(doctor.getDoctorSpecialization());
+        specializationDataLabel.setFont(serifFont);
 
+        // add specialization label data to JPanel
+        secondDataLabelColumn.add(specializationDataLabel);
 
+        // salary label description
+        JLabel salaryDescriptionLabel = new JLabel("Salary:");
+        salaryDescriptionLabel.setFont(serifFont);
 
+        // add salary label description to JPanel
+        firstDescriptionLabelColumn.add(salaryDescriptionLabel);
 
+        // salary label data
+        JLabel salaryDataLabel = new JLabel(String.valueOf(doctor.getDoctorSalary()));
+        salaryDataLabel.setFont(serifFont);
 
-//        JLabel nameLabel = new JLabel("Name: " + pesel);
-//        JLabel ageLabel = new JLabel("Age: " + firstName);
-//        JLabel emailLabel = new JLabel("Email: " + lastName);
+        // add salary label data to JPanel
+        firstDataLabelColumn.add(salaryDataLabel);
 
-//        add(nameLabel);
-//        add(ageLabel);
-//        add(emailLabel);
+        // fields label description
+        JLabel fieldsDescriptionLabel = new JLabel("Fields:");
+        fieldsDescriptionLabel.setFont(serifFont);
 
+        // add fields label description to JPanel
+        secondDescriptionLabelColumn.add(fieldsDescriptionLabel);
 
+        // fields label data
+        String tmp = "";
+        for (DoctorField field : doctor.getDoctorFields()) {
+            tmp = tmp + " " + field.toString();
+        }
+        JLabel fieldsDataLabel = new JLabel(tmp);
+        fieldsDataLabel.setFont(serifFont);
+
+        // add fields label data to JPanel
+        secondDataLabelColumn.add(fieldsDataLabel);
+
+        textPanel.add(firstDescriptionLabelColumn);
+        textPanel.add(firstDataLabelColumn);
+        textPanel.add(secondDescriptionLabelColumn);
+        textPanel.add(secondDataLabelColumn);
+
+        add(textPanel);
         setVisible(true);
     }
 }
 
-
-
-//    private int salary;
-//    private String specialization;
-//    private EnumSet<DoctorField> fields;
 //    private java.util.List<Treatment> treatments = new ArrayList<>();
 //    private java.util.List<String> trainings = new ArrayList<>();
 //    private List<String> successfulOperations = new ArrayList<>();
-//    private String firstName;
-//    private String lastName;
-//    private String PESEL;

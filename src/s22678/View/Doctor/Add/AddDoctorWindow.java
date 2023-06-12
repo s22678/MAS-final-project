@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.screenWidth;
+import static s22678.View.Main.MainView.screenHeight;
 
 public class AddDoctorWindow extends JFrame {
     public static final int textFieldHeight = 50;
@@ -19,7 +21,7 @@ public class AddDoctorWindow extends JFrame {
         setTitle("Add Doctor");
 //        setLayout();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1536, 864);
+        setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
@@ -123,7 +125,6 @@ public class AddDoctorWindow extends JFrame {
                 for(int i = 0; i < fields.getSelectedIndices().length; i++) {
                     selectedFields[i] = dFields[i];
                 }
-
                 new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), Integer.parseInt(salaryTextField.getText()), specializationTextField.getText(), selectedFields);
 
                 JLabel label = new JLabel("Doctor " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");

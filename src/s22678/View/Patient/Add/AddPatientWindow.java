@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.DateTimeException;
 
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.*;
 
 public class AddPatientWindow extends JFrame {
     public static final int textFieldHeight = 50;
@@ -16,7 +16,7 @@ public class AddPatientWindow extends JFrame {
     public AddPatientWindow() {
         setTitle("Add Patient");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(1536, 864);
+        setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
