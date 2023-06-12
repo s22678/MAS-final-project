@@ -14,6 +14,9 @@ import static s22678.View.Main.MainView.sansSerifFont;
 
 public class ListRoomAndBedTable extends JTable {
     private static DefaultTableModel tableModel;
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
     public ListRoomAndBedTable() {
         setRowHeight(this.getRowHeight() + 35);
         setFont(sansSerifFont);

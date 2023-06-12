@@ -1,19 +1,16 @@
-package s22678.View.Patient.List;
-
-import s22678.Model.Person;
-import s22678.Model.PersonRole;
+package s22678.View.Treatment.SelectPatient;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import static s22678.View.Main.MainView.sansSerifFont;
 
-public class ListPatientTable extends JTable {
+public class ListSelectedPatientTable extends JTable {
     private static DefaultTableModel tableModel;
     public boolean isCellEditable(int row, int column) {
         return false;
     }
-    public ListPatientTable() {
+    public ListSelectedPatientTable() {
         setRowHeight(this.getRowHeight() + 35);
         setFont(sansSerifFont);
         getTableHeader().setFont(sansSerifFont);

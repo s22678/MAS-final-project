@@ -4,6 +4,7 @@ import s22678.Model.*;
 import s22678.View.Doctor.List.ListDoctorActionListener;
 import s22678.View.Equipment.List.ListRoomAndBedActionListener;
 import s22678.View.Patient.List.ListPatientActionListener;
+import s22678.View.Treatment.SelectDoctor.ListDoctorWithPatientActionListener;
 
 import java.io.*;
 
@@ -42,8 +43,9 @@ public class MainController {
     }
 
     public static void reloadData() {
-        ListDoctorActionListener.action();
-        ListPatientActionListener.action();
-        ListRoomAndBedActionListener.action();
+        ListDoctorActionListener.reload();
+        ListPatientActionListener.reload();
+        ListRoomAndBedActionListener.reload();
+        ListDoctorWithPatientActionListener.reload();
     }
 }

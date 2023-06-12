@@ -20,6 +20,10 @@ public class Treatment implements Serializable {
     private LocalDateTime treatmentEnd;
     private String afterTreatmentHealtState;
 
+    public Person getPatient() {
+        return patient;
+    }
+
     public static void newFile() {
         extent.removeAll(extent);
     }

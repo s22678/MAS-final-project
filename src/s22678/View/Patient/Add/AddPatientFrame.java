@@ -2,10 +2,12 @@ package s22678.View.Patient.Add;
 
 import s22678.Model.PatientCard;
 import s22678.Model.Person;
+import s22678.Model.Treatment;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static s22678.Controller.DoctorController.getDoctorWithSmallestNumberOfPatients;
 import static s22678.View.Main.MainView.*;
 
 public class AddPatientFrame extends JFrame {
@@ -105,7 +107,12 @@ public class AddPatientFrame extends JFrame {
 
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
-            if (Person.isBadPESEL(PESELTextField.getText())) {
+            Person doctor = getDoctorWithSmallestNumberOfPatients();
+            if (doctor == null) {
+                JLabel label = new JLabel("Patient can't be assigned to a doctor - doctor doesn't exist. Make sure doctors are added to the system");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
+            } else if (Person.isBadPESEL(PESELTextField.getText())) {
                 JLabel label = new JLabel("incorrect PESEL format");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "PESEL error", JOptionPane.ERROR_MESSAGE);
@@ -119,6 +126,7 @@ public class AddPatientFrame extends JFrame {
                     person.setPatientParentsInfo(parentsInfoTextField.getText());
                     person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());
                 }
+                new Treatment(doctor, person);
                 JLabel label = new JLabel("Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label);

@@ -4,7 +4,7 @@ import s22678.Model.Person;
 import s22678.Model.PersonRole;
 
 public class ListDoctorActionListener {
-    public static void action() {
+    public static void reload() {
         ListDoctorTable.getDefaultTableModel().setRowCount(0);
         for (Person person : Person.getExtent().values()) {
             if (person.getRole() == PersonRole.DOCTOR)

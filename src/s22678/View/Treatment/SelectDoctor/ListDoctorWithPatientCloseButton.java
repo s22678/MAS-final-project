@@ -1,11 +1,11 @@
-package s22678.View.Equipment.List;
+package s22678.View.Treatment.SelectDoctor;
 
 import s22678.View.Main.MainView;
 
 import javax.swing.*;
 
-public class ListRoomAndBedCloseButton extends JButton {
-    public ListRoomAndBedCloseButton(String buttonName) {
+public class ListDoctorWithPatientCloseButton extends JButton {
+    public ListDoctorWithPatientCloseButton(String buttonName) {
         super(buttonName);
 
         addActionListener(e -> {

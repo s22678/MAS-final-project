@@ -4,6 +4,8 @@ import s22678.View.Doctor.List.ListDoctorPanel;
 import s22678.View.Equipment.List.ListRoomAndBedPanel;
 import s22678.View.Main.Menu.MainMenuBar;
 import s22678.View.Patient.List.ListPatientPanel;
+import s22678.View.Treatment.SelectDoctor.ListDoctorWithPatientPanel;
+import s22678.View.Treatment.SelectPatient.ListSelectedPatientPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,11 +31,15 @@ public class MainView extends JFrame {
         JPanel listPatientPanel = new ListPatientPanel();
         JPanel listDoctorPanel = new ListDoctorPanel();
         JPanel listRoomAndBedPanel = new ListRoomAndBedPanel();
+        JPanel listDoctorWithPatientPanel = new ListDoctorWithPatientPanel();
+        JPanel listSelectedPatientPanel = new ListSelectedPatientPanel();
         JPanel defaultPanel = new DefaultPanel();
 
         mainPanel.add("listPatientPanel", listPatientPanel);
         mainPanel.add("listDoctorPanel", listDoctorPanel);
         mainPanel.add("listRoomAndBedPanel", listRoomAndBedPanel);
+        mainPanel.add("listDoctorWithPatientPanel", listDoctorWithPatientPanel);
+        mainPanel.add("listSelectedPatientPanel", listSelectedPatientPanel);
         mainPanel.add("defaultPanel", defaultPanel);
 
         add(mainPanel);

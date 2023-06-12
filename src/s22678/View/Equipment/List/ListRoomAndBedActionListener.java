@@ -6,7 +6,7 @@ import s22678.Model.Room;
 import java.util.Vector;
 
 public class ListRoomAndBedActionListener {
-    public static void action() {
+    public static void reload() {
         ListRoomAndBedTable.getDefaultTableModel().setRowCount(0);
         for (Room room : Room.getExtent()) {
             System.out.println(room.getRoomNumber());

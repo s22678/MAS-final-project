@@ -17,8 +17,21 @@ public class DoctorController {
         return doctors;
     }
 
+    public static List<Person> getDoctors() {
+        List<Person> doctors = new ArrayList<>();
+        for (Person doctor : Person.getExtent().values()) {
+            if (doctor.getRole() == PersonRole.DOCTOR) doctors.add(doctor);
+        }
+        return doctors;
+    }
+
     public static Person getDoctorWithSmallestNumberOfPatients() {
-        Person smallestDoctor = getDoctorsWithPatients().get(0);  // Assume the first doctor has the smallest number of patients
+        if (getDoctors().size() == 0) {
+            return null;
+        }
+        
+        // Assume first doctor has the lowest number of patients
+        Person smallestDoctor = getDoctors().get(0);
 
         for (Person person : getDoctorsWithPatients()) {
             if (person.getDoctorTreatments().size() < smallestDoctor.getDoctorTreatments().size()) {
@@ -27,5 +40,12 @@ public class DoctorController {
         }
 
         return smallestDoctor;
+    }
+
+    public static Person getDoctorByPesel(String PESEL) {
+        for (Person doctor : Person.getExtent().values()) {
+            if (doctor.getRole() == PersonRole.DOCTOR && doctor.getPESEL().equals(PESEL)) return doctor;
+        }
+        return null;
     }
 }

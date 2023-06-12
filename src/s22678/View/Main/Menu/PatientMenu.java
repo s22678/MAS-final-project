@@ -17,7 +17,7 @@ public class PatientMenu extends JMenu {
         showPatientItem.addActionListener(e -> {
             System.out.println("changing view to listPatientPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listPatientPanel");
-            ListPatientActionListener.action();
+            ListPatientActionListener.reload();
         });
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
         addPatientItem.setFont(serifFont);

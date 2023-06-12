@@ -17,7 +17,7 @@ public class DoctorMenu extends JMenu {
         showDoctorItem.addActionListener(e -> {
             System.out.println("changing view to listDoctorPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listDoctorPanel");
-            ListDoctorActionListener.action();
+            ListDoctorActionListener.reload();
         });
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
         addDoctorItem.setFont(serifFont);

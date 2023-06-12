@@ -1,8 +1,5 @@
 package s22678.View.Patient.List;
 
-import s22678.Model.Person;
-import s22678.Model.PersonRole;
-
 import javax.swing.*;
 
 public class ListPatientRefreshButton extends JButton {
@@ -10,7 +7,7 @@ public class ListPatientRefreshButton extends JButton {
         super(buttonName);
 
         addActionListener(e -> {
-            ListPatientActionListener.action();
+            ListPatientActionListener.reload();
         });
     }
 }

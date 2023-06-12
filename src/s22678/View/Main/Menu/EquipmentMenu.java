@@ -18,7 +18,7 @@ public class EquipmentMenu extends JMenu {
         showRoomItem.addActionListener(e -> {
             System.out.println("changing view to listRoomAndBedPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listRoomAndBedPanel");
-            ListRoomAndBedActionListener.action();
+            ListRoomAndBedActionListener.reload();
         });
         JMenuItem addRoomItem = new JMenuItem("Add Room");
         addRoomItem.setFont(serifFont);
