@@ -20,6 +20,10 @@ public class Treatment implements Serializable {
     private LocalDateTime treatmentEnd;
     private String afterTreatmentHealtState;
 
+    public static void newFile() {
+        extent.removeAll(extent);
+    }
+
     public Treatment(Person doctor, Person patient) {
         if (setPerson(doctor, PersonRole.DOCTOR) && setPerson(patient, PersonRole.PATIENT)) {
             treatmentStart = LocalDateTime.now();

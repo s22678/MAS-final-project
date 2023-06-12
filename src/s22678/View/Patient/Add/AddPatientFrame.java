@@ -5,15 +5,14 @@ import s22678.Model.Person;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.DateTimeException;
 
 import static s22678.View.Main.MainView.*;
 
-public class AddPatientWindow extends JFrame {
+public class AddPatientFrame extends JFrame {
     public static final int textFieldHeight = 50;
     public static final int textFieldWidth = 200;
 
-    public AddPatientWindow() {
+    public AddPatientFrame() {
         setTitle("Add Patient");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(screenWidth, screenHeight);
@@ -106,11 +105,11 @@ public class AddPatientWindow extends JFrame {
 
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
-            if (!Person.parsePESEL(PESELTextField.getText())) {
+            if (Person.isBadPESEL(PESELTextField.getText())) {
                 JLabel label = new JLabel("incorrect PESEL format");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "PESEL error", JOptionPane.ERROR_MESSAGE);
-            } else if (!Person.parseTextFields(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
+            } else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
                 JLabel label = new JLabel("incorrect patient info format - cannot be shorter than 2 characters");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);

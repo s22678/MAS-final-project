@@ -10,11 +10,11 @@ import java.awt.*;
 
 import static s22678.View.Main.MainView.*;
 
-public class AddBedWindow extends JFrame {
+public class AddBedFrame extends JFrame {
     public static final int textFieldHeight = 50;
     public static final int textFieldWidth = 200;
 
-    public AddBedWindow() {
+    public AddBedFrame() {
         setTitle("Add Bed");
 //        setLayout();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

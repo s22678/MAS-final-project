@@ -1,6 +1,6 @@
 package s22678.View.Main.Menu;
 
-import s22678.View.Doctor.Add.AddDoctorWindow;
+import s22678.View.Doctor.Add.AddDoctorFrame;
 import s22678.View.Doctor.List.ListDoctorActionListener;
 import s22678.View.Main.MainView;
 
@@ -22,7 +22,7 @@ public class DoctorMenu extends JMenu {
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
         addDoctorItem.setFont(serifFont);
         addDoctorItem.addActionListener(e -> {
-            JFrame addDoctorWindow = new AddDoctorWindow();
+            JFrame addDoctorWindow = new AddDoctorFrame();
             addDoctorWindow.setVisible(true);
         });
 

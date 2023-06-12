@@ -22,33 +22,62 @@ public class Person implements Serializable {
     private Patient patient;
     private PersonRole currentRole;
 
+    public static void newFile() {
+        extent.clear();
+    }
 
-    public static boolean parseTextFields(String... textFields) {
+    public static boolean isTextFieldDataIncorrect(String... textFields) {
         for(String field : textFields) {
             if (field.length() < 2) {
                 System.out.println("Bad input data: " + field.length());
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-
-    public static boolean parsePESEL(String PESEL) {
+    public static boolean isBadPESEL(String PESEL) {
         if (PESEL.length() != 11) {
             System.out.println("Incorrect PESEL length: " + PESEL.length());
-            return false;
+            return true;
         }
 
-        String birthDay = PESEL.substring(0, 6);
+        String birthDay = getBirthday(PESEL);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         try {
             LocalDate.parse(birthDay, formatter);
         } catch (Exception e) {
             System.out.println("Error while parsing PESSEL - incorrect data: " + birthDay);
-            return false;
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    public static String getBirthday(String PESEL) {
+        if (Character.getNumericValue(PESEL.charAt(2)) > 1) {
+            int intMonth = Character.getNumericValue(PESEL.charAt(2)) - 2;
+            String strMonth = String.valueOf(intMonth);
+            return PESEL.substring(0, 2) + strMonth + PESEL.substring(3, 6);
+        } else {
+            return PESEL.substring(0, 6);
+        }
+    }
+
+    public LocalDate getBirthDay() {
+        String birthDay = getBirthday(getPESEL());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        return LocalDate.parse(birthDay, formatter);
+    }
+
+    public int getAge() {
+        return Period.between(getBirthDay(), LocalDate.now()).getYears();
+    }
+
+    public static boolean isAdult(String PESEL) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        LocalDate birthday = LocalDate.parse(getBirthday(PESEL), formatter);
+        System.out.println(birthday);
+        return Period.between(birthday, LocalDate.now()).getYears() >= 18;
     }
 
     public static void save(ObjectOutputStream stream) throws IOException {
@@ -91,16 +120,6 @@ public class Person implements Serializable {
             }
         }
         return null;
-    }
-
-    public LocalDate getBirthDay() {
-        String birthDay = getPESEL().substring(0, 6);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        return LocalDate.parse(birthDay, formatter);
-    }
-
-    public int getAge() {
-        return Period.between(getBirthDay(), LocalDate.now()).getYears();
     }
 
     public static void changeMinTrainingsRequired(int newMin) {

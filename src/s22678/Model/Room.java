@@ -24,6 +24,10 @@ public class Room implements Serializable {
         return null;
     }
 
+    public static void newFile() {
+        extent.removeAll(extent);
+    }
+
     public static int getMaxBedCapacity() {
         return maxBedCapacity;
     }

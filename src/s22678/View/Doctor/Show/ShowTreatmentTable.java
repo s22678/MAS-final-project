@@ -31,7 +31,7 @@ public class ShowTreatmentTable extends JTable {
                     String firstName = (String) getValueAt(row, 1);
                     String lastName = (String) getValueAt(row, 2);
 
-                    new ShowDoctorWindow(pesel, firstName, lastName);
+                    new ShowDoctorFrame(pesel, firstName, lastName);
                 }
             }
         });

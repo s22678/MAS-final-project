@@ -1,7 +1,7 @@
 package s22678.View.Main.Menu;
 
 import s22678.View.Main.MainView;
-import s22678.View.Patient.Add.AddPatientWindow;
+import s22678.View.Patient.Add.AddPatientFrame;
 import s22678.View.Patient.List.ListPatientActionListener;
 
 import javax.swing.*;
@@ -22,7 +22,7 @@ public class PatientMenu extends JMenu {
         JMenuItem addPatientItem = new JMenuItem("Add Patient");
         addPatientItem.setFont(serifFont);
         addPatientItem.addActionListener(e -> {
-            JFrame addPatientWindow = new AddPatientWindow();
+            JFrame addPatientWindow = new AddPatientFrame();
             addPatientWindow.setVisible(true);
         });
 

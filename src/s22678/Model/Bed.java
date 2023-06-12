@@ -14,7 +14,9 @@ public class Bed implements Serializable {
     private Person patient;
     private Room room;
 
-
+    public static void newFile() {
+        extent.removeAll(extent);
+    }
 
     public static void save(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);

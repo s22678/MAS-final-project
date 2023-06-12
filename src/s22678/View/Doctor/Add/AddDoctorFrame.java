@@ -1,23 +1,20 @@
 package s22678.View.Doctor.Add;
 
 import s22678.Model.DoctorField;
-import s22678.Model.PatientCard;
 import s22678.Model.Person;
 
-import javax.print.Doc;
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static s22678.View.Main.MainView.serifFont;
 import static s22678.View.Main.MainView.screenWidth;
 import static s22678.View.Main.MainView.screenHeight;
 
-public class AddDoctorWindow extends JFrame {
+public class AddDoctorFrame extends JFrame {
     public static final int textFieldHeight = 50;
     public static final int textFieldWidth = 200;
 
-    public AddDoctorWindow() {
+    public AddDoctorFrame() {
         setTitle("Add Doctor");
 //        setLayout();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -108,11 +105,11 @@ public class AddDoctorWindow extends JFrame {
 
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
-            if (!Person.parsePESEL(PESELTextField.getText())) {
+            if (Person.isBadPESEL(PESELTextField.getText())) {
                 JLabel label = new JLabel("incorrect PESEL format");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "PESEL Error", JOptionPane.ERROR_MESSAGE);
-            } else if (!Person.parseTextFields(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText())) {
+            } else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText())) {
                 JLabel label = new JLabel("incorrect doctor info format - cannot be shorter than 2 characters");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);

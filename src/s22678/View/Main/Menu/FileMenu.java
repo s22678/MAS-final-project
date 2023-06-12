@@ -4,10 +4,12 @@ import s22678.Controller.MainController;
 import s22678.Model.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 
+import static s22678.Controller.MainController.reloadData;
 import static s22678.View.Main.MainView.serifFont;
 
 public class FileMenu extends JMenu {
@@ -15,6 +17,19 @@ public class FileMenu extends JMenu {
         super(name);
         setFont(serifFont);
         setMnemonic(KeyEvent.ALT_DOWN_MASK | KeyEvent.getExtendedKeyCodeForChar('F'));
+
+        JMenuItem newItem = new JMenuItem("New File");
+        newItem.setFont(serifFont);
+        newItem.setMnemonic(KeyEvent.VK_L);
+        newItem.addActionListener(e -> {
+            JLabel label = new JLabel("This will remove all unsaved changes! Continue?");
+            label.setFont(serifFont);
+            int result = JOptionPane.showConfirmDialog((Component) null, label,"alert", JOptionPane.YES_NO_OPTION);
+            if (result == 0) {
+                MainController.newFile();
+                reloadData();
+            }
+        });
 
         JMenuItem loadItem = new JMenuItem("Load");
         loadItem.setFont(serifFont);
@@ -47,6 +62,8 @@ public class FileMenu extends JMenu {
                         System.out.println("leczenia");
                         List<Treatment> treatments = Treatment.getExtent();
                         System.out.println(treatments);
+
+                        reloadData();
                     }
                 }
         );
@@ -79,6 +96,7 @@ public class FileMenu extends JMenu {
         exitItem.setMnemonic(KeyEvent.VK_Q);
         exitItem.addActionListener((event) -> System.exit(0));
 
+        add(newItem);
         add(loadItem);
         add(saveItem);
         add(exitItem);

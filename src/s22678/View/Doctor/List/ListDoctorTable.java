@@ -1,13 +1,10 @@
 package s22678.View.Doctor.List;
 
-import s22678.Model.Person;
-import s22678.Model.PersonRole;
-import s22678.View.Doctor.Show.ShowDoctorWindow;
+import s22678.View.Doctor.Show.ShowDoctorFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -37,7 +34,7 @@ public class ListDoctorTable extends JTable {
                     String firstName = (String) getValueAt(row, 1);
                     String lastName = (String) getValueAt(row, 2);
 
-                    new ShowDoctorWindow(pesel, firstName, lastName);
+                    new ShowDoctorFrame(pesel, firstName, lastName);
                 }
             }
         });

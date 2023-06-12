@@ -13,6 +13,10 @@ public class PatientCard implements Serializable {
     private List<Treatment> patientHistory = new ArrayList<>();
     private static List<PatientCard> extent = new ArrayList<>();
 
+    public static void newFile() {
+        extent.removeAll(extent);
+    }
+
     public PatientCard() {
         extent.add(this);
     }

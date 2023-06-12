@@ -8,13 +8,13 @@ import java.awt.*;
 
 import static s22678.View.Main.MainView.*;
 
-public class ShowDoctorWindow extends JFrame {
-    public ShowDoctorWindow(String pesel, String firstName, String lastName) {
+public class ShowDoctorFrame extends JFrame {
+    public ShowDoctorFrame(String pesel, String firstName, String lastName) {
         setTitle("Show Details for: dr " + firstName + " " + lastName);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(1, 1));
 
         Person doctor = Person.getPersonByFullNameandPesel(pesel, firstName, lastName);
 

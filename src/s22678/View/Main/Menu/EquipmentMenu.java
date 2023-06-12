@@ -1,7 +1,7 @@
 package s22678.View.Main.Menu;
 
 import s22678.Model.Room;
-import s22678.View.Equipment.Add.AddBedWindow;
+import s22678.View.Equipment.Add.AddBedFrame;
 import s22678.View.Equipment.List.ListRoomAndBedActionListener;
 import s22678.View.Main.MainView;
 
@@ -29,7 +29,7 @@ public class EquipmentMenu extends JMenu {
         JMenuItem addBedItem = new JMenuItem("Add Bed");
         addBedItem.setFont(serifFont);
         addBedItem.addActionListener(e -> {
-            JFrame addBedWindow = new AddBedWindow();
+            JFrame addBedWindow = new AddBedFrame();
             addBedWindow.setVisible(true);
         });
 
