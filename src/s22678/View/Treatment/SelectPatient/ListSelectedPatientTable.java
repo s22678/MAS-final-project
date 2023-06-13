@@ -31,6 +31,11 @@ public class ListSelectedPatientTable extends JTable {
         String[] columnNames = {"PESEL", "First Name", "Last Name", "Admission Date"};
         tableModel = new DefaultTableModel(columnNames, 0);
         setModel(tableModel);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tableModel);
+        setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>(1);
+        sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
 
         addMouseListener(new MouseAdapter() {
             @Override

@@ -17,8 +17,8 @@ public class ShowTreatmentFrame extends JFrame {
         setLocationRelativeTo(null);
 
         // Main Panels
-        JPanel textPanel = new ShowTreatmentTextPanel(treatment);
-        JPanel buttonPanel = new ShowTreatmentButtonPanel();
+        ShowTreatmentTextPanel textPanel = new ShowTreatmentTextPanel(treatment);
+        JPanel buttonPanel = new ShowTreatmentButtonPanel(treatment, textPanel);
 
         add(textPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);

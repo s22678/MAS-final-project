@@ -105,8 +105,8 @@ public class AddPatientFrame extends JFrame {
         labelContainer.add(lastNameLabel);
         labelContainer.add(addressLabel);
         labelContainer.add(bloodTypeLabel);
-        labelContainer.add(parentsInfoLabel);
         labelContainer.add(allergiesTypeLabel);
+        labelContainer.add(parentsInfoLabel);
         labelContainer.add(parentsContactLabel);
         labelContainer.add(isContagiousRadioButton);
 
@@ -131,6 +131,7 @@ public class AddPatientFrame extends JFrame {
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else {
+                System.out.println("new person added: allergies: " + allergiesTypeTextField.getText());
                 Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), allergiesTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
                 if (!person.isPatientAdult()) {
                     person.setPatientParentsInfo(parentsInfoTextField.getText());

@@ -559,6 +559,7 @@ public class Person implements Serializable {
             this.bloodType = bloodType;
             this.allergies = allergies;
             this.isContagious = isContagious;
+            System.out.println("creating new patient with allergies: " + allergies);
         }
 
         private void setPatientCard(PatientCard patientCard) {
@@ -608,6 +609,7 @@ public class Person implements Serializable {
         public String toString() {
             return "Patient{" +
                     "bloodType='" + bloodType + '\'' +
+                    "allergies='" + allergies + '\'' +
                     '}';
         }
     }

@@ -8,6 +8,9 @@ import java.awt.*;
 import static s22678.View.Main.MainView.serifFont;
 
 public class ShowTreatmentTextPanel extends JPanel {
+    private JTextField diseasesTextField;
+    private JTextField prescribedDrugsTextField;
+    private JTextField patientHealthAfterTreatmentDataTextField;
     public ShowTreatmentTextPanel(Treatment treatment) {
 
         GridLayout mainLayout = new GridLayout(7 ,4);
@@ -86,7 +89,11 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(diseasesLabel);
 
         // Patient diseases data textField
-        JTextField diseasesTextField = new JTextField();
+        String disease = "";
+        if (treatment.getDisease() != null) {
+            disease = treatment.getDisease();
+        }
+        diseasesTextField = new JTextField(disease);
         diseasesTextField.setFont(serifFont);
         diseasesTextField.setEnabled(true);
         // Add patient diseases data to JPanel
@@ -116,7 +123,7 @@ public class ShowTreatmentTextPanel extends JPanel {
 
         // Prescribed drugs data text field
         String drugs = treatment.getPrescribedMedicine().size() > 0 ? String.join(", ", treatment.getPrescribedMedicine()) : "";
-        JTextField prescribedDrugsTextField = new JTextField(drugs);
+        prescribedDrugsTextField = new JTextField(drugs);
         prescribedDrugsTextField.setFont(serifFont);
         // Add prescribed drugs data to JPanel
         add(prescribedDrugsTextField);
@@ -129,7 +136,7 @@ public class ShowTreatmentTextPanel extends JPanel {
 
         // Patient health after treatment data text field
         String pTreatment = treatment.getAfterTreatmentHealtState() == null ? "" : treatment.getAfterTreatmentHealtState();
-        JTextField patientHealthAfterTreatmentDataTextField = new JTextField(pTreatment);
+        patientHealthAfterTreatmentDataTextField = new JTextField(pTreatment);
         patientHealthAfterTreatmentDataTextField.setFont(serifFont);
         // Add patient health after treatment data to JPanel
         add(patientHealthAfterTreatmentDataTextField);
@@ -169,5 +176,17 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(new JSeparator());
         add(new JSeparator());
         add(new JSeparator());
+    }
+
+    public JTextField getDiseasesTextField() {
+        return diseasesTextField;
+    }
+
+    public JTextField getPrescribedDrugsTextField() {
+        return prescribedDrugsTextField;
+    }
+
+    public JTextField getPatientHealthAfterTreatmentDataTextField() {
+        return patientHealthAfterTreatmentDataTextField;
     }
 }

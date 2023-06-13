@@ -191,6 +191,7 @@ public class Treatment implements Serializable {
                     ", patient=" + patient.getFirstName() + " " + patient.getLastName() +
                     result +
                     ", isOperationNeeded=" + isOperationNeeded +
+                    ", diseases=" + disease +
                     ", treatmentStart=" + treatmentStart +
                     '}';
         }
