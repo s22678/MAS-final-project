@@ -6,6 +6,8 @@ import s22678.Model.Person;
 import s22678.Model.Treatment;
 import s22678.View.CustomSwingClasses.CustomJButton;
 import s22678.View.CustomSwingClasses.CustomJLabel;
+import s22678.View.CustomSwingClasses.CustomJRadioButton;
+import s22678.View.CustomSwingClasses.CustomJTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +16,6 @@ import static s22678.Controller.DoctorController.getDoctorWithSmallestNumberOfPa
 import static s22678.View.Main.MainView.*;
 
 public class AddPatientFrame extends JFrame {
-    public static final int textFieldHeight = 50;
-    public static final int textFieldWidth = 200;
 
     public AddPatientFrame() {
         setTitle("Add Patient");
@@ -33,9 +33,7 @@ public class AddPatientFrame extends JFrame {
         textFieldLayout.setVgap(40);
         JPanel textFieldContainer = new JPanel(textFieldLayout);
 
-        JTextField PESELTextField = new JTextField();
-        PESELTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        PESELTextField.setFont(serifFont);
+        CustomJTextField PESELTextField = new CustomJTextField();
 
         JTextField firstNameTextField = new JTextField();
         firstNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
@@ -65,34 +63,7 @@ public class AddPatientFrame extends JFrame {
         parentsContactInfoTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         parentsContactInfoTextField.setFont(serifFont);
 
-        JLabel PESELLabel = new JLabel("PESEL", SwingConstants.CENTER);
-        PESELLabel.setFont(serifFont);
-
-        JLabel firstNameLabel = new JLabel("First Name", SwingConstants.CENTER);
-        firstNameLabel.setFont(serifFont);
-
-        JLabel lastNameLabel = new JLabel("Last Name", SwingConstants.CENTER);
-        lastNameLabel.setFont(serifFont);
-
-        JLabel addressLabel = new JLabel("Address", SwingConstants.CENTER);
-        addressLabel.setFont(serifFont);
-
-        JLabel bloodTypeLabel = new JLabel("Blood Type", SwingConstants.CENTER);
-        bloodTypeLabel.setFont(serifFont);
-
-        JLabel allergiesTypeLabel = new JLabel("Allergies", SwingConstants.CENTER);
-        allergiesTypeLabel.setFont(serifFont);
-
-        JLabel parentsInfoLabel = new JLabel("Parents Info", SwingConstants.CENTER);
-        parentsInfoLabel.setFont(serifFont);
-
-        JLabel parentsContactLabel = new JLabel("Parents Contact Info", SwingConstants.CENTER);
-        parentsContactLabel.setFont(serifFont);
-
-        JRadioButton isContagiousRadioButton = new JRadioButton("Is contagious?");
-        isContagiousRadioButton.setFont(serifFont);
-        isContagiousRadioButton.setSize(70, 70);
-        isContagiousRadioButton.setHorizontalAlignment(JRadioButton.CENTER);
+        CustomJRadioButton isContagiousRadioButton = new CustomJRadioButton("Is contagious?", JRadioButton.CENTER);
 
         textFieldContainer.add(PESELTextField);
         textFieldContainer.add(firstNameTextField);
@@ -103,14 +74,14 @@ public class AddPatientFrame extends JFrame {
         textFieldContainer.add(parentsInfoTextField);
         textFieldContainer.add(parentsContactInfoTextField);
 
-        labelContainer.add(PESELLabel);
-        labelContainer.add(firstNameLabel);
-        labelContainer.add(lastNameLabel);
-        labelContainer.add(addressLabel);
-        labelContainer.add(bloodTypeLabel);
-        labelContainer.add(allergiesTypeLabel);
-        labelContainer.add(parentsInfoLabel);
-        labelContainer.add(parentsContactLabel);
+        labelContainer.add(new CustomJLabel("PESEL", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("First Name", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Last Name", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Address", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Blood Type", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Allergies", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Parents Info", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Parents Contact Info", SwingConstants.CENTER));
         labelContainer.add(isContagiousRadioButton);
 
         GridLayout buttonContainerLayout = new GridLayout();
@@ -120,16 +91,11 @@ public class AddPatientFrame extends JFrame {
         CustomJButton addButton = new CustomJButton("Add");
         addButton.addActionListener(e -> {
             Person doctor = getDoctorWithSmallestNumberOfPatients();
-            if (doctor == null) {
-                JOptionPane.showMessageDialog(this, new CustomJLabel("Patient can't be assigned to a doctor - doctor doesn't exist. Make sure doctors are added to the system"), "Input Data error", JOptionPane.ERROR_MESSAGE);
-            } else if (PersonController.isPESELLengthIncorrect(PESELTextField.getText())) {
-                JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect PESEL format"), "PESEL error", JOptionPane.ERROR_MESSAGE);
-            } else if (PersonController.doesPeselExist(PESELTextField.getText())) {
-                JLabel label = new CustomJLabel("A person with that PESEL already exists in the database");
-                JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
-            } else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
-                JLabel label = new CustomJLabel("incorrect patient info format - cannot be shorter than 2 characters");
-                JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
+            if (doctor == null) JOptionPane.showMessageDialog(this, new CustomJLabel("Patient can't be assigned to a doctor - doctor doesn't exist. Make sure doctors are added to the system"), "Input Data error", JOptionPane.ERROR_MESSAGE);
+            else if (PersonController.isPESELLengthIncorrect(PESELTextField.getText())) JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect PESEL format"), "PESEL error", JOptionPane.ERROR_MESSAGE);
+            else if (PersonController.doesPeselExist(PESELTextField.getText())) JOptionPane.showMessageDialog(this, new CustomJLabel("A person with that PESEL already exists in the database"), "Input Data error", JOptionPane.ERROR_MESSAGE);
+            else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
+                JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect patient info format - cannot be shorter than 2 characters"), "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else {
                 System.out.println("new person added: allergies: " + allergiesTypeTextField.getText());
                 Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), allergiesTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
@@ -138,8 +104,7 @@ public class AddPatientFrame extends JFrame {
                     person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());
                 }
                 new Treatment(doctor, person);
-                JLabel label = new CustomJLabel("Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
-                JOptionPane.showMessageDialog(this, label);
+                JOptionPane.showMessageDialog(this, new CustomJLabel("Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added"));
             }
         });
 
