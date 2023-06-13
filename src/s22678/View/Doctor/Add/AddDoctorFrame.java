@@ -2,6 +2,7 @@ package s22678.View.Doctor.Add;
 
 import s22678.Model.DoctorField;
 import s22678.Model.Person;
+import s22678.View.CustomSwingClasses.CustomJLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +10,11 @@ import java.awt.*;
 import static s22678.View.Main.MainView.serifFont;
 import static s22678.View.Main.MainView.screenWidth;
 import static s22678.View.Main.MainView.screenHeight;
+import static s22678.View.Main.MainView.textFieldHeight;
+import static s22678.View.Main.MainView.textFieldWidth;
 
 public class AddDoctorFrame extends JFrame {
-    public static final int textFieldHeight = 50;
-    public static final int textFieldWidth = 200;
+
 
     public AddDoctorFrame() {
         setTitle("Add Doctor");
@@ -26,10 +28,7 @@ public class AddDoctorFrame extends JFrame {
         GridLayout labelLayout = new GridLayout(8 ,1);
         labelLayout.setVgap(40);
         JPanel labelContainer = new JPanel(labelLayout);
-
-        GridLayout textFieldLayout = new GridLayout(8 ,1);
-        textFieldLayout.setVgap(40);
-        JPanel textFieldContainer = new JPanel(textFieldLayout);
+        JPanel textFieldContainer = new JPanel(labelLayout);
 
         JTextField PESELTextField = new JTextField();
         PESELTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
@@ -55,26 +54,19 @@ public class AddDoctorFrame extends JFrame {
         specializationTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         specializationTextField.setFont(serifFont);
 
-        JLabel PESELLabel = new JLabel("PESEL", SwingConstants.CENTER);
-        PESELLabel.setFont(serifFont);
+        JLabel PESELLabel = new CustomJLabel("PESEL", SwingConstants.CENTER);
 
-        JLabel firstNameLabel = new JLabel("First Name", SwingConstants.CENTER);
-        firstNameLabel.setFont(serifFont);
+        JLabel firstNameLabel = new CustomJLabel("First Name", SwingConstants.CENTER);
 
-        JLabel lastNameLabel = new JLabel("Last Name", SwingConstants.CENTER);
-        lastNameLabel.setFont(serifFont);
+        JLabel lastNameLabel = new CustomJLabel("Last Name", SwingConstants.CENTER);
 
-        JLabel addressLabel = new JLabel("Address", SwingConstants.CENTER);
-        addressLabel.setFont(serifFont);
+        JLabel addressLabel = new CustomJLabel("Address", SwingConstants.CENTER);
 
-        JLabel salaryTypeLabel = new JLabel("Salary", SwingConstants.CENTER);
-        salaryTypeLabel.setFont(serifFont);
+        JLabel salaryTypeLabel = new CustomJLabel("Salary", SwingConstants.CENTER);
 
-        JLabel specializationLabel = new JLabel("Specialization", SwingConstants.CENTER);
-        specializationLabel.setFont(serifFont);
+        JLabel specializationLabel = new CustomJLabel("Specialization", SwingConstants.CENTER);
 
-        JLabel selectFieldsLabel = new JLabel("Select Field(s)", SwingConstants.CENTER);
-        selectFieldsLabel.setFont(serifFont);
+        JLabel selectFieldsLabel = new CustomJLabel("Select Field(s)", SwingConstants.CENTER);
 
         DoctorField[] dFields = {DoctorField.SURGEON, DoctorField.DIAGNOSTICIAN};
         JList<DoctorField> fields = new JList<>(dFields);

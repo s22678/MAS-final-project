@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
+    public static final int textFieldHeight = 50;
+    public static final int textFieldWidth = 200;
     public static final int screenWidth = 1536;
     public static final int screenHeight = 864;
     public static final int fontSize = 30;
