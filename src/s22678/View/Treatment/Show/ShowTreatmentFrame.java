@@ -25,7 +25,3 @@ public class ShowTreatmentFrame extends JFrame {
         setVisible(true);
     }
 }
-
-//    private java.util.List<Treatment> treatments = new ArrayList<>();
-//    private java.util.List<String> trainings = new ArrayList<>();
-//    private List<String> successfulOperations = new ArrayList<>();

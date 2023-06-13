@@ -115,6 +115,7 @@ public class AddPatientFrame extends JFrame {
         JPanel buttonPanel = new JPanel(buttonContainerLayout);
 
         JButton addButton = new JButton("Add");
+        addButton.setFont(serifFont);
         addButton.addActionListener(e -> {
             Person doctor = getDoctorWithSmallestNumberOfPatients();
             if (doctor == null) {
@@ -130,7 +131,7 @@ public class AddPatientFrame extends JFrame {
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else {
-                Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), allergiesTypeLabel.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
+                Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), allergiesTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
                 if (!person.isPatientAdult()) {
                     person.setPatientParentsInfo(parentsInfoTextField.getText());
                     person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());

@@ -13,6 +13,27 @@ public class Bed implements Serializable {
     private boolean occupied;
     private Person patient;
     private Room room;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getNewBedId() {
+        if (extent.size() == 0) {
+            return 0;
+        }
+
+        int largest = 0;
+
+        for (Bed bed : extent) {
+            if (bed.getId() > largest) {
+                largest = bed.getId();
+            }
+        }
+
+        return ++largest;
+    }
 
     public static void newFile() {
         extent.removeAll(extent);
@@ -36,6 +57,7 @@ public class Bed implements Serializable {
 
     public Bed() {
         occupied = false;
+        id = getNewBedId();
         extent.add(this);
     }
 

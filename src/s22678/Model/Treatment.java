@@ -137,14 +137,20 @@ public class Treatment implements Serializable {
         return isOperationNeeded;
     }
 
-    public void setOperationNeeded(boolean operationNeeded) {
+    public boolean setOperationNeeded(boolean operationNeeded) {
         if (operationNeeded) {
             Bed availableBed = Bed.getAvailableBed();
+            if (availableBed == null ) {
+                return false;
+            }
             patient.setPatientBed(availableBed);
         } else {
-            patient.getPatientBed().freeBed();
+            if (patient.getPatientBed() != null) {
+                patient.getPatientBed().freeBed();
+            }
         }
         isOperationNeeded = operationNeeded;
+        return true;
     }
 
     public LocalDateTime getTreatmentStart() {

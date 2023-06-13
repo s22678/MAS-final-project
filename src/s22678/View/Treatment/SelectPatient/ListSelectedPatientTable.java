@@ -7,14 +7,18 @@ import s22678.View.Treatment.Show.ShowTreatmentFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import static s22678.View.Main.MainView.sansSerifFont;
 
 public class ListSelectedPatientTable extends JTable {
-    private Person doctor;
+    private static Person doctor;
     private static DefaultTableModel tableModel;
     public boolean isCellEditable(int row, int column) {
         return false;
@@ -49,7 +53,8 @@ public class ListSelectedPatientTable extends JTable {
     public static DefaultTableModel getDefaultTableModel() {
         return tableModel;
     }
-    public void setDoctor(Person doctor) {
-        this.doctor = doctor;
+
+    public static void setDoctor(Person person) {
+        doctor = person;
     }
 }

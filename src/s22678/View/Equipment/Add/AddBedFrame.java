@@ -47,6 +47,7 @@ public class AddBedFrame extends JFrame {
         JPanel buttonPanel = new JPanel(buttonContainerLayout);
 
         JButton addButton = new JButton("Add");
+        addButton.setFont(serifFont);
         addButton.addActionListener(e -> {
             Room room = Room.findByNumber(Integer.parseInt(roomTextField.getText()));
             if (room == null) {

@@ -3,6 +3,8 @@ package s22678.View.Treatment.SelectDoctor;
 import s22678.View.Doctor.Show.ShowDoctorFrame;
 import s22678.View.Main.MainView;
 import s22678.View.Treatment.SelectPatient.ListSelectedPatientActionListener;
+import s22678.View.Treatment.SelectPatient.ListSelectedPatientPanel;
+import s22678.View.Treatment.SelectPatient.ListSelectedPatientTable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -35,6 +37,8 @@ public class ListDoctorWithPatientTable extends JTable {
                     String pesel = (String) getValueAt(row, 0);
 
                     ListSelectedPatientActionListener.reload(getDoctorByPesel(pesel));
+                    ListSelectedPatientPanel.getPanel().updateDoctor(getDoctorByPesel(pesel));
+                    ListSelectedPatientTable.setDoctor(getDoctorByPesel(pesel));
                     System.out.println("changing view to listSelectedPatientPanel");
                     MainView.getCardLayout().show(MainView.getMainPanel(), "listSelectedPatientPanel");
                 }

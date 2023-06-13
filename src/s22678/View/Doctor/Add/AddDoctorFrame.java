@@ -23,11 +23,11 @@ public class AddDoctorFrame extends JFrame {
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
 
-        GridLayout labelLayout = new GridLayout(7 ,1);
+        GridLayout labelLayout = new GridLayout(8 ,1);
         labelLayout.setVgap(40);
         JPanel labelContainer = new JPanel(labelLayout);
 
-        GridLayout textFieldLayout = new GridLayout(7 ,1);
+        GridLayout textFieldLayout = new GridLayout(8 ,1);
         textFieldLayout.setVgap(40);
         JPanel textFieldContainer = new JPanel(textFieldLayout);
 
@@ -78,10 +78,10 @@ public class AddDoctorFrame extends JFrame {
 
         DoctorField[] dFields = {DoctorField.SURGEON, DoctorField.DIAGNOSTICIAN};
         JList<DoctorField> fields = new JList<>(dFields);
-        // TODO: Check list selection model
+
         fields.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         fields.setVisibleRowCount(2);
-        fields.setFont(serifFont);
+        fields.setFont(new Font("Serif,", Font.PLAIN, 21));
 
         textFieldContainer.add(PESELTextField);
         textFieldContainer.add(firstNameTextField);
@@ -104,6 +104,7 @@ public class AddDoctorFrame extends JFrame {
         JPanel buttonPanel = new JPanel(buttonContainerLayout);
 
         JButton addButton = new JButton("Add");
+        addButton.setFont(serifFont);
         addButton.addActionListener(e -> {
             if (Person.isBadPESEL(PESELTextField.getText())) {
                 JLabel label = new JLabel("incorrect PESEL format");
