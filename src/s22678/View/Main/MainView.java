@@ -11,13 +11,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
-    public static final int textFieldHeight = 50;
-    public static final int textFieldWidth = 200;
-    public static final int screenWidth = 1536;
-    public static final int screenHeight = 864;
-    public static final int fontSize = 30;
-    public static final Font serifFont = new Font("Serif,", Font.PLAIN, fontSize);
-    public static final Font sansSerifFont = new Font("SansSerif,", Font.PLAIN, fontSize);
+    private static final int textFieldHeight = 50;
+    private static final int textFieldWidth = 200;
+    private static final int screenWidth = 1536;
+    private static final int screenHeight = 864;
+    private static final int fontSize = 30;
+    private static final Font serifFont = new Font("Serif,", Font.PLAIN, fontSize);
+    private static final Font sansSerifFont = new Font("SansSerif,", Font.PLAIN, fontSize);
     private static CardLayout cardLayout;
     private static JPanel mainPanel;
     public MainView() {
@@ -30,29 +30,40 @@ public class MainView extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(cardLayout);
 
-        JPanel listPatientPanel = new ListPatientPanel();
-        JPanel listDoctorPanel = new ListDoctorPanel();
-        JPanel listRoomAndBedPanel = new ListRoomAndBedPanel();
-        JPanel listDoctorWithPatientPanel = new ListDoctorWithPatientPanel();
-        JPanel listSelectedPatientPanel = new ListSelectedPatientPanel();
-        JPanel defaultPanel = new DefaultPanel();
-
-        mainPanel.add("listPatientPanel", listPatientPanel);
-        mainPanel.add("listDoctorPanel", listDoctorPanel);
-        mainPanel.add("listRoomAndBedPanel", listRoomAndBedPanel);
-        mainPanel.add("listDoctorWithPatientPanel", listDoctorWithPatientPanel);
-        mainPanel.add("listSelectedPatientPanel", listSelectedPatientPanel);
-        mainPanel.add("defaultPanel", defaultPanel);
+        mainPanel.add("listPatientPanel", new ListPatientPanel());
+        mainPanel.add("listDoctorPanel", new ListDoctorPanel());
+        mainPanel.add("listRoomAndBedPanel", new ListRoomAndBedPanel());
+        mainPanel.add("listDoctorWithPatientPanel", new ListDoctorWithPatientPanel());
+        mainPanel.add("listSelectedPatientPanel", new ListSelectedPatientPanel());
+        mainPanel.add("defaultPanel", new DefaultPanel());
 
         add(mainPanel);
         setJMenuBar(new MainMenuBar());
         setVisible(true);
     }
 
+
+    public static int getTextFieldHeight() {
+        return textFieldHeight;
+    }
+    public static int getTextFieldWidth() {
+        return textFieldWidth;
+    }
+    public static int getScreenWidthget() {
+        return screenWidth;
+    }
+    public static int getScreenHeight() {
+        return screenHeight;
+    }
+    public static Font getSerifFont() {
+        return serifFont;
+    }
+    public static Font getSansSerifFont() {
+        return sansSerifFont;
+    }
     public static CardLayout getCardLayout() {
         return cardLayout;
     }
-
     public static JPanel getMainPanel() {
         return mainPanel;
     }

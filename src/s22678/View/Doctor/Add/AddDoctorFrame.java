@@ -68,23 +68,21 @@ public class AddDoctorFrame extends JFrame {
         CustomJButton addButton = new CustomJButton("Add");
         addButton.addActionListener(e -> {
             if (PersonController.isPESELLengthIncorrect(PESELTextField.getText())) {
-                JLabel label = new JLabel("incorrect PESEL length");
-                label.setFont(serifFont);
-                JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect PESEL length"), "Input Data Error", JOptionPane.ERROR_MESSAGE);
             } else if (PersonController.doesPeselExist(PESELTextField.getText())) {
-                JLabel label = new JLabel("A person with that PESEL already exists in the database");
+                JLabel label = new CustomJLabel("A person with that PESEL already exists in the database");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else if (PersonController.isPESELIncorrectlyFormated(PESELTextField.getText())) {
-                JLabel label = new JLabel("incorrect PESEL format - cannot translate to date");
+                JLabel label = new CustomJLabel("incorrect PESEL format - cannot translate to date");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
             }  else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText())) {
-                JLabel label = new JLabel("incorrect doctor info format - cannot be shorter than 2 characters");
+                JLabel label = new CustomJLabel("incorrect doctor info format - cannot be shorter than 2 characters");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
             } else if (fields.getSelectedIndices().length < 1) {
-                JLabel label = new JLabel("at least 1 field must be selected");
+                JLabel label = new CustomJLabel("at least 1 field must be selected");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Field Select Error", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -94,7 +92,7 @@ public class AddDoctorFrame extends JFrame {
                 }
                 new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), Integer.parseInt(salaryTextField.getText()), specializationTextField.getText(), selectedFields);
 
-                JLabel label = new JLabel("Doctor " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
+                JLabel label = new CustomJLabel("Doctor " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label);
             }

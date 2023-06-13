@@ -4,20 +4,18 @@ import javax.swing.*;
 
 import java.awt.*;
 
-import static s22678.View.Main.MainView.serifFont;
-import static s22678.View.Main.MainView.textFieldHeight;
-import static s22678.View.Main.MainView.textFieldWidth;
+import static s22678.View.Main.MainView.*;
 
 public class CustomJTextField extends JTextField {
 
     public CustomJTextField() {
-        setFont(serifFont);
-        setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+        setFont(getSerifFont());
+        setPreferredSize(new Dimension(getTextFieldWidth(), getTextFieldHeight()));
     }
 
     public CustomJTextField(String text) {
         super(text);
-        setFont(serifFont);
-        setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+        setFont(getSerifFont());
+        setPreferredSize(new Dimension(getTextFieldWidth(), getTextFieldHeight()));
     }
 }

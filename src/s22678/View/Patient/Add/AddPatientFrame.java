@@ -34,36 +34,13 @@ public class AddPatientFrame extends JFrame {
         JPanel textFieldContainer = new JPanel(textFieldLayout);
 
         CustomJTextField PESELTextField = new CustomJTextField();
-
-        JTextField firstNameTextField = new JTextField();
-        firstNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        firstNameTextField.setFont(serifFont);
-
-        JTextField lastNameTextField = new JTextField();
-        lastNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        lastNameTextField.setFont(serifFont);
-
-        JTextField addressTextField = new JTextField();
-        addressTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        addressTextField.setFont(serifFont);
-
-        JTextField bloodTypeTextField = new JTextField();
-        bloodTypeTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        bloodTypeTextField.setFont(serifFont);
-
-        JTextField allergiesTypeTextField = new JTextField();
-        allergiesTypeTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        allergiesTypeTextField.setFont(serifFont);
-
-        JTextField parentsInfoTextField = new JTextField();
-        parentsInfoTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        parentsInfoTextField.setFont(serifFont);
-
-        JTextField parentsContactInfoTextField = new JTextField();
-        parentsContactInfoTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        parentsContactInfoTextField.setFont(serifFont);
-
-        CustomJRadioButton isContagiousRadioButton = new CustomJRadioButton("Is contagious?", JRadioButton.CENTER);
+        CustomJTextField firstNameTextField = new CustomJTextField();
+        CustomJTextField lastNameTextField = new CustomJTextField();
+        CustomJTextField addressTextField = new CustomJTextField();
+        CustomJTextField bloodTypeTextField = new CustomJTextField();
+        CustomJTextField allergiesTypeTextField = new CustomJTextField();
+        CustomJTextField parentsInfoTextField = new CustomJTextField();
+        CustomJTextField parentsContactInfoTextField = new CustomJTextField();
 
         textFieldContainer.add(PESELTextField);
         textFieldContainer.add(firstNameTextField);
@@ -82,6 +59,8 @@ public class AddPatientFrame extends JFrame {
         labelContainer.add(new CustomJLabel("Allergies", SwingConstants.CENTER));
         labelContainer.add(new CustomJLabel("Parents Info", SwingConstants.CENTER));
         labelContainer.add(new CustomJLabel("Parents Contact Info", SwingConstants.CENTER));
+
+        CustomJRadioButton isContagiousRadioButton = new CustomJRadioButton("Is contagious?", JRadioButton.CENTER);
         labelContainer.add(isContagiousRadioButton);
 
         GridLayout buttonContainerLayout = new GridLayout();
