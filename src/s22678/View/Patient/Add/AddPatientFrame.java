@@ -22,11 +22,11 @@ public class AddPatientFrame extends JFrame {
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
 
-        GridLayout labelLayout = new GridLayout(8 ,1);
+        GridLayout labelLayout = new GridLayout(9 ,1);
         labelLayout.setVgap(40);
         JPanel labelContainer = new JPanel(labelLayout);
 
-        GridLayout textFieldLayout = new GridLayout(8 ,1);
+        GridLayout textFieldLayout = new GridLayout(9 ,1);
         textFieldLayout.setVgap(40);
         JPanel textFieldContainer = new JPanel(textFieldLayout);
 
@@ -49,6 +49,10 @@ public class AddPatientFrame extends JFrame {
         JTextField bloodTypeTextField = new JTextField();
         bloodTypeTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
         bloodTypeTextField.setFont(serifFont);
+
+        JTextField allergiesTypeTextField = new JTextField();
+        allergiesTypeTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+        allergiesTypeTextField.setFont(serifFont);
 
         JTextField parentsInfoTextField = new JTextField();
         parentsInfoTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
@@ -73,6 +77,9 @@ public class AddPatientFrame extends JFrame {
         JLabel bloodTypeLabel = new JLabel("Blood Type", SwingConstants.CENTER);
         bloodTypeLabel.setFont(serifFont);
 
+        JLabel allergiesTypeLabel = new JLabel("Allergies", SwingConstants.CENTER);
+        allergiesTypeLabel.setFont(serifFont);
+
         JLabel parentsInfoLabel = new JLabel("Parents Info", SwingConstants.CENTER);
         parentsInfoLabel.setFont(serifFont);
 
@@ -89,6 +96,7 @@ public class AddPatientFrame extends JFrame {
         textFieldContainer.add(lastNameTextField);
         textFieldContainer.add(addressTextField);
         textFieldContainer.add(bloodTypeTextField);
+        textFieldContainer.add(allergiesTypeTextField);
         textFieldContainer.add(parentsInfoTextField);
         textFieldContainer.add(parentsContactInfoTextField);
 
@@ -98,6 +106,7 @@ public class AddPatientFrame extends JFrame {
         labelContainer.add(addressLabel);
         labelContainer.add(bloodTypeLabel);
         labelContainer.add(parentsInfoLabel);
+        labelContainer.add(allergiesTypeLabel);
         labelContainer.add(parentsContactLabel);
         labelContainer.add(isContagiousRadioButton);
 
@@ -121,7 +130,7 @@ public class AddPatientFrame extends JFrame {
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else {
-                Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
+                Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), allergiesTypeLabel.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
                 if (!person.isPatientAdult()) {
                     person.setPatientParentsInfo(parentsInfoTextField.getText());
                     person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());

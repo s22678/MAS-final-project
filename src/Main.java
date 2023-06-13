@@ -43,29 +43,29 @@ public class Main {
             final Person doctor1 = new Person("23223", "Jan", "Kowalski", "Ziemowita 5", 3000, "ortopeda", DoctorField.SURGEON);
 
             final Person doctor2 = new Person("763353", "Radosław", "Szymczak", "Gdańska 3", 5000, "internista", DoctorField.DIAGNOSTICIAN);
-            doctor2.addPatientRoleToPerson("0-", false);
+            doctor2.addPatientRoleToPerson("0-", "", false);
             System.out.println(doctor2);
 
             PatientCard patientCard1 = new PatientCard();
-            final Person patient1 = new Person("43343", "Kornel", "Sikora", "Klonowa 7", "A+", false, patientCard1);
+            final Person patient1 = new Person("43343", "Kornel", "Sikora", "Klonowa 7", "A+", "",false, patientCard1);
             PatientCard patientCard2 = new PatientCard();
-            final Person patient2 = new Person("5663", "Kordian", "Kołodziej", "Lipowa 12", "A+",false, patientCard2);
+            final Person patient2 = new Person("5663", "Kordian", "Kołodziej", "Lipowa 12", "A+", "",false, patientCard2);
             PatientCard patientCard3 = new PatientCard();
-            final Person patient3 = new Person("82572", "Piotr", "Wiśniewski", "Słoneczna 22", "A+", false, patientCard3);
+            final Person patient3 = new Person("82572", "Piotr", "Wiśniewski", "Słoneczna 22", "A+", "", false, patientCard3);
             PatientCard patientCard4 = new PatientCard();
-            final Person patient4 = new Person("82562", "Miron", "Mazurek", "Polna 15", "A+", false, patientCard4);
+            final Person patient4 = new Person("82562", "Miron", "Mazurek", "Polna 15", "A+", "", false, patientCard4);
             PatientCard patientCard5 = new PatientCard();
-            final Person patient5 = new Person("86256565", "Bronisław", "Błaszczyk", "Akacjowa 9", "B+", false, patientCard5);
+            final Person patient5 = new Person("86256565", "Bronisław", "Błaszczyk", "Akacjowa 9", "B+", "", false, patientCard5);
             PatientCard patientCard6 = new PatientCard();
-            final Person patient6 = new Person("2569425", "Alex", "Adamska", "Topolowa 4", "B+", false, patientCard6);
+            final Person patient6 = new Person("2569425", "Alex", "Adamska", "Topolowa 4", "B+", "", false, patientCard6);
             PatientCard patientCard7 = new PatientCard();
-            final Person patient7 = new Person("624725773", "Jarosław", "Zieliński", "Dębowa 17", "B+", false, patientCard7);
+            final Person patient7 = new Person("624725773", "Jarosław", "Zieliński", "Dębowa 17", "B+", "", false, patientCard7);
             PatientCard patientCard8 = new PatientCard();
-            final Person patient8 = new Person("43736373", "Krzysztof", "Zalewski", "Brzozowa 3", "B+", false, patientCard8);
+            final Person patient8 = new Person("43736373", "Krzysztof", "Zalewski", "Brzozowa 3", "B+", "", false, patientCard8);
             PatientCard patientCard9 = new PatientCard();
-            final Person patient9 = new Person("6373673", "Roman", "Lis", "Wąska 11", "B+", false, patientCard9);
+            final Person patient9 = new Person("6373673", "Roman", "Lis", "Wąska 11", "B+", "", false, patientCard9);
             PatientCard patientCard10 = new PatientCard();
-            final Person patient10 = new Person("663732", "Kacper", "Makowski", "Jesienna 8", "B+", false, patientCard10);
+            final Person patient10 = new Person("663732", "Kacper", "Makowski", "Jesienna 8", "B+", "", false, patientCard10);
 
             Treatment treatment1 = new Treatment(doctor1, patient1);
             Treatment treatment2 = new Treatment(doctor2, patient2);

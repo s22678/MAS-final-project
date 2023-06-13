@@ -22,6 +22,10 @@ public class Person implements Serializable {
     private Patient patient;
     private PersonRole currentRole;
 
+    public String getAddress() {
+        return address;
+    }
+
     public static void newFile() {
         extent.clear();
     }
@@ -180,8 +184,8 @@ public class Person implements Serializable {
     }
 
     // Add Patient
-    public Person(String PESEL, String firstName, String lastName, String address, String bloodType, boolean isContagious, PatientCard patientCard) {
-        if(addPatientRoleToPerson(bloodType, isContagious, patientCard)) {
+    public Person(String PESEL, String firstName, String lastName, String address, String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
+        if(addPatientRoleToPerson(bloodType, allergies, isContagious, patientCard)) {
             this.PESEL = PESEL;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -199,21 +203,21 @@ public class Person implements Serializable {
         return false;
     }
 
-    public boolean addPatientRoleToPerson(String bloodType, boolean isContagious) {
+    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious) {
         if (this.patient == null) {
             currentRole = PersonRole.PATIENT;
             PatientCard patientCard = new PatientCard();
-            this.patient = new Patient(bloodType, isContagious);
+            this.patient = new Patient(bloodType, allergies, isContagious);
             this.patient.setPatientCard(patientCard);
             return true;
         }
         return false;
     }
 
-    public boolean addPatientRoleToPerson(String bloodType, boolean isContagious, PatientCard patientCard) {
+    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
         if (this.patient == null) {
             currentRole = PersonRole.PATIENT;
-            this.patient = new Patient(bloodType, isContagious);
+            this.patient = new Patient(bloodType, allergies, isContagious);
             this.patient.setPatientCard(patientCard);
             return true;
         }
@@ -372,6 +376,13 @@ public class Person implements Serializable {
         return null;
     }
 
+    public String getAllergies() {
+        if (currentRole == PersonRole.PATIENT) {
+            return patient.getAllergies();
+        }
+        return "";
+    }
+
     public boolean isPatientAdult() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.isAdult();
@@ -501,6 +512,11 @@ public class Person implements Serializable {
         private boolean isContagious;
         private String parentsInfo;
         private String parentsContactInfo;
+        private String allergies;
+
+        private String getAllergies() {
+            return allergies;
+        }
 
         private String getParentsInfo() {
             return parentsInfo;
@@ -538,9 +554,10 @@ public class Person implements Serializable {
             return bloodType;
         }
 
-        private Patient(String bloodType, boolean isContagious) {
+        private Patient(String bloodType, String allergies, boolean isContagious) {
             this.admissionDate = LocalDateTime.now();
             this.bloodType = bloodType;
+            this.allergies = allergies;
             this.isContagious = isContagious;
         }
 

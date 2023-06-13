@@ -19,10 +19,21 @@ public class Treatment implements Serializable {
     private LocalDateTime treatmentStart;
     private LocalDateTime treatmentEnd;
     private String afterTreatmentHealtState;
+    private String disease;
+
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
 
     public Person getPatient() {
         return patient;
     }
+
+    public Person getDoctor() { return doctor;}
 
     public static void newFile() {
         extent.removeAll(extent);
