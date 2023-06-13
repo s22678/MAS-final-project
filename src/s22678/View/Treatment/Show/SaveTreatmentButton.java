@@ -1,18 +1,16 @@
 package s22678.View.Treatment.Show;
 
 import s22678.Model.Treatment;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
 import javax.swing.*;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static s22678.View.Main.MainView.serifFont;
-
-public class SaveTreatmentButton extends JButton {
-    public SaveTreatmentButton(String name, Treatment treatment, ShowTreatmentTextPanel panel) {
-        super(name);
-        setFont(serifFont);
+public class SaveTreatmentButton extends CustomJButton {
+    public SaveTreatmentButton(String text, Treatment treatment, ShowTreatmentTextPanel panel) {
+        super(text);
 
         addActionListener(e -> {
             List<String> prescribedMedicine = Arrays.asList(panel.getPrescribedDrugsTextField().getText().split(", "));

@@ -1,5 +1,7 @@
 package s22678.View.Treatment.SelectDoctor;
 
+import s22678.View.CustomSwingClasses.CustomJButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,10 +17,8 @@ public class ListDoctorWithPatientPanel extends JPanel {
         buttonContainerLayout.setHgap(30);
         JPanel buttonContainer = new JPanel(buttonContainerLayout);
 
-        JButton refreshButton = new ListDoctorWithPatientRefreshButton("Refresh");
-        refreshButton.setFont(serifFont);
-        JButton closeButton = new ListDoctorWithPatientCloseButton("Close");
-        closeButton.setFont(serifFont);
+        CustomJButton refreshButton = new ListDoctorWithPatientRefreshButton("Refresh");
+        CustomJButton closeButton = new ListDoctorWithPatientCloseButton("Close");
 
         buttonContainer.add(refreshButton);
         buttonContainer.add(closeButton);

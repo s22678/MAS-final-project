@@ -1,15 +1,11 @@
 package s22678.View.Treatment.Show;
 
 import s22678.Model.Treatment;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
-import javax.swing.*;
-
-import static s22678.View.Main.MainView.serifFont;
-
-public class EndTreatmentButton extends JButton {
-    public EndTreatmentButton(String name, Treatment treatment) {
-        super(name);
-        setFont(serifFont);
+public class EndTreatmentButton extends CustomJButton {
+    public EndTreatmentButton(String text, Treatment treatment) {
+        super(text);
 
         addActionListener(e -> {
             treatment.finishTreatment();

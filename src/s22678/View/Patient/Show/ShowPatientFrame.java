@@ -21,15 +21,8 @@ public class ShowPatientFrame extends JFrame {
 
         StartTreatmentButton button = new StartTreatmentButton("Start new treatment", patient);
 
-
-
-
         add(panel, BorderLayout.CENTER);
         add(button, BorderLayout.SOUTH);
         setVisible(true);
     }
 }
-
-//    private java.util.List<Treatment> treatments = new ArrayList<>();
-//    private java.util.List<String> trainings = new ArrayList<>();
-//    private List<String> successfulOperations = new ArrayList<>();

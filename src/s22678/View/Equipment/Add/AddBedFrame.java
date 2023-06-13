@@ -1,9 +1,8 @@
 package s22678.View.Equipment.Add;
 
 import s22678.Model.Bed;
-import s22678.Model.DoctorField;
-import s22678.Model.Person;
 import s22678.Model.Room;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +45,7 @@ public class AddBedFrame extends JFrame {
         buttonContainerLayout.setHgap(30);
         JPanel buttonPanel = new JPanel(buttonContainerLayout);
 
-        JButton addButton = new JButton("Add");
-        addButton.setFont(serifFont);
+        CustomJButton addButton = new CustomJButton("Add");
         addButton.addActionListener(e -> {
             Room room = Room.findByNumber(Integer.parseInt(roomTextField.getText()));
             if (room == null) {

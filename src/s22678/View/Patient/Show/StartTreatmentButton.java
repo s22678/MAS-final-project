@@ -2,16 +2,16 @@ package s22678.View.Patient.Show;
 
 import s22678.Model.Person;
 import s22678.Model.Treatment;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
 import javax.swing.*;
 
 import static s22678.Controller.DoctorController.getDoctorWithSmallestNumberOfPatients;
 import static s22678.View.Main.MainView.serifFont;
 
-public class StartTreatmentButton extends JButton {
+public class StartTreatmentButton extends CustomJButton {
     public StartTreatmentButton(String name, Person patient) {
         super(name);
-        setFont(serifFont);
 
         addActionListener(e -> {
             if (patient.getPatientTreatment() == null) {

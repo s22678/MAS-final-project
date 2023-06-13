@@ -1,10 +1,10 @@
 package s22678.View.Equipment.List;
 
-import javax.swing.*;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
-public class ListRoomAndBedRefreshButton extends JButton {
-    public ListRoomAndBedRefreshButton(String buttonName) {
-        super(buttonName);
+public class ListRoomAndBedRefreshButton extends CustomJButton {
+    public ListRoomAndBedRefreshButton(String text) {
+        super(text);
 
         addActionListener(e -> {
             ListRoomAndBedActionListener.reload();

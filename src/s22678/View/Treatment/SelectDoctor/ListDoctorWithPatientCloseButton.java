@@ -1,10 +1,9 @@
 package s22678.View.Treatment.SelectDoctor;
 
+import s22678.View.CustomSwingClasses.CustomJButton;
 import s22678.View.Main.MainView;
 
-import javax.swing.*;
-
-public class ListDoctorWithPatientCloseButton extends JButton {
+public class ListDoctorWithPatientCloseButton extends CustomJButton {
     public ListDoctorWithPatientCloseButton(String buttonName) {
         super(buttonName);
 

@@ -1,6 +1,7 @@
 package s22678.View.Treatment.SelectPatient;
 
 import s22678.Model.Person;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,14 +22,11 @@ public class ListSelectedPatientPanel extends JPanel {
         buttonContainerLayout.setHgap(30);
         JPanel buttonContainer = new JPanel(buttonContainerLayout);
 
-        JButton refreshButton = new ListSelectedPatientRefreshButton("Refresh");
-        refreshButton.setFont(serifFont);
-        JButton closeButton = new ListSelectedPatientCloseButton("Close");
-        closeButton.setFont(serifFont);
+        CustomJButton refreshButton = new ListSelectedPatientRefreshButton("Refresh");
+        CustomJButton closeButton = new ListSelectedPatientCloseButton("Close");
 
         buttonContainer.add(refreshButton);
         buttonContainer.add(closeButton);
-
 
         add(scrollPane, BorderLayout.CENTER);
         add(buttonContainer, BorderLayout.SOUTH);

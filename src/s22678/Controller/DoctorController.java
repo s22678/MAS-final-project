@@ -26,14 +26,15 @@ public class DoctorController {
     }
 
     public static Person getDoctorWithSmallestNumberOfPatients() {
-        if (getDoctors().size() == 0) {
+        List<Person> doctors = getDoctors();
+        if (doctors.size() == 0) {
             return null;
         }
         
         // Assume first doctor has the lowest number of patients
-        Person smallestDoctor = getDoctors().get(0);
+        Person smallestDoctor = doctors.get(0);
 
-        for (Person person : getDoctorsWithPatients()) {
+        for (Person person : doctors) {
             if (person.getDoctorTreatments().size() < smallestDoctor.getDoctorTreatments().size()) {
                 smallestDoctor = person;
             }

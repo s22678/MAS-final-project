@@ -1,5 +1,7 @@
 package s22678.Model;
 
+import s22678.Controller.PersonController;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,6 +24,60 @@ public class Person implements Serializable {
     private Patient patient;
     private PersonRole currentRole;
 
+    // Add doctor
+    public Person(String PESEL, String firstName, String lastName, String address, int salary, String specialization, DoctorField... doctorFields) {
+        if(addDoctorRoleToPerson(salary, specialization, doctorFields)) {
+            this.PESEL = PESEL;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.address = address;
+            extent.put(PESEL, this);
+        }
+    }
+
+    // Constructors
+    // Add Patient
+    public Person(String PESEL, String firstName, String lastName, String address, String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
+        if(addPatientRoleToPerson(bloodType, allergies, isContagious, patientCard)) {
+            this.PESEL = PESEL;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.address = address;
+            extent.put(PESEL, this);
+        }
+    }
+
+    public boolean addDoctorRoleToPerson(int salary, String specialization, DoctorField... doctorFields) {
+        if (this.doctor == null) {
+            this.doctor = new Doctor(salary, specialization, doctorFields);
+            currentRole = PersonRole.DOCTOR;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious) {
+        if (this.patient == null) {
+            currentRole = PersonRole.PATIENT;
+            PatientCard patientCard = new PatientCard();
+            this.patient = new Patient(bloodType, allergies, isContagious);
+            this.patient.setPatientCard(patientCard);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
+        if (this.patient == null) {
+            currentRole = PersonRole.PATIENT;
+            this.patient = new Patient(bloodType, allergies, isContagious);
+            this.patient.setPatientCard(patientCard);
+            return true;
+        }
+        return false;
+    }
+
+
     public String getAddress() {
         return address;
     }
@@ -40,48 +96,10 @@ public class Person implements Serializable {
         return false;
     }
 
-    public static boolean isBadPESEL(String PESEL) {
-        if (PESEL.length() != 11) {
-            System.out.println("Incorrect PESEL length: " + PESEL.length());
-            return true;
-        }
-
-        String birthDay = getBirthday(PESEL);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        try {
-            LocalDate.parse(birthDay, formatter);
-        } catch (Exception e) {
-            System.out.println("Error while parsing PESSEL - incorrect data: " + birthDay);
-            return true;
-        }
-        return false;
-    }
-
-    public static String getBirthday(String PESEL) {
-        if (Character.getNumericValue(PESEL.charAt(2)) > 1) {
-            int intMonth = Character.getNumericValue(PESEL.charAt(2)) - 2;
-            String strMonth = String.valueOf(intMonth);
-            return PESEL.substring(0, 2) + strMonth + PESEL.substring(3, 6);
-        } else {
-            return PESEL.substring(0, 6);
-        }
-    }
-
-    public LocalDate getBirthDay() {
-        String birthDay = getBirthday(getPESEL());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        return LocalDate.parse(birthDay, formatter);
-    }
-
     public int getAge() {
-        return Period.between(getBirthDay(), LocalDate.now()).getYears();
-    }
-
-    public static boolean isAdult(String PESEL) {
+        String birthDay = PersonController.getBirthday(getPESEL());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        LocalDate birthday = LocalDate.parse(getBirthday(PESEL), formatter);
-        System.out.println(birthday);
-        return Period.between(birthday, LocalDate.now()).getYears() >= 18;
+        return Period.between(LocalDate.parse(birthDay, formatter), LocalDate.now()).getYears();
     }
 
     public static void save(ObjectOutputStream stream) throws IOException {
@@ -172,57 +190,7 @@ public class Person implements Serializable {
         return currentRole;
     }
 
-    // Add doctor
-    public Person(String PESEL, String firstName, String lastName, String address, int salary, String specialization, DoctorField... doctorFields) {
-        if(addDoctorRoleToPerson(salary, specialization, doctorFields)) {
-            this.PESEL = PESEL;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.address = address;
-            extent.put(PESEL, this);
-        }
-    }
 
-    // Add Patient
-    public Person(String PESEL, String firstName, String lastName, String address, String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
-        if(addPatientRoleToPerson(bloodType, allergies, isContagious, patientCard)) {
-            this.PESEL = PESEL;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.address = address;
-            extent.put(PESEL, this);
-        }
-    }
-
-    public boolean addDoctorRoleToPerson(int salary, String specialization, DoctorField... doctorFields) {
-        if (this.doctor == null) {
-            this.doctor = new Doctor(salary, specialization, doctorFields);
-            currentRole = PersonRole.DOCTOR;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious) {
-        if (this.patient == null) {
-            currentRole = PersonRole.PATIENT;
-            PatientCard patientCard = new PatientCard();
-            this.patient = new Patient(bloodType, allergies, isContagious);
-            this.patient.setPatientCard(patientCard);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
-        if (this.patient == null) {
-            currentRole = PersonRole.PATIENT;
-            this.patient = new Patient(bloodType, allergies, isContagious);
-            this.patient.setPatientCard(patientCard);
-            return true;
-        }
-        return false;
-    }
 
     public Bed getPatientBed() {
         if (currentRole == PersonRole.PATIENT) {

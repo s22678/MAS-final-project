@@ -1,12 +1,11 @@
 package s22678.View.Equipment.List;
 
+import s22678.View.CustomSwingClasses.CustomJButton;
 import s22678.View.Main.MainView;
 
-import javax.swing.*;
-
-public class ListRoomAndBedCloseButton extends JButton {
-    public ListRoomAndBedCloseButton(String buttonName) {
-        super(buttonName);
+public class ListRoomAndBedCloseButton extends CustomJButton {
+    public ListRoomAndBedCloseButton(String text) {
+        super(text);
 
         addActionListener(e -> {
             System.out.println("changing view to defaultPanel");

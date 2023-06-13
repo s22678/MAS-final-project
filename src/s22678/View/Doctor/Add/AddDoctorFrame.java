@@ -1,8 +1,11 @@
 package s22678.View.Doctor.Add;
 
+import s22678.Controller.PersonController;
 import s22678.Model.DoctorField;
 import s22678.Model.Person;
+import s22678.View.CustomSwingClasses.CustomJButton;
 import s22678.View.CustomSwingClasses.CustomJLabel;
+import s22678.View.CustomSwingClasses.CustomJTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +13,6 @@ import java.awt.*;
 import static s22678.View.Main.MainView.serifFont;
 import static s22678.View.Main.MainView.screenWidth;
 import static s22678.View.Main.MainView.screenHeight;
-import static s22678.View.Main.MainView.textFieldHeight;
-import static s22678.View.Main.MainView.textFieldWidth;
 
 public class AddDoctorFrame extends JFrame {
 
@@ -30,43 +31,12 @@ public class AddDoctorFrame extends JFrame {
         JPanel labelContainer = new JPanel(labelLayout);
         JPanel textFieldContainer = new JPanel(labelLayout);
 
-        JTextField PESELTextField = new JTextField();
-        PESELTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        PESELTextField.setFont(serifFont);
-
-        JTextField firstNameTextField = new JTextField();
-        firstNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        firstNameTextField.setFont(serifFont);
-
-        JTextField lastNameTextField = new JTextField();
-        lastNameTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        lastNameTextField.setFont(serifFont);
-
-        JTextField addressTextField = new JTextField();
-        addressTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        addressTextField.setFont(serifFont);
-
-        JTextField salaryTextField = new JTextField();
-        salaryTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        salaryTextField.setFont(serifFont);
-
-        JTextField specializationTextField = new JTextField();
-        specializationTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        specializationTextField.setFont(serifFont);
-
-        JLabel PESELLabel = new CustomJLabel("PESEL", SwingConstants.CENTER);
-
-        JLabel firstNameLabel = new CustomJLabel("First Name", SwingConstants.CENTER);
-
-        JLabel lastNameLabel = new CustomJLabel("Last Name", SwingConstants.CENTER);
-
-        JLabel addressLabel = new CustomJLabel("Address", SwingConstants.CENTER);
-
-        JLabel salaryTypeLabel = new CustomJLabel("Salary", SwingConstants.CENTER);
-
-        JLabel specializationLabel = new CustomJLabel("Specialization", SwingConstants.CENTER);
-
-        JLabel selectFieldsLabel = new CustomJLabel("Select Field(s)", SwingConstants.CENTER);
+        JTextField PESELTextField = new CustomJTextField();
+        JTextField firstNameTextField = new CustomJTextField();
+        JTextField lastNameTextField = new CustomJTextField();
+        JTextField addressTextField = new CustomJTextField();
+        JTextField salaryTextField = new CustomJTextField();
+        JTextField specializationTextField = new CustomJTextField();
 
         DoctorField[] dFields = {DoctorField.SURGEON, DoctorField.DIAGNOSTICIAN};
         JList<DoctorField> fields = new JList<>(dFields);
@@ -83,26 +53,33 @@ public class AddDoctorFrame extends JFrame {
         textFieldContainer.add(specializationTextField);
         textFieldContainer.add(fields);
 
-        labelContainer.add(PESELLabel);
-        labelContainer.add(firstNameLabel);
-        labelContainer.add(lastNameLabel);
-        labelContainer.add(addressLabel);
-        labelContainer.add(salaryTypeLabel);
-        labelContainer.add(specializationLabel);
-        labelContainer.add(selectFieldsLabel);
+        labelContainer.add(new CustomJLabel("PESEL", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("First Name", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Last Name", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Address", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Salary", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Specialization", SwingConstants.CENTER));
+        labelContainer.add(new CustomJLabel("Select Field(s)", SwingConstants.CENTER));
 
         GridLayout buttonContainerLayout = new GridLayout();
         buttonContainerLayout.setHgap(30);
         JPanel buttonPanel = new JPanel(buttonContainerLayout);
 
-        JButton addButton = new JButton("Add");
-        addButton.setFont(serifFont);
+        CustomJButton addButton = new CustomJButton("Add");
         addButton.addActionListener(e -> {
-            if (Person.isBadPESEL(PESELTextField.getText())) {
-                JLabel label = new JLabel("incorrect PESEL format");
+            if (PersonController.isPESELLengthIncorrect(PESELTextField.getText())) {
+                JLabel label = new JLabel("incorrect PESEL length");
                 label.setFont(serifFont);
-                JOptionPane.showMessageDialog(this, label, "PESEL Error", JOptionPane.ERROR_MESSAGE);
-            } else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText())) {
+                JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
+            } else if (PersonController.doesPeselExist(PESELTextField.getText())) {
+                JLabel label = new JLabel("A person with that PESEL already exists in the database");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
+            } else if (PersonController.isPESELIncorrectlyFormated(PESELTextField.getText())) {
+                JLabel label = new JLabel("incorrect PESEL format - cannot translate to date");
+                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
+            }  else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText())) {
                 JLabel label = new JLabel("incorrect doctor info format - cannot be shorter than 2 characters");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Input Data Error", JOptionPane.ERROR_MESSAGE);
@@ -110,7 +87,7 @@ public class AddDoctorFrame extends JFrame {
                 JLabel label = new JLabel("at least 1 field must be selected");
                 label.setFont(serifFont);
                 JOptionPane.showMessageDialog(this, label, "Field Select Error", JOptionPane.ERROR_MESSAGE);
-            }else {
+            } else {
                 DoctorField[] selectedFields = new DoctorField[fields.getSelectedIndices().length];
                 for(int i = 0; i < fields.getSelectedIndices().length; i++) {
                     selectedFields[i] = dFields[i];

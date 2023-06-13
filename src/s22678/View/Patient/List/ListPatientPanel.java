@@ -1,5 +1,7 @@
 package s22678.View.Patient.List;
 
+import s22678.View.CustomSwingClasses.CustomJButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,10 +17,8 @@ public class ListPatientPanel extends JPanel {
         buttonContainerLayout.setHgap(30);
         JPanel buttonContainer = new JPanel(buttonContainerLayout);
 
-        JButton refreshButton = new ListPatientRefreshButton("Refresh");
-        refreshButton.setFont(serifFont);
-        JButton closeButton = new ListPatientCloseButton("Close");
-        closeButton.setFont(serifFont);
+        CustomJButton refreshButton = new ListPatientRefreshButton("Refresh");
+        CustomJButton closeButton = new ListPatientCloseButton("Close");
 
         buttonContainer.add(refreshButton);
         buttonContainer.add(closeButton);

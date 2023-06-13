@@ -1,9 +1,9 @@
 package s22678.View.Doctor.List;
 
+import s22678.View.CustomSwingClasses.CustomJButton;
+
 import javax.swing.*;
 import java.awt.*;
-
-import static s22678.View.Main.MainView.serifFont;
 
 public class ListDoctorPanel extends JPanel {
     public ListDoctorPanel() {
@@ -15,10 +15,8 @@ public class ListDoctorPanel extends JPanel {
         buttonContainerLayout.setHgap(30);
         JPanel buttonContainer = new JPanel(buttonContainerLayout);
 
-        JButton refreshButton = new ListDoctorRefreshButton("Refresh");
-        refreshButton.setFont(serifFont);
-        JButton closeButton = new ListDoctorCloseButton("Close");
-        closeButton.setFont(serifFont);
+        CustomJButton refreshButton = new ListDoctorRefreshButton("Refresh");
+        CustomJButton closeButton = new ListDoctorCloseButton("Close");
 
         buttonContainer.add(refreshButton);
         buttonContainer.add(closeButton);

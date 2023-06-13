@@ -1,5 +1,7 @@
 package s22678.View.Equipment.List;
 
+import s22678.View.CustomSwingClasses.CustomJButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,10 +17,8 @@ public class ListRoomAndBedPanel extends JPanel {
         buttonContainerLayout.setHgap(30);
         JPanel buttonContainer = new JPanel(buttonContainerLayout);
 
-        JButton refreshButton = new ListRoomAndBedRefreshButton("Refresh");
-        refreshButton.setFont(serifFont);
-        JButton closeButton = new ListRoomAndBedCloseButton("Close");
-        closeButton.setFont(serifFont);
+        CustomJButton refreshButton = new ListRoomAndBedRefreshButton("Refresh");
+        CustomJButton closeButton = new ListRoomAndBedCloseButton("Close");
 
         buttonContainer.add(refreshButton);
         buttonContainer.add(closeButton);

@@ -1,8 +1,11 @@
 package s22678.View.Patient.Add;
 
+import s22678.Controller.PersonController;
 import s22678.Model.PatientCard;
 import s22678.Model.Person;
 import s22678.Model.Treatment;
+import s22678.View.CustomSwingClasses.CustomJButton;
+import s22678.View.CustomSwingClasses.CustomJLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -114,21 +117,18 @@ public class AddPatientFrame extends JFrame {
         buttonContainerLayout.setHgap(30);
         JPanel buttonPanel = new JPanel(buttonContainerLayout);
 
-        JButton addButton = new JButton("Add");
-        addButton.setFont(serifFont);
+        CustomJButton addButton = new CustomJButton("Add");
         addButton.addActionListener(e -> {
             Person doctor = getDoctorWithSmallestNumberOfPatients();
             if (doctor == null) {
-                JLabel label = new JLabel("Patient can't be assigned to a doctor - doctor doesn't exist. Make sure doctors are added to the system");
-                label.setFont(serifFont);
+                JOptionPane.showMessageDialog(this, new CustomJLabel("Patient can't be assigned to a doctor - doctor doesn't exist. Make sure doctors are added to the system"), "Input Data error", JOptionPane.ERROR_MESSAGE);
+            } else if (PersonController.isPESELLengthIncorrect(PESELTextField.getText())) {
+                JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect PESEL format"), "PESEL error", JOptionPane.ERROR_MESSAGE);
+            } else if (PersonController.doesPeselExist(PESELTextField.getText())) {
+                JLabel label = new CustomJLabel("A person with that PESEL already exists in the database");
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
-            } else if (Person.isBadPESEL(PESELTextField.getText())) {
-                JLabel label = new JLabel("incorrect PESEL format");
-                label.setFont(serifFont);
-                JOptionPane.showMessageDialog(this, label, "PESEL error", JOptionPane.ERROR_MESSAGE);
             } else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
-                JLabel label = new JLabel("incorrect patient info format - cannot be shorter than 2 characters");
-                label.setFont(serifFont);
+                JLabel label = new CustomJLabel("incorrect patient info format - cannot be shorter than 2 characters");
                 JOptionPane.showMessageDialog(this, label, "Input Data error", JOptionPane.ERROR_MESSAGE);
             } else {
                 System.out.println("new person added: allergies: " + allergiesTypeTextField.getText());
@@ -138,8 +138,7 @@ public class AddPatientFrame extends JFrame {
                     person.setPatientParentsContactInfo(parentsContactInfoTextField.getText());
                 }
                 new Treatment(doctor, person);
-                JLabel label = new JLabel("Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
-                label.setFont(serifFont);
+                JLabel label = new CustomJLabel("Patient " + firstNameTextField.getText() + " " + lastNameTextField.getText() + " added");
                 JOptionPane.showMessageDialog(this, label);
             }
         });

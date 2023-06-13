@@ -1,10 +1,10 @@
 package s22678.View.Treatment.SelectPatient;
 
-import javax.swing.*;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
-public class ListSelectedPatientRefreshButton extends JButton {
-    public ListSelectedPatientRefreshButton(String buttonName) {
-        super(buttonName);
+public class ListSelectedPatientRefreshButton extends CustomJButton {
+    public ListSelectedPatientRefreshButton(String text) {
+        super(text);
 
         addActionListener(e -> {
 

@@ -1,8 +1,8 @@
 package s22678.View.Treatment.SelectDoctor;
 
-import javax.swing.*;
+import s22678.View.CustomSwingClasses.CustomJButton;
 
-public class ListDoctorWithPatientRefreshButton extends JButton {
+public class ListDoctorWithPatientRefreshButton extends CustomJButton {
     public ListDoctorWithPatientRefreshButton(String buttonName) {
         super(buttonName);
 
