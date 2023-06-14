@@ -20,7 +20,7 @@ public class AddPatientFrame extends JFrame {
     public AddPatientFrame() {
         setTitle("Add Patient");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(screenWidth, screenHeight);
+        setSize(getScreenWidth(), getScreenHeight());
         setLocationRelativeTo(null);
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
@@ -73,9 +73,8 @@ public class AddPatientFrame extends JFrame {
             if (doctor == null) JOptionPane.showMessageDialog(this, new CustomJLabel("Patient can't be assigned to a doctor - doctor doesn't exist. Make sure doctors are added to the system"), "Input Data error", JOptionPane.ERROR_MESSAGE);
             else if (PersonController.isPESELLengthIncorrect(PESELTextField.getText())) JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect PESEL format"), "PESEL error", JOptionPane.ERROR_MESSAGE);
             else if (PersonController.doesPeselExist(PESELTextField.getText())) JOptionPane.showMessageDialog(this, new CustomJLabel("A person with that PESEL already exists in the database"), "Input Data error", JOptionPane.ERROR_MESSAGE);
-            else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) {
-                JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect patient info format - cannot be shorter than 2 characters"), "Input Data error", JOptionPane.ERROR_MESSAGE);
-            } else {
+            else if (Person.isTextFieldDataIncorrect(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText())) JOptionPane.showMessageDialog(this, new CustomJLabel("incorrect patient info format - cannot be shorter than 2 characters"), "Input Data error", JOptionPane.ERROR_MESSAGE);
+            else {
                 System.out.println("new person added: allergies: " + allergiesTypeTextField.getText());
                 Person person = new Person(PESELTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(), bloodTypeTextField.getText(), allergiesTypeTextField.getText(), isContagiousRadioButton.isSelected(), new PatientCard());
                 if (!person.isPatientAdult()) {

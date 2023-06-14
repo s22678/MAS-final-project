@@ -7,7 +7,7 @@ import s22678.View.CustomSwingClasses.CustomJButton;
 import javax.swing.*;
 
 import static s22678.Controller.DoctorController.getDoctorWithSmallestNumberOfPatients;
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.getSerifFont;
 
 public class StartTreatmentButton extends CustomJButton {
     public StartTreatmentButton(String name, Person patient) {
@@ -19,7 +19,7 @@ public class StartTreatmentButton extends CustomJButton {
                 new Treatment(doctor, patient);
             } else {
                 JLabel label = new JLabel("The patient is being trated - cannot start a new treatment");
-                label.setFont(serifFont);
+                label.setFont(getSerifFont());
                 JOptionPane.showMessageDialog(this, label, "Multiple treatments error", JOptionPane.ERROR_MESSAGE);
             }
         });

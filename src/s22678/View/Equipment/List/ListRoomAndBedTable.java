@@ -1,8 +1,6 @@
 package s22678.View.Equipment.List;
 
 import s22678.Model.Bed;
-import s22678.Model.Person;
-import s22678.Model.PersonRole;
 import s22678.Model.Room;
 
 import javax.swing.*;
@@ -10,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 import java.util.Vector;
 
-import static s22678.View.Main.MainView.sansSerifFont;
+import static s22678.View.Main.MainView.getSansSerifFont;
 
 public class ListRoomAndBedTable extends JTable {
     private static DefaultTableModel tableModel;
@@ -19,8 +17,8 @@ public class ListRoomAndBedTable extends JTable {
     }
     public ListRoomAndBedTable() {
         setRowHeight(this.getRowHeight() + 35);
-        setFont(sansSerifFont);
-        getTableHeader().setFont(sansSerifFont);
+        setFont(getSansSerifFont());
+        getTableHeader().setFont(getSansSerifFont());
         getTableHeader().setResizingAllowed(true);
         String[] columnNames = {"Room number", "Is bed occupied", "Patient name"};
         tableModel = new DefaultTableModel(columnNames, 0);

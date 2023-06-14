@@ -3,6 +3,7 @@ package s22678.View.Equipment.Add;
 import s22678.Model.Bed;
 import s22678.Model.Room;
 import s22678.View.CustomSwingClasses.CustomJButton;
+import s22678.View.CustomSwingClasses.CustomJLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class AddBedFrame extends JFrame {
         setTitle("Add Bed");
 //        setLayout();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(screenWidth, screenHeight);
+        setSize(getScreenWidth(), getScreenHeight());
         setLocationRelativeTo(null);
 
         JPanel masterPanel =  new JPanel(new GridLayout(1 ,2));
@@ -32,10 +33,10 @@ public class AddBedFrame extends JFrame {
 
         JTextField roomTextField = new JTextField();
         roomTextField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
-        roomTextField.setFont(serifFont);
+        roomTextField.setFont(getSerifFont());
 
         JLabel roomLabel = new JLabel("Select room for the bed", SwingConstants.CENTER);
-        roomLabel.setFont(serifFont);
+        roomLabel.setFont(getSerifFont());
 
         textFieldContainer.add(roomTextField);
 
@@ -49,19 +50,14 @@ public class AddBedFrame extends JFrame {
         addButton.addActionListener(e -> {
             Room room = Room.findByNumber(Integer.parseInt(roomTextField.getText()));
             if (room == null) {
-                JLabel label = new JLabel("The room with number" + roomTextField.getText() + " doesn't exist");
-                label.setFont(serifFont);
-                JOptionPane.showMessageDialog(this, label, "Room Number Error", JOptionPane.ERROR_MESSAGE);
-            } else if (!(room.getBeds().size() < Room.getMaxBedCapacity())){
-                JLabel label = new JLabel("The room with number" + roomTextField.getText() + " doesn't have enough space for a new bed");
-                label.setFont(serifFont);
-                JOptionPane.showMessageDialog(this, label, "Room Full Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, new CustomJLabel("The room with number " + roomTextField.getText() + " doesn't exist"), "Room Number Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!(room.getBeds().size() < Room.getMaxBedCapacity())) {
+                JOptionPane.showMessageDialog(this, new CustomJLabel("The room with number " + roomTextField.getText() + " doesn't have enough space for a new bed"), "Room Full Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 Bed bed = new Bed();
                 room.addBed(bed);
-                JLabel label = new JLabel("Bed added to room nr: " + room.getRoomNumber());
-                label.setFont(serifFont);
-                JOptionPane.showMessageDialog(this, label);
+
+                JOptionPane.showMessageDialog(this, new CustomJLabel("Bed added to room nr: " + room.getRoomNumber()));
             }
         });
 

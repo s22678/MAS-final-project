@@ -49,7 +49,7 @@ public class MainView extends JFrame {
     public static int getTextFieldWidth() {
         return textFieldWidth;
     }
-    public static int getScreenWidthget() {
+    public static int getScreenWidth() {
         return screenWidth;
     }
     public static int getScreenHeight() {

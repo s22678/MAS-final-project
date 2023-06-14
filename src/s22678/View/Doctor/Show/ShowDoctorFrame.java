@@ -2,6 +2,7 @@ package s22678.View.Doctor.Show;
 
 import s22678.Model.DoctorField;
 import s22678.Model.Person;
+import s22678.View.CustomSwingClasses.CustomJLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class ShowDoctorFrame extends JFrame {
     public ShowDoctorFrame(String pesel, String firstName, String lastName) {
         setTitle("Show Details for: dr " + firstName + " " + lastName);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(screenWidth, screenHeight);
+        setSize(getScreenWidth(), getScreenHeight());
         setLocationRelativeTo(null);
         setLayout(new GridLayout(1, 1));
 
@@ -36,93 +37,46 @@ public class ShowDoctorFrame extends JFrame {
         // Second column label data
         JPanel secondDataLabelColumn = new JPanel(masterGridLayout);
 
-        // firstName label description
-        JLabel firstNameDescriptionLabel = new JLabel("Name:");
-        firstNameDescriptionLabel.setFont(serifFont);
-
         // add firstName label description to JPanel
-        firstDescriptionLabelColumn.add(firstNameDescriptionLabel);
-
-        // firstName label data
-        JLabel firstNameDataLabel = new JLabel(firstName);
-        firstNameDataLabel.setFont(serifFont);
+        firstDescriptionLabelColumn.add(new CustomJLabel("Name:"));
 
         // add firstName label data to JPanel
-        firstDataLabelColumn.add(firstNameDataLabel);
-
-        // lastName label description
-        JLabel lastNameDescriptionLabel = new JLabel("Last Name:");
-        lastNameDescriptionLabel.setFont(serifFont);
+        firstDataLabelColumn.add(new CustomJLabel(firstName));
 
         // add lastName label description to JPanel
-        secondDescriptionLabelColumn.add(lastNameDescriptionLabel);
-
-        // lastName label data
-        JLabel lastNameDataLabel = new JLabel(lastName);
-        lastNameDataLabel.setFont(serifFont);
+        secondDescriptionLabelColumn.add(new CustomJLabel("Last Name:"));
 
         // add lastName label data to JPanel
-        secondDataLabelColumn.add(lastNameDataLabel);
-
-        // pesel label description
-        JLabel peselDescriptionLabel = new JLabel("PESEL:");
-        peselDescriptionLabel.setFont(serifFont);
+        secondDataLabelColumn.add(new CustomJLabel(lastName));
 
         // add pesel label description to JPanel
-        firstDescriptionLabelColumn.add(peselDescriptionLabel);
-
-        // pesel label data
-        JLabel peselDataLabel = new JLabel(pesel);
-        peselDataLabel.setFont(serifFont);
+        firstDescriptionLabelColumn.add(new CustomJLabel("PESEL:"));
 
         // add pesel label data to JPanel
-        firstDataLabelColumn.add(peselDataLabel);
-
-        // specialization label description
-        JLabel specializationDescriptionLabel = new JLabel("Specialization:");
-        specializationDescriptionLabel.setFont(serifFont);
+        firstDataLabelColumn.add(new CustomJLabel(pesel));
 
         // add specialization label description to JPanel
-        secondDescriptionLabelColumn.add(specializationDescriptionLabel);
-
-        // specialization label data
-        JLabel specializationDataLabel = new JLabel(doctor.getDoctorSpecialization());
-        specializationDataLabel.setFont(serifFont);
+        secondDescriptionLabelColumn.add(new CustomJLabel("Specialization:"));
 
         // add specialization label data to JPanel
-        secondDataLabelColumn.add(specializationDataLabel);
-
-        // salary label description
-        JLabel salaryDescriptionLabel = new JLabel("Salary:");
-        salaryDescriptionLabel.setFont(serifFont);
+        secondDataLabelColumn.add(new CustomJLabel(doctor.getDoctorSpecialization()));
 
         // add salary label description to JPanel
-        firstDescriptionLabelColumn.add(salaryDescriptionLabel);
-
-        // salary label data
-        JLabel salaryDataLabel = new JLabel(String.valueOf(doctor.getDoctorSalary()));
-        salaryDataLabel.setFont(serifFont);
+        firstDescriptionLabelColumn.add(new CustomJLabel("Salary:"));
 
         // add salary label data to JPanel
-        firstDataLabelColumn.add(salaryDataLabel);
-
-        // fields label description
-        JLabel fieldsDescriptionLabel = new JLabel("Fields:");
-        fieldsDescriptionLabel.setFont(serifFont);
+        firstDataLabelColumn.add(new CustomJLabel(String.valueOf(doctor.getDoctorSalary())));
 
         // add fields label description to JPanel
-        secondDescriptionLabelColumn.add(fieldsDescriptionLabel);
+        secondDescriptionLabelColumn.add(new CustomJLabel("Fields:"));
 
         // fields label data
         String tmp = "";
         for (DoctorField field : doctor.getDoctorFields()) {
             tmp = tmp + " " + field.toString();
         }
-        JLabel fieldsDataLabel = new JLabel(tmp);
-        fieldsDataLabel.setFont(serifFont);
-
         // add fields label data to JPanel
-        secondDataLabelColumn.add(fieldsDataLabel);
+        secondDataLabelColumn.add(new CustomJLabel(tmp));
 
         textPanel.add(firstDescriptionLabelColumn);
         textPanel.add(firstDataLabelColumn);

@@ -2,6 +2,7 @@ package s22678.View.Main.Menu;
 
 import s22678.Controller.MainController;
 import s22678.Model.*;
+import s22678.View.CustomSwingClasses.CustomJLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,21 +11,19 @@ import java.io.File;
 import java.util.List;
 
 import static s22678.Controller.MainController.reloadData;
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.getSerifFont;
 
 public class FileMenu extends JMenu {
     public FileMenu (String name) {
         super(name);
-        setFont(serifFont);
+        setFont(getSerifFont());
         setMnemonic(KeyEvent.ALT_DOWN_MASK | KeyEvent.getExtendedKeyCodeForChar('F'));
 
         JMenuItem newItem = new JMenuItem("New File");
-        newItem.setFont(serifFont);
+        newItem.setFont(getSerifFont());
         newItem.setMnemonic(KeyEvent.VK_L);
         newItem.addActionListener(e -> {
-            JLabel label = new JLabel("This will remove all unsaved changes! Continue?");
-            label.setFont(serifFont);
-            int result = JOptionPane.showConfirmDialog((Component) null, label,"alert", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog((Component) null, new CustomJLabel("This will remove all unsaved changes! Continue?"),"alert", JOptionPane.YES_NO_OPTION);
             if (result == 0) {
                 MainController.newFile();
                 reloadData();
@@ -32,7 +31,7 @@ public class FileMenu extends JMenu {
         });
 
         JMenuItem loadItem = new JMenuItem("Load");
-        loadItem.setFont(serifFont);
+        loadItem.setFont(getSerifFont());
         loadItem.setMnemonic(KeyEvent.VK_L);
         loadItem.addActionListener((event) -> {
                     JFileChooser fileChooser = new JFileChooser();
@@ -45,9 +44,7 @@ public class FileMenu extends JMenu {
                         try {
                             MainController.load(selectedFile.getAbsolutePath());
                         } catch (Exception e) {
-                            JLabel label = new JLabel("can't load the file - bad format or not enough significant permissions");
-                            label.setFont(serifFont);
-                            JOptionPane.showMessageDialog(this, label, "File Load Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, new CustomJLabel("can't load the file - bad format or not enough significant permissions"), "File Load Error", JOptionPane.ERROR_MESSAGE);
                         }
 
                         System.out.println("łóżka");
@@ -70,7 +67,7 @@ public class FileMenu extends JMenu {
 
 
         JMenuItem saveItem = new JMenuItem("Save");
-        saveItem.setFont(serifFont);
+        saveItem.setFont(getSerifFont());
         saveItem.setMnemonic(KeyEvent.VK_S);
         saveItem.addActionListener((event) -> {
                     JFileChooser fileChooser = new JFileChooser();
@@ -83,16 +80,14 @@ public class FileMenu extends JMenu {
                         try {
                             MainController.save(selectedFile.getAbsolutePath());
                         } catch (Exception e) {
-                            JLabel label = new JLabel("can't save the file - bad format or not enough significant permissions");
-                            label.setFont(serifFont);
-                            JOptionPane.showMessageDialog(this, label, "File Save Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, new CustomJLabel("can't save the file - bad format or not enough significant permissions"), "File Save Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
         );
 
         JMenuItem exitItem = new JMenuItem("Exit");
-        exitItem.setFont(serifFont);
+        exitItem.setFont(getSerifFont());
         exitItem.setMnemonic(KeyEvent.VK_Q);
         exitItem.addActionListener((event) -> System.exit(0));
 

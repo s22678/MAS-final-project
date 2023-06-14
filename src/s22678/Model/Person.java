@@ -77,7 +77,6 @@ public class Person implements Serializable {
         return false;
     }
 
-
     public String getAddress() {
         return address;
     }
@@ -96,10 +95,25 @@ public class Person implements Serializable {
         return false;
     }
 
+    public String getBirthday() {
+        String birthday = getPESEL();
+        if (Character.getNumericValue(birthday.charAt(2)) > 1) {
+            int intMonth = Character.getNumericValue(birthday.charAt(2)) - 2;
+            String strMonth = String.valueOf(intMonth);
+            return "20" + birthday.substring(0, 2) + strMonth + birthday.substring(3, 6);
+        } else {
+            return "19" + PESEL.substring(0, 6);
+        }
+    }
+
+    public LocalDate getBirthdayDate() {
+        String birthday = getBirthday();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return LocalDate.parse(birthday, formatter);
+    }
+
     public int getAge() {
-        String birthDay = PersonController.getBirthday(getPESEL());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        return Period.between(LocalDate.parse(birthDay, formatter), LocalDate.now()).getYears();
+        return Period.between(getBirthdayDate(), LocalDate.now()).getYears();
     }
 
     public static void save(ObjectOutputStream stream) throws IOException {
@@ -190,8 +204,6 @@ public class Person implements Serializable {
         return currentRole;
     }
 
-
-
     public Bed getPatientBed() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.getBed();
@@ -273,7 +285,6 @@ public class Person implements Serializable {
             currentRole = PersonRole.PATIENT;
             return true;
         }
-
         return false;
     }
 
@@ -344,7 +355,7 @@ public class Person implements Serializable {
         return null;
     }
 
-    public String getAllergies() {
+    public String getPatientAllergies() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.getAllergies();
         }

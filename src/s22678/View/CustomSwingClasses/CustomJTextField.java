@@ -18,4 +18,18 @@ public class CustomJTextField extends JTextField {
         setFont(getSerifFont());
         setPreferredSize(new Dimension(getTextFieldWidth(), getTextFieldHeight()));
     }
+
+    public CustomJTextField(String text, boolean enabled) {
+        super(text);
+        setEnabled(enabled);
+        setDisabledTextColor(Color.black);
+        setFont(getSerifFont());
+        setPreferredSize(new Dimension(getTextFieldWidth(), getTextFieldHeight()));
+    }
+
+    public CustomJTextField(String text, java.awt.Dimension preferredSize) {
+        super(text);
+        setFont(getSerifFont());
+        setPreferredSize(preferredSize);
+    }
 }

@@ -13,7 +13,7 @@ public class ShowTreatmentFrame extends JFrame {
     public ShowTreatmentFrame(Treatment treatment) {
         setTitle("Show Details for treatment of: " + treatment.getPatient().getFirstName() + " " + treatment.getPatient().getLastName() + " by: dr " + treatment.getDoctor().getFirstName() + " " + treatment.getDoctor().getLastName());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(screenWidth, screenHeight);
+        setSize(getScreenWidth(), getScreenHeight());
         setLocationRelativeTo(null);
 
         // Main Panels

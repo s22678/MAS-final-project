@@ -2,16 +2,17 @@ package s22678.View.Treatment.SelectPatient;
 
 import s22678.Model.Person;
 import s22678.View.CustomSwingClasses.CustomJButton;
+import s22678.View.CustomSwingClasses.CustomJLabel;
+import s22678.View.CustomSwingClasses.CustomJTextField;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.getTextFieldHeight;
+import static s22678.View.Main.MainView.getTextFieldWidth;
 
 public class ListSelectedPatientPanel extends JPanel {
-    private JPanel doctorInfo = new JPanel();
-    private JLabel doctorLabel = new JLabel("Lekarz: ");
-    private JTextField doctorTextField = new JTextField();
+    private final CustomJTextField doctorTextField = new CustomJTextField("", new Dimension(400, getTextFieldHeight()));
     private static ListSelectedPatientPanel thisPanel;
     public ListSelectedPatientPanel() {
         setLayout(new BorderLayout());
@@ -21,6 +22,14 @@ public class ListSelectedPatientPanel extends JPanel {
         GridLayout buttonContainerLayout = new GridLayout(1, 2);
         buttonContainerLayout.setHgap(30);
         JPanel buttonContainer = new JPanel(buttonContainerLayout);
+        JPanel doctorInfo = new JPanel();
+        CustomJLabel doctorLabel = new CustomJLabel("Lekarz: ");
+
+        doctorInfo.add(doctorLabel);
+        doctorInfo.add(doctorTextField);
+        doctorTextField.setEnabled(false);
+        this.add(doctorInfo, BorderLayout.NORTH);
+        doctorInfo.setPreferredSize(new Dimension(50, 75));
 
         CustomJButton refreshButton = new ListSelectedPatientRefreshButton("Refresh");
         CustomJButton closeButton = new ListSelectedPatientCloseButton("Close");
@@ -41,15 +50,7 @@ public class ListSelectedPatientPanel extends JPanel {
 
     public void updateDoctor(Person doctor) {
         if (doctor != null) {
-
-            doctorLabel.setFont(serifFont);
-            JTextField doctorTextField = new JTextField(doctor.getFirstName() + " " + doctor.getLastName());
-            doctorTextField.setFont(serifFont);
-
-            doctorInfo.add(doctorLabel);
-            doctorInfo.add(doctorTextField);
-            this.add(doctorInfo, BorderLayout.NORTH);
-            doctorInfo.setPreferredSize(new Dimension(50, 75));
+            doctorTextField.setText(doctor.getFirstName() + " " + doctor.getLastName());
         }
     }
 }

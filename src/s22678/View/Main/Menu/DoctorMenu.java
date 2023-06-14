@@ -7,28 +7,28 @@ import s22678.View.Treatment.SelectDoctor.ListDoctorWithPatientActionListener;
 
 import javax.swing.*;
 
-import static s22678.View.Main.MainView.serifFont;
+import static s22678.View.Main.MainView.getSerifFont;
 
 public class DoctorMenu extends JMenu {
     public DoctorMenu(String name) {
         super(name);
-        setFont(serifFont);
+        setFont(getSerifFont());
         JMenuItem showDoctorItem = new JMenuItem("List Doctors");
-        showDoctorItem.setFont(serifFont);
+        showDoctorItem.setFont(getSerifFont());
         showDoctorItem.addActionListener(e -> {
             System.out.println("changing view to listDoctorPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listDoctorPanel");
             ListDoctorActionListener.reload();
         });
         JMenuItem addDoctorItem = new JMenuItem("Add Doctor");
-        addDoctorItem.setFont(serifFont);
+        addDoctorItem.setFont(getSerifFont());
         addDoctorItem.addActionListener(e -> {
             JFrame addDoctorWindow = new AddDoctorFrame();
             addDoctorWindow.setVisible(true);
         });
 
         JMenuItem selectTreatmentItem = new JMenuItem("Select Treatment");
-        selectTreatmentItem.setFont(serifFont);
+        selectTreatmentItem.setFont(getSerifFont());
         selectTreatmentItem.addActionListener(e -> {
             System.out.println("changing view to listDoctorWithPatientPanel");
             MainView.getCardLayout().show(MainView.getMainPanel(), "listDoctorWithPatientPanel");

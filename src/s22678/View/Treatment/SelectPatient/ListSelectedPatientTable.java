@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static s22678.View.Main.MainView.sansSerifFont;
+import static s22678.View.Main.MainView.getSansSerifFont;
 
 public class ListSelectedPatientTable extends JTable {
     private static Person doctor;
@@ -25,8 +25,8 @@ public class ListSelectedPatientTable extends JTable {
     }
     public ListSelectedPatientTable() {
         setRowHeight(this.getRowHeight() + 35);
-        setFont(sansSerifFont);
-        getTableHeader().setFont(sansSerifFont);
+        setFont(getSansSerifFont());
+        getTableHeader().setFont(getSansSerifFont());
         getTableHeader().setResizingAllowed(true);
         String[] columnNames = {"PESEL", "First Name", "Last Name", "Admission Date"};
         tableModel = new DefaultTableModel(columnNames, 0);

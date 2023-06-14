@@ -1,16 +1,17 @@
 package s22678.View.Treatment.Show;
 
 import s22678.Model.Treatment;
+import s22678.View.CustomSwingClasses.CustomJLabel;
+import s22678.View.CustomSwingClasses.CustomJTextField;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static s22678.View.Main.MainView.serifFont;
 
 public class ShowTreatmentTextPanel extends JPanel {
-    private JTextField diseasesTextField;
-    private JTextField prescribedDrugsTextField;
-    private JTextField patientHealthAfterTreatmentDataTextField;
+    private final CustomJTextField diseasesTextField;
+    private final CustomJTextField prescribedDrugsTextField;
+    private final CustomJTextField patientHealthAfterTreatmentDataTextField;
     public ShowTreatmentTextPanel(Treatment treatment) {
 
         GridLayout mainLayout = new GridLayout(7 ,4);
@@ -19,30 +20,20 @@ public class ShowTreatmentTextPanel extends JPanel {
 
 
         // First Row
-        // Doctor full name description label
-        JLabel doctorNameLabel = new JLabel("Doctor:", SwingConstants.CENTER);
-        doctorNameLabel.setFont(serifFont);
         // Add doctor full name to JPanel
-        add(doctorNameLabel);
+        add(new CustomJLabel("Doctor:", SwingConstants.CENTER));
 
         // Doctor full name data textField
-        JTextField doctorNameTextField = new JTextField(treatment.getDoctor().getFirstName() + " " + treatment.getDoctor().getLastName());
-        doctorNameTextField.setFont(serifFont);
-        doctorNameTextField.setEnabled(false);
+        CustomJTextField doctorNameTextField = new CustomJTextField(treatment.getDoctor().getFirstName() + " " + treatment.getDoctor().getLastName(), false);
         doctorNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
         // Add doctor full name data to JPanel
         add(doctorNameTextField);
 
-        // Patient Full Name description label
-        JLabel patientNameLabel = new JLabel("Patient:", SwingConstants.CENTER);
-        patientNameLabel.setFont(serifFont);
         // Add patient full name to JPanel
-        add(patientNameLabel);
+        add(new CustomJLabel("Patient:", SwingConstants.CENTER));
 
         // Patient full name data textField
-        JTextField patientNameTextField = new JTextField(treatment.getPatient().getFirstName() + " " + treatment.getPatient().getLastName());
-        patientNameTextField.setFont(serifFont);
-        patientNameTextField.setEnabled(false);
+        CustomJTextField patientNameTextField = new CustomJTextField(treatment.getPatient().getFirstName() + " " + treatment.getPatient().getLastName() + " " + treatment.getPatient().getPatientBloodType(), false);
         patientNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
         // Add patient full name data to JPanel
         add(patientNameTextField);
@@ -53,28 +44,19 @@ public class ShowTreatmentTextPanel extends JPanel {
 
 
         // Second Row
-        // Treatment start description label
-        JLabel treatmentStartLabel = new JLabel("Treatment Start:", SwingConstants.CENTER);
-        treatmentStartLabel.setFont(serifFont);
         // Add treatment start description to JPanel
-        add(treatmentStartLabel);
+        add(new CustomJLabel("Treatment Start:", SwingConstants.CENTER));
 
         // Treatment start data textField
-        JTextField treatmentStartTextField = new JTextField(treatment.getTreatmentStart().toString());
-        treatmentStartTextField.setFont(serifFont);
-        treatmentStartTextField.setEnabled(false);
+        CustomJTextField treatmentStartTextField = new CustomJTextField(treatment.getTreatmentStart().toString(), false);
         // Add treatment start data to JPanel
         add(treatmentStartTextField);
 
-        // Treatment end description label
-        JLabel treatmentEndLabel = new JLabel("Treatment End:", SwingConstants.CENTER);
-        treatmentEndLabel.setFont(serifFont);
         // Add treatment end description to JPanel
-        add(treatmentEndLabel);
+        add(new CustomJLabel("Treatment End:", SwingConstants.CENTER));
 
         // Treatment end data textField
-        JTextField treatmentEndTextField = new JTextField();
-        treatmentEndTextField.setFont(serifFont);
+        CustomJTextField treatmentEndTextField = new CustomJTextField();
         treatmentEndTextField.setEnabled(false);
         // Add treatment end data to JPanel
         add(treatmentEndTextField);
@@ -82,62 +64,44 @@ public class ShowTreatmentTextPanel extends JPanel {
 
 
         // Third Row
-        // Patient diseases description label
-        JLabel diseasesLabel = new JLabel("Diseases:", SwingConstants.CENTER);
-        diseasesLabel.setFont(serifFont);
         // Add patient diseases description to JPanel
-        add(diseasesLabel);
+        add(new CustomJLabel("Diseases:", SwingConstants.CENTER));
 
         // Patient diseases data textField
         String disease = "";
         if (treatment.getDisease() != null) {
             disease = treatment.getDisease();
         }
-        diseasesTextField = new JTextField(disease);
-        diseasesTextField.setFont(serifFont);
-        diseasesTextField.setEnabled(true);
+        diseasesTextField = new CustomJTextField(disease);
         // Add patient diseases data to JPanel
         add(diseasesTextField);
 
-        // Allergies description label
-        JLabel allergiesLabel = new JLabel("Allergies:", SwingConstants.CENTER);
-        allergiesLabel.setFont(serifFont);
         // Add allergies description to JPanel
-        add(allergiesLabel);
+        add(new CustomJLabel("Allergies:", SwingConstants.CENTER));
 
         // Allergies data textField
-        JTextField allergiesTextField = new JTextField(treatment.getPatient().getAllergies());
-        allergiesTextField.setFont(serifFont);
-        allergiesTextField.setEnabled(false);
+        CustomJTextField allergiesTextField = new CustomJTextField(treatment.getPatient().getPatientAllergies(), false);
         // Add allergies data to JPanel
         add(allergiesTextField);
 
 
 
         // Fourth Row
-        // Prescribed drugs description label
-        JLabel prescribedDrugsLabel = new JLabel("Prescribed drugs:", SwingConstants.CENTER);
-        prescribedDrugsLabel.setFont(serifFont);
         // Add prescribed drugs to JPanel
-        add(prescribedDrugsLabel);
+        add(new CustomJLabel("Prescribed drugs:", SwingConstants.CENTER));
 
         // Prescribed drugs data text field
         String drugs = treatment.getPrescribedMedicine().size() > 0 ? String.join(", ", treatment.getPrescribedMedicine()) : "";
-        prescribedDrugsTextField = new JTextField(drugs);
-        prescribedDrugsTextField.setFont(serifFont);
+        prescribedDrugsTextField = new CustomJTextField(drugs);
         // Add prescribed drugs data to JPanel
         add(prescribedDrugsTextField);
 
-        // Patient health after treatment description label
-        JLabel patientHealtAfterTreatmentLabel = new JLabel("Patient health after treatment:", SwingConstants.CENTER);
-        patientHealtAfterTreatmentLabel.setFont(serifFont);
         // Add patient health after treatment description to JPanel
-        add(patientHealtAfterTreatmentLabel);
+        add(new CustomJLabel("Patient health after treatment:", SwingConstants.CENTER));
 
         // Patient health after treatment data text field
         String pTreatment = treatment.getAfterTreatmentHealtState() == null ? "" : treatment.getAfterTreatmentHealtState();
-        patientHealthAfterTreatmentDataTextField = new JTextField(pTreatment);
-        patientHealthAfterTreatmentDataTextField.setFont(serifFont);
+        patientHealthAfterTreatmentDataTextField = new CustomJTextField(pTreatment);
         // Add patient health after treatment data to JPanel
         add(patientHealthAfterTreatmentDataTextField);
 
@@ -151,24 +115,18 @@ public class ShowTreatmentTextPanel extends JPanel {
             id = String.valueOf(treatment.getPatient().getPatientBed().getId());
             operationNeeded = true;
         }
-        JTextField assignedBedTextField = new JTextField(id);
+        CustomJTextField assignedBedTextField = new CustomJTextField(id, false);
         // is operation needed button
         JRadioButton isOperationNeededButton = new IsOperationNeededRadioButton("", treatment, assignedBedTextField);
         isOperationNeededButton.setSelected(operationNeeded);
         add(isOperationNeededButton);
-        JLabel buttonDescription = new JLabel("    Operation needed");
-        buttonDescription.setFont(serifFont);
-        add(buttonDescription);
 
-        // Assigned bed description label
-        JLabel assignedBedLabel = new JLabel("Assigned bed:", SwingConstants.CENTER);
-        assignedBedLabel.setFont(serifFont);
+        // Add assigned bed button description to JPanel
+        add(new CustomJLabel("    Operation needed"));
+
         // Add assigned bed description to JPanel
-        add(assignedBedLabel);
+        add(new CustomJLabel("Assigned bed:", SwingConstants.CENTER));
 
-        // Assigned bed data text field
-        assignedBedTextField.setFont(serifFont);
-        assignedBedTextField.setEnabled(false);
         // Add assigned bed data to JPanel
         add(assignedBedTextField);
 

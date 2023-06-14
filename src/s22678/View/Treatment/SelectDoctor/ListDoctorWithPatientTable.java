@@ -1,6 +1,5 @@
 package s22678.View.Treatment.SelectDoctor;
 
-import s22678.View.Doctor.Show.ShowDoctorFrame;
 import s22678.View.Main.MainView;
 import s22678.View.Treatment.SelectPatient.ListSelectedPatientActionListener;
 import s22678.View.Treatment.SelectPatient.ListSelectedPatientPanel;
@@ -12,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static s22678.Controller.DoctorController.getDoctorByPesel;
-import static s22678.View.Main.MainView.sansSerifFont;
+import static s22678.View.Main.MainView.getSansSerifFont;
 
 public class ListDoctorWithPatientTable extends JTable {
     private static DefaultTableModel tableModel;
@@ -22,8 +21,8 @@ public class ListDoctorWithPatientTable extends JTable {
     }
     public ListDoctorWithPatientTable() {
         setRowHeight(this.getRowHeight() + 35);
-        setFont(sansSerifFont);
-        getTableHeader().setFont(sansSerifFont);
+        setFont(getSansSerifFont());
+        getTableHeader().setFont(getSansSerifFont());
         getTableHeader().setResizingAllowed(true);
         String[] columnNames = {"PESEL", "First Name", "Last Name", "Specialization"};
         tableModel = new DefaultTableModel(columnNames, 0);

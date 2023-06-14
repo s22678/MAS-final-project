@@ -1,7 +1,8 @@
 package s22678.View.Patient.Show;
 
-import s22678.Model.DoctorField;
 import s22678.Model.Person;
+import s22678.View.CustomSwingClasses.CustomJLabel;
+import s22678.View.CustomSwingClasses.CustomJTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,12 +13,17 @@ public class ShowPatientFrame extends JFrame {
     public ShowPatientFrame(Person patient) {
         setTitle("Show Details for: patient " + patient.getFirstName() + " " + patient.getLastName());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(screenWidth, screenHeight);
+        setSize(getScreenWidth(), getScreenHeight());
         setLocationRelativeTo(null);
 
-        GridLayout layout = new GridLayout(8 ,4);
-        layout.setVgap(40);
-        JPanel panel = new JPanel(layout);
+        JPanel panel = new JPanel(new GridLayout(2 ,1));
+
+        JPanel top = new ShowPatientTopPanel(patient);
+        JPanel bottom = new JPanel();
+
+        panel.add(top);
+        panel.add(bottom);
+
 
         StartTreatmentButton button = new StartTreatmentButton("Start new treatment", patient);
 

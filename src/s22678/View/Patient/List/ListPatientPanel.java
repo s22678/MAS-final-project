@@ -5,8 +5,6 @@ import s22678.View.CustomSwingClasses.CustomJButton;
 import javax.swing.*;
 import java.awt.*;
 
-import static s22678.View.Main.MainView.serifFont;
-
 public class ListPatientPanel extends JPanel {
     public ListPatientPanel() {
         setLayout(new BorderLayout());
