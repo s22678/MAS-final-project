@@ -24,9 +24,7 @@ public class ShowPatientFrame extends JFrame {
         panel.add(top);
         panel.add(bottom);
 
-
         StartTreatmentButton newTreatmentButton = new StartTreatmentButton("Start new treatment", patient);
-//        ReloadButton reloadButton = new ReloadButton("Reload")
 
         add(panel, BorderLayout.CENTER);
         add(newTreatmentButton, BorderLayout.SOUTH);

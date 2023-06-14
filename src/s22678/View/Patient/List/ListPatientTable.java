@@ -5,6 +5,7 @@ import s22678.Model.Person;
 import s22678.Model.PersonRole;
 import s22678.View.Doctor.Show.ShowDoctorFrame;
 import s22678.View.Patient.Show.ShowPatientFrame;
+import s22678.View.Patient.Show.ShowPatientHistoryTable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,7 @@ public class ListPatientTable extends JTable {
         setFont(getSansSerifFont());
         getTableHeader().setFont(getSansSerifFont());
         getTableHeader().setResizingAllowed(true);
-        String[] columnNames = {"PESEL", "First Name", "Last Name", "Admission Date"};
+        String[] columnNames = {"PESEL", "First Name", "Last Name", "Admission Date", "Assigned Doctor"};
         tableModel = new DefaultTableModel(columnNames, 0);
         setModel(tableModel);
 
@@ -36,7 +37,7 @@ public class ListPatientTable extends JTable {
                     String pesel = (String) getValueAt(row, 0);
 
                     Person patient = PatientController.getPatientByPesel(pesel);
-
+                    ShowPatientHistoryTable.reloadData(patient);
                     new ShowPatientFrame(patient);
                 }
             }

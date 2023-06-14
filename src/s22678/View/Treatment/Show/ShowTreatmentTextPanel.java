@@ -12,6 +12,8 @@ public class ShowTreatmentTextPanel extends JPanel {
     private final CustomJTextField diseasesTextField;
     private final CustomJTextField prescribedDrugsTextField;
     private final CustomJTextField patientHealthAfterTreatmentDataTextField;
+    private final CustomJTextField treatmentEndTextField;
+
     public ShowTreatmentTextPanel(Treatment treatment) {
 
         GridLayout mainLayout = new GridLayout(7 ,4);
@@ -56,12 +58,9 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(new CustomJLabel("Treatment End:", SwingConstants.CENTER));
 
         // Treatment end data textField
-        CustomJTextField treatmentEndTextField = new CustomJTextField();
-        treatmentEndTextField.setEnabled(false);
+        treatmentEndTextField = new CustomJTextField("", false);
         // Add treatment end data to JPanel
         add(treatmentEndTextField);
-
-
 
         // Third Row
         // Add patient diseases description to JPanel
@@ -146,5 +145,9 @@ public class ShowTreatmentTextPanel extends JPanel {
 
     public JTextField getPatientHealthAfterTreatmentDataTextField() {
         return patientHealthAfterTreatmentDataTextField;
+    }
+
+    public void setTreatmentEndTextField(String message) {
+        treatmentEndTextField.setText(message);
     }
 }

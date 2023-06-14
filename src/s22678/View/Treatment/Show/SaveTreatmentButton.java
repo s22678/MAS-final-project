@@ -2,7 +2,9 @@ package s22678.View.Treatment.Show;
 
 import s22678.Model.Treatment;
 import s22678.View.CustomSwingClasses.CustomJButton;
+import s22678.View.CustomSwingClasses.CustomJLabel;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class SaveTreatmentButton extends CustomJButton {
             treatment.setPrescribedMedicine(prescribedMedicine);
             treatment.setAfterTreatmentHealthState(afterTreatmentHealthState);
             treatment.setDisease(disease);
+            JOptionPane.showMessageDialog(this, new CustomJLabel("Patient data saved (temporarily, save to file to store permanently)"));
         });
     }
 }

@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class ShowPatientBottomPanel extends JPanel {
     public ShowPatientBottomPanel(Person patient) {
-        setPreferredSize(new Dimension(500, 100));
+        setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(new ShowPatientHistoryTable(patient));
         add(scrollPane);
     }

@@ -1,5 +1,6 @@
 package s22678.View.Treatment.SelectDoctor;
 
+import s22678.Model.Person;
 import s22678.View.Main.MainView;
 import s22678.View.Treatment.SelectPatient.ListSelectedPatientActionListener;
 import s22678.View.Treatment.SelectPatient.ListSelectedPatientPanel;
@@ -35,7 +36,9 @@ public class ListDoctorWithPatientTable extends JTable {
                     int row = getSelectedRow();
                     String pesel = (String) getValueAt(row, 0);
 
-                    ListSelectedPatientActionListener.reload(getDoctorByPesel(pesel));
+                    Person doctor = getDoctorByPesel(pesel);
+
+                    ListSelectedPatientActionListener.reload(doctor);
                     ListSelectedPatientPanel.getPanel().updateDoctor(getDoctorByPesel(pesel));
                     ListSelectedPatientTable.setDoctor(getDoctorByPesel(pesel));
                     System.out.println("changing view to listSelectedPatientPanel");

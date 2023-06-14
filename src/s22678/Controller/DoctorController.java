@@ -3,9 +3,7 @@ package s22678.Controller;
 import s22678.Model.Person;
 import s22678.Model.PersonRole;
 
-import javax.print.Doc;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DoctorController {
@@ -30,7 +28,7 @@ public class DoctorController {
         if (doctors.size() == 0) {
             return null;
         }
-        
+
         // Assume first doctor has the lowest number of patients
         Person smallestDoctor = doctors.get(0);
 

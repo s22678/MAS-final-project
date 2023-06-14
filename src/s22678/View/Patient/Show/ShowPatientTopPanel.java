@@ -10,7 +10,7 @@ import java.awt.*;
 public class ShowPatientTopPanel extends JPanel {
     public ShowPatientTopPanel(Person patient) {
         setLayout(new GridLayout(1, 4));
-        GridLayout topLayout = new GridLayout(4 ,1);
+        GridLayout topLayout = new GridLayout(5 ,1);
         topLayout.setVgap(40);
         JPanel leftLeft = new JPanel(topLayout);
         JPanel leftRight = new JPanel(topLayout);
@@ -63,6 +63,5 @@ public class ShowPatientTopPanel extends JPanel {
             rightLeft.add(new CustomJLabel("Parents contact info:", SwingConstants.CENTER));
             rightRight.add(new CustomJTextField(patient.getPatientParentsContactInfo(), false));
         }
-
     }
 }

@@ -127,8 +127,10 @@ public class Person implements Serializable {
     }
 
     public String[] getPatientTableData() {
-        String[] data = {getPESEL(), getFirstName(), getLastName(), getAdmissionDate().toString()};
-        return data;
+        if (patient.getTreatment() == null) {
+            return new String[]{getPESEL(), getFirstName(), getLastName(), getAdmissionDate().toString(), ""};
+        }
+        return new String[]{getPESEL(), getFirstName(), getLastName(), getAdmissionDate().toString(), patient.getTreatment().getTreatingDoctor()};
     }
 
     public String[] getDoctorTableData() {

@@ -13,6 +13,7 @@ public class Treatment implements Serializable {
     private static List<Treatment> extent = new ArrayList<>();
     private PatientCard patientCard;
     private Person doctor;
+    private String treatingDoctor;
     private Person patient;
     private List<String> prescribedMedicine = new ArrayList<>();
     private boolean isOperationNeeded;
@@ -20,6 +21,10 @@ public class Treatment implements Serializable {
     private LocalDateTime treatmentEnd;
     private String afterTreatmentHealthState = "";
     private String disease = "";
+
+    public String getTreatingDoctor() {
+        return treatingDoctor;
+    }
 
     public String getDisease() {
         return disease;
@@ -47,7 +52,7 @@ public class Treatment implements Serializable {
     }
 
     public String[] getTreatmentTableData() {
-        String[] data = {getTreatmentStart().toString(), getTreatmentEnd().toString(), getDisease(), String.join(", ", getPrescribedMedicine())};
+        String[] data = {getTreatmentStart().toString(), getTreatmentEnd().toString(), getDisease(), String.join(", ", getPrescribedMedicine()), getTreatingDoctor()};
         return data;
     }
 
@@ -80,11 +85,7 @@ public class Treatment implements Serializable {
 
     public boolean startTreatment(Person doctor, Person patient) {
         treatmentStart = LocalDateTime.now();
-        if (setPerson(doctor, PersonRole.DOCTOR) && setPerson(patient, PersonRole.PATIENT)) {
-            return true;
-        }
-
-        return false;
+        return setPerson(doctor, PersonRole.DOCTOR) && setPerson(patient, PersonRole.PATIENT);
     }
 
     public void finishTreatment() {
@@ -121,6 +122,7 @@ public class Treatment implements Serializable {
 
             if (role == PersonRole.DOCTOR && doctor == null) {
                 doctor = person;
+                treatingDoctor = person.getFirstName() + " " + person.getLastName();
                 if (!doctor.getDoctorTreatments().contains(this)) {
                     doctor.addDoctorTreatments(this);
                     return true;
