@@ -246,6 +246,13 @@ public class Person implements Serializable {
         return "not a doctor";
     }
 
+    public void setDoctorSalary(int salary) {
+        if (currentRole == PersonRole.DOCTOR) {
+            doctor.setSalary(salary);
+        }
+    }
+
+
     public int getDoctorSalary() {
         if (currentRole == PersonRole.DOCTOR) {
             return doctor.getSalary();
@@ -425,8 +432,8 @@ public class Person implements Serializable {
             return salary;
         }
 
-        private void setSalary(int id) {
-            this.salary = id;
+        private void setSalary(int salary) {
+            this.salary = salary;
         }
 
         private List<Treatment> getTreatments() {

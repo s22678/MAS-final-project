@@ -1,5 +1,6 @@
 package s22678.View.Doctor.List;
 
+import s22678.Model.Person;
 import s22678.View.Doctor.Show.ShowDoctorFrame;
 
 import javax.swing.*;
@@ -34,7 +35,8 @@ public class ListDoctorTable extends JTable {
                     String firstName = (String) getValueAt(row, 1);
                     String lastName = (String) getValueAt(row, 2);
 
-                    new ShowDoctorFrame(pesel, firstName, lastName);
+                    Person doctor = Person.getPersonByFullNameandPesel(pesel, firstName, lastName);
+                    new ShowDoctorFrame(doctor);
                 }
             }
         });

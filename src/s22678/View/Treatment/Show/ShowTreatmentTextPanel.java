@@ -20,7 +20,6 @@ public class ShowTreatmentTextPanel extends JPanel {
         mainLayout.setVgap(40);
         setLayout(mainLayout);
 
-
         // First Row
         // Add doctor full name to JPanel
         add(new CustomJLabel("Doctor:", SwingConstants.CENTER));
@@ -43,7 +42,6 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(new JSeparator());
         add(new JSeparator());
         add(new JSeparator());
-
 
         // Second Row
         // Add treatment start description to JPanel
@@ -83,8 +81,6 @@ public class ShowTreatmentTextPanel extends JPanel {
         // Add allergies data to JPanel
         add(allergiesTextField);
 
-
-
         // Fourth Row
         // Add prescribed drugs to JPanel
         add(new CustomJLabel("Prescribed drugs:", SwingConstants.CENTER));
@@ -103,8 +99,6 @@ public class ShowTreatmentTextPanel extends JPanel {
         patientHealthAfterTreatmentDataTextField = new CustomJTextField(pTreatment);
         // Add patient health after treatment data to JPanel
         add(patientHealthAfterTreatmentDataTextField);
-
-
 
         // Fifth row
         // Assigned bed data text field
