@@ -52,7 +52,7 @@ public class Treatment implements Serializable {
     }
 
     public String[] getTreatmentTableData() {
-        String[] data = {getTreatmentStart().toString(), getTreatmentEnd().toString(), getDisease(), String.join(", ", getPrescribedMedicine()), getTreatingDoctor()};
+        String[] data = {getTreatmentStart().toString().substring(0, 16), getTreatmentEnd().toString().substring(0, 16), getDisease(), String.join(", ", getPrescribedMedicine()), getTreatingDoctor()};
         return data;
     }
 

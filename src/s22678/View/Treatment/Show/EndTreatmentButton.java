@@ -13,8 +13,9 @@ public class EndTreatmentButton extends CustomJButton {
         addActionListener(e -> {
             if (panel.getDiseasesTextField().getText().length() == 0  || panel.getPrescribedDrugsTextField().getText().length() == 0 || panel.getPatientHealthAfterTreatmentDataTextField().getText().length() == 0) JOptionPane.showMessageDialog(this, new CustomJLabel("Diseases, prescribed drugs and patient health after treatment must be filled in before ending the treatment"), "Input Data error", JOptionPane.ERROR_MESSAGE);
             else {
+                SaveTreatmentData.save(panel, treatment);
                 treatment.finishTreatment();
-                panel.setTreatmentEndTextField(treatment.getTreatmentEnd().toString());
+                panel.setTreatmentEndTextField(treatment.getTreatmentEnd().toString().substring(0, 16));
                 JOptionPane.showMessageDialog(this, new CustomJLabel("Treatment ended"));
             }
         });

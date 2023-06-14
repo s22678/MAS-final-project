@@ -10,7 +10,7 @@ import java.awt.*;
 public class ShowPatientTopPanel extends JPanel {
     public ShowPatientTopPanel(Person patient) {
         setLayout(new GridLayout(1, 4));
-        GridLayout topLayout = new GridLayout(5 ,1);
+        GridLayout topLayout = new GridLayout(4 ,1);
         topLayout.setVgap(40);
         JPanel leftLeft = new JPanel(topLayout);
         JPanel leftRight = new JPanel(topLayout);
@@ -52,16 +52,22 @@ public class ShowPatientTopPanel extends JPanel {
 
         // Add admission date
         rightLeft.add(new CustomJLabel("Admission date", SwingConstants.CENTER));
-        rightRight.add(new CustomJTextField(patient.getAdmissionDate().toString(), false));
+        rightRight.add(new CustomJTextField(patient.getAdmissionDate().toString().substring(0, 16), false));
 
         // If patient is a minor, add his parents' info
         if (patient.getAge() < 18) {
-            topLayout.setRows(5);
+            topLayout.setRows(topLayout.getRows() + 1);
             leftLeft.add(new CustomJLabel("Parents info:", SwingConstants.CENTER));
             leftRight.add(new CustomJTextField(patient.getPatientParentsInfo(), false));
 
             rightLeft.add(new CustomJLabel("Parents contact info:", SwingConstants.CENTER));
             rightRight.add(new CustomJTextField(patient.getPatientParentsContactInfo(), false));
+        }
+
+        if (patient.isPatientContagious()) {
+            topLayout.setRows(topLayout.getRows() + 1);
+            leftLeft.add(new CustomJLabel("Contagious:", SwingConstants.CENTER));
+            leftRight.add(new CustomJTextField("true", false));
         }
     }
 }

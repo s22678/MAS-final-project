@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 
 import static s22678.View.Main.MainView.getTextFieldHeight;
-import static s22678.View.Main.MainView.getTextFieldWidth;
 
 public class ListSelectedPatientPanel extends JPanel {
     private final CustomJTextField doctorTextField = new CustomJTextField("", new Dimension(400, getTextFieldHeight()));
+    private Person doctor;
     private static ListSelectedPatientPanel thisPanel;
     public ListSelectedPatientPanel() {
         setLayout(new BorderLayout());
@@ -28,10 +28,11 @@ public class ListSelectedPatientPanel extends JPanel {
         doctorInfo.add(doctorLabel);
         doctorInfo.add(doctorTextField);
         doctorTextField.setEnabled(false);
+        doctorTextField.setDisabledTextColor(Color.black);
         this.add(doctorInfo, BorderLayout.NORTH);
         doctorInfo.setPreferredSize(new Dimension(50, 75));
 
-        CustomJButton refreshButton = new ListSelectedPatientRefreshButton("Refresh");
+        CustomJButton refreshButton = new ListSelectedPatientRefreshButton("Refresh", this);
         CustomJButton closeButton = new ListSelectedPatientCloseButton("Close");
 
         buttonContainer.add(refreshButton);
@@ -50,7 +51,12 @@ public class ListSelectedPatientPanel extends JPanel {
 
     public void updateDoctor(Person doctor) {
         if (doctor != null) {
+            this.doctor = doctor;
             doctorTextField.setText(doctor.getFirstName() + " " + doctor.getLastName());
         }
+    }
+
+    public Person getDoctor() {
+        return doctor;
     }
 }

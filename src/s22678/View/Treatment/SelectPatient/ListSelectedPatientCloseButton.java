@@ -4,8 +4,8 @@ import s22678.View.CustomSwingClasses.CustomJButton;
 import s22678.View.Main.MainView;
 
 public class ListSelectedPatientCloseButton extends CustomJButton {
-    public ListSelectedPatientCloseButton(String buttonName) {
-        super(buttonName);
+    public ListSelectedPatientCloseButton(String text) {
+        super(text);
 
         addActionListener(e -> {
             System.out.println("changing view to listDoctorWithPatientPanel");

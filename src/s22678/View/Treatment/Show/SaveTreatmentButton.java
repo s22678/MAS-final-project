@@ -13,14 +13,7 @@ public class SaveTreatmentButton extends CustomJButton {
         super(text);
 
         addActionListener(e -> {
-            List<String> prescribedMedicine = Arrays.asList(panel.getPrescribedDrugsTextField().getText().split(", "));
-            String afterTreatmentHealthState = panel.getPatientHealthAfterTreatmentDataTextField().getText();
-            System.out.println("save button debug: diseases: " + panel.getDiseasesTextField().getText());
-            String disease = panel.getDiseasesTextField().getText();
-
-            treatment.setPrescribedMedicine(prescribedMedicine);
-            treatment.setAfterTreatmentHealthState(afterTreatmentHealthState);
-            treatment.setDisease(disease);
+            SaveTreatmentData.save(panel, treatment);
             JOptionPane.showMessageDialog(this, new CustomJLabel("Patient data saved (temporarily, save to file to store permanently)"));
         });
     }

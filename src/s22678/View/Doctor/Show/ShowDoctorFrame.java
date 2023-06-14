@@ -5,8 +5,10 @@ import s22678.Model.Person;
 import s22678.View.CustomSwingClasses.CustomJLabel;
 import s22678.View.CustomSwingClasses.CustomJTextField;
 
+import javax.print.Doc;
 import javax.swing.*;
 import java.awt.*;
+import java.util.EnumSet;
 
 import static s22678.View.Main.MainView.*;
 
@@ -19,7 +21,7 @@ public class ShowDoctorFrame extends JFrame {
 
         JPanel textPanel = new JPanel(new GridLayout(1, 4));
 
-        GridLayout masterGridLayout = new GridLayout(8 ,1);
+        GridLayout masterGridLayout = new GridLayout(7 ,1);
         masterGridLayout.setVgap(40);
 
         // First column label description
@@ -62,19 +64,35 @@ public class ShowDoctorFrame extends JFrame {
         firstDescriptionLabelColumn.add(new CustomJLabel("Salary:", SwingConstants.CENTER));
 
         // add salary label data to JPanel
-        CustomJTextField salary = new CustomJTextField(String.valueOf(doctor.getDoctorSalary()));
-        firstDataLabelColumn.add(salary);
+        CustomJTextField salaryTextField = new CustomJTextField(String.valueOf(doctor.getDoctorSalary()));
+        firstDataLabelColumn.add(salaryTextField);
 
         // add fields label description to JPanel
         secondDescriptionLabelColumn.add(new CustomJLabel("Fields:", SwingConstants.CENTER));
 
         // fields label data
+        EnumSet<DoctorField> doctorFields = doctor.getDoctorFields();
         String tmp = "";
-        for (DoctorField field : doctor.getDoctorFields()) {
+        for (DoctorField field : doctorFields) {
             tmp = tmp + " " + field.toString();
         }
         // add fields label data to JPanel
         secondDataLabelColumn.add(new CustomJTextField(tmp, false));
+
+        if (doctorFields.contains(DoctorField.SURGEON)) {
+            // add successful operations label description to JPanel
+            firstDescriptionLabelColumn.add(new CustomJLabel("Successful operations:", SwingConstants.CENTER));
+
+            // add successful operations label data to JPanel
+            firstDataLabelColumn.add(new CustomJTextField(String.join(", ", doctor.getDoctorSuccessfulOperations()), false));
+            secondDescriptionLabelColumn.add(new JPanel());
+            secondDataLabelColumn.add(new JPanel());
+        }
+
+        firstDescriptionLabelColumn.add(new JSeparator());
+        firstDataLabelColumn.add(new JSeparator());
+        secondDescriptionLabelColumn.add(new JSeparator());
+        secondDataLabelColumn.add(new JSeparator());
 
         textPanel.add(firstDescriptionLabelColumn);
         textPanel.add(firstDataLabelColumn);
@@ -82,7 +100,7 @@ public class ShowDoctorFrame extends JFrame {
         textPanel.add(secondDataLabelColumn);
 
         add(textPanel, BorderLayout.CENTER);
-        add(new ShowDoctorChangeSalaryButton(doctor, salary), BorderLayout.SOUTH);
+        add(new ShowDoctorChangeSalaryButton(doctor, salaryTextField), BorderLayout.SOUTH);
         setVisible(true);
     }
 }

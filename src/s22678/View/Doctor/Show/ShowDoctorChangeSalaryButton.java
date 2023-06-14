@@ -8,11 +8,11 @@ import s22678.View.CustomSwingClasses.CustomJTextField;
 import javax.swing.*;
 
 public class ShowDoctorChangeSalaryButton extends CustomJButton {
-    public ShowDoctorChangeSalaryButton(Person doctor, CustomJTextField salary) {
+    public ShowDoctorChangeSalaryButton(Person doctor, CustomJTextField salaryTextField) {
         setText("Set Salary");
 
         addActionListener(e -> {
-            doctor.setDoctorSalary(Integer.parseInt(salary.getText()));
+            doctor.setDoctorSalary(Integer.parseInt(salaryTextField.getText()));
             JOptionPane.showMessageDialog(this, new CustomJLabel("Doctor " + doctor.getFirstName() + " " + doctor.getLastName() + " changed"));
         });
     }

@@ -13,8 +13,8 @@ import java.awt.*;
 public class MainView extends JFrame {
     private static final int textFieldHeight = 50;
     private static final int textFieldWidth = 200;
-    private static final int screenWidth = 1536;
-    private static final int screenHeight = 864;
+    private static final int screenWidth = 2000;
+    private static final int screenHeight = 1300;
     private static final int fontSize = 30;
     private static final Font serifFont = new Font("Serif,", Font.PLAIN, fontSize);
     private static final Font sansSerifFont = new Font("SansSerif,", Font.PLAIN, fontSize);

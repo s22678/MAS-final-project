@@ -34,7 +34,7 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(new CustomJLabel("Patient:", SwingConstants.CENTER));
 
         // Patient full name data textField
-        CustomJTextField patientNameTextField = new CustomJTextField(treatment.getPatient().getFirstName() + " " + treatment.getPatient().getLastName() + " " + treatment.getPatient().getPatientBloodType(), false);
+        CustomJTextField patientNameTextField = new CustomJTextField(treatment.getPatient().getFirstName() + " " + treatment.getPatient().getLastName() + "     " + treatment.getPatient().getPatientBloodType(), false);
         patientNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
         // Add patient full name data to JPanel
         add(patientNameTextField);
@@ -48,7 +48,7 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(new CustomJLabel("Treatment Start:", SwingConstants.CENTER));
 
         // Treatment start data textField
-        CustomJTextField treatmentStartTextField = new CustomJTextField(treatment.getTreatmentStart().toString(), false);
+        CustomJTextField treatmentStartTextField = new CustomJTextField(treatment.getTreatmentStart().toString().substring(0, 16), false);
         // Add treatment start data to JPanel
         add(treatmentStartTextField);
 

@@ -22,8 +22,9 @@ public class AddDoctorButton extends CustomJButton {
             else if (panel.getFields().getSelectedIndices().length < 1) JOptionPane.showMessageDialog(this, new CustomJLabel("at least 1 field must be selected"), "Field Select Error", JOptionPane.ERROR_MESSAGE);
             else {
                 DoctorField[] selectedFields = new DoctorField[panel.getFields().getSelectedIndices().length];
-                for(int i = 0; i < panel.getFields().getSelectedIndices().length; i++) {
-                    selectedFields[i] = panel.getdFields()[i];
+                int i = 0;
+                for (Integer fieldNumber : panel.getFields().getSelectedIndices()) {
+                    selectedFields[i++] = panel.getdFields()[fieldNumber];
                 }
                 new Person(panel.getPESELTextField().getText(), panel.getFirstNameTextField().getText(), panel.getLastNameTextField().getText(), panel.getAddressTextField().getText(), Integer.parseInt(panel.getSalaryTextField().getText()), panel.getSpecializationTextField().getText(), selectedFields);
 

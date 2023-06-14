@@ -39,8 +39,8 @@ public class ListDoctorWithPatientTable extends JTable {
                     Person doctor = getDoctorByPesel(pesel);
 
                     ListSelectedPatientActionListener.reload(doctor);
-                    ListSelectedPatientPanel.getPanel().updateDoctor(getDoctorByPesel(pesel));
-                    ListSelectedPatientTable.setDoctor(getDoctorByPesel(pesel));
+                    ListSelectedPatientPanel.getPanel().updateDoctor(doctor);
+                    ListSelectedPatientTable.setDoctor(doctor);
                     System.out.println("changing view to listSelectedPatientPanel");
                     MainView.getCardLayout().show(MainView.getMainPanel(), "listSelectedPatientPanel");
                 }
