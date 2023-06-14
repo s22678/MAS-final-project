@@ -29,6 +29,11 @@ public class ShowPatientHistoryTable extends JTable {
         tableModel = new DefaultTableModel(columnNames, 0);
         setModel(tableModel);
 
+        tableModel.setRowCount(0);
+        for (Treatment treatment : patient.getPatientCard().getPatientHistory()) {
+            ListDoctorTable.getDefaultTableModel().addRow(treatment.getTreatmentTableData());
+        }
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

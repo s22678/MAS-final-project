@@ -25,10 +25,11 @@ public class ShowPatientFrame extends JFrame {
         panel.add(bottom);
 
 
-        StartTreatmentButton button = new StartTreatmentButton("Start new treatment", patient);
+        StartTreatmentButton newTreatmentButton = new StartTreatmentButton("Start new treatment", patient);
+//        ReloadButton reloadButton = new ReloadButton("Reload")
 
         add(panel, BorderLayout.CENTER);
-        add(button, BorderLayout.SOUTH);
+        add(newTreatmentButton, BorderLayout.SOUTH);
         setVisible(true);
     }
 }
