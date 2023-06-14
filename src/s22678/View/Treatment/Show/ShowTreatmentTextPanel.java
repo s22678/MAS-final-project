@@ -100,7 +100,7 @@ public class ShowTreatmentTextPanel extends JPanel {
         add(new CustomJLabel("Patient health after treatment:", SwingConstants.CENTER));
 
         // Patient health after treatment data text field
-        String pTreatment = treatment.getAfterTreatmentHealtState() == null ? "" : treatment.getAfterTreatmentHealtState();
+        String pTreatment = treatment.getAfterTreatmentHealthState() == null ? "" : treatment.getAfterTreatmentHealthState();
         patientHealthAfterTreatmentDataTextField = new CustomJTextField(pTreatment);
         // Add patient health after treatment data to JPanel
         add(patientHealthAfterTreatmentDataTextField);

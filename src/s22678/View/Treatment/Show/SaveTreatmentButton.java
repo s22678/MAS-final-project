@@ -3,8 +3,6 @@ package s22678.View.Treatment.Show;
 import s22678.Model.Treatment;
 import s22678.View.CustomSwingClasses.CustomJButton;
 
-import javax.swing.*;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class SaveTreatmentButton extends CustomJButton {
             String disease = panel.getDiseasesTextField().getText();
 
             treatment.setPrescribedMedicine(prescribedMedicine);
-            treatment.setAfterTreatmentHealtState(afterTreatmentHealthState);
+            treatment.setAfterTreatmentHealthState(afterTreatmentHealthState);
             treatment.setDisease(disease);
         });
     }

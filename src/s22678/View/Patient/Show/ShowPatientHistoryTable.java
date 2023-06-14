@@ -1,6 +1,10 @@
 package s22678.View.Patient.Show;
 
+import s22678.Model.PatientCard;
 import s22678.Model.Person;
+import s22678.Model.PersonRole;
+import s22678.Model.Treatment;
+import s22678.View.Doctor.List.ListDoctorTable;
 import s22678.View.Doctor.Show.ShowDoctorFrame;
 
 import javax.swing.*;
@@ -29,12 +33,10 @@ public class ShowPatientHistoryTable extends JTable {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    int row = getSelectedRow();
-                    String pesel = (String) getValueAt(row, 0);
-                    String firstName = (String) getValueAt(row, 1);
-                    String lastName = (String) getValueAt(row, 2);
-
-                    new ShowDoctorFrame(pesel, firstName, lastName);
+                    tableModel.setRowCount(0);
+                    for (Treatment treatment : patient.getPatientCard().getPatientHistory()) {
+                            ListDoctorTable.getDefaultTableModel().addRow(treatment.getTreatmentTableData());
+                    }
                 }
             }
         });

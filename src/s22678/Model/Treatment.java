@@ -18,8 +18,8 @@ public class Treatment implements Serializable {
     private boolean isOperationNeeded;
     private LocalDateTime treatmentStart;
     private LocalDateTime treatmentEnd;
-    private String afterTreatmentHealtState;
-    private String disease;
+    private String afterTreatmentHealthState = "";
+    private String disease = "";
 
     public String getDisease() {
         return disease;
@@ -44,6 +44,11 @@ public class Treatment implements Serializable {
             treatmentStart = LocalDateTime.now();
             extent.add(this);
         }
+    }
+
+    public String[] getTreatmentTableData() {
+        String[] data = {getTreatmentStart().toString(), getTreatmentEnd().toString(), getDisease(), String.join(", ", getPrescribedMedicine())};
+        return data;
     }
 
     public static void save(ObjectOutputStream stream) throws IOException {
@@ -169,12 +174,12 @@ public class Treatment implements Serializable {
         this.treatmentEnd = treatmentEnd;
     }
 
-    public String getAfterTreatmentHealtState() {
-        return afterTreatmentHealtState;
+    public String getAfterTreatmentHealthState() {
+        return afterTreatmentHealthState;
     }
 
-    public void setAfterTreatmentHealtState(String afterTreatmentHealtState) {
-        this.afterTreatmentHealtState = afterTreatmentHealtState;
+    public void setAfterTreatmentHealthState(String afterTreatmentHealthState) {
+        this.afterTreatmentHealthState = afterTreatmentHealthState;
     }
 
     @Override
@@ -197,7 +202,7 @@ public class Treatment implements Serializable {
         }
 
         if (treatmentStart != null && treatmentEnd != null) {
-            return "Treatment over; Treatment start: " + treatmentStart + " Treatment end: " + treatmentEnd + " afterTreatmentHealtState: " + afterTreatmentHealtState;
+            return "Treatment over; Treatment start: " + treatmentStart + " Treatment end: " + treatmentEnd + " afterTreatmentHealtState: " + afterTreatmentHealthState;
         }
         return "";
     }

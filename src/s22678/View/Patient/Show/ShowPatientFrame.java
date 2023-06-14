@@ -18,8 +18,8 @@ public class ShowPatientFrame extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(2 ,1));
 
-        JPanel top = new ShowPatientTopPanel(patient);
-        JPanel bottom = new JPanel();
+        ShowPatientTopPanel top = new ShowPatientTopPanel(patient);
+        ShowPatientBottomPanel bottom = new ShowPatientBottomPanel(patient);
 
         panel.add(top);
         panel.add(bottom);
