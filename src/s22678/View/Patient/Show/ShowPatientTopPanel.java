@@ -52,7 +52,7 @@ public class ShowPatientTopPanel extends JPanel {
 
         // Add admission date
         rightLeft.add(new CustomJLabel("Admission date", SwingConstants.CENTER));
-        rightRight.add(new CustomJTextField(patient.getAdmissionDate().toString().substring(0, 16), false));
+        rightRight.add(new CustomJTextField(patient.getPatientAdmissionDate().toString().substring(0, 16), false));
 
         // If patient is a minor, add his parents' info
         if (patient.getAge() < 18) {

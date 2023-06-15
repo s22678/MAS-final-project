@@ -9,7 +9,6 @@ public class ListRoomAndBedActionListener {
     public static void reload() {
         ListRoomAndBedTable.getDefaultTableModel().setRowCount(0);
         for (Room room : Room.getExtent()) {
-            System.out.println(room.getRoomNumber());
             for (Bed bed : room.getBeds()) {
                 ListRoomAndBedTable.getDefaultTableModel().addRow(
                         new Vector<String>() {{

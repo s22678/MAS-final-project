@@ -10,7 +10,7 @@ public class DoctorController {
     public static List<Person> getDoctorsWithPatients() {
         List<Person> doctors = new ArrayList<>();
         for (Person doctor : Person.getExtent().values()) {
-            if (doctor.getRole() == PersonRole.DOCTOR && doctor.getDoctorTreatments().size() > 0) doctors.add(doctor);
+            if (doctor.getCurrentRole() == PersonRole.DOCTOR && doctor.getDoctorTreatments().size() > 0) doctors.add(doctor);
         }
         return doctors;
     }
@@ -18,7 +18,7 @@ public class DoctorController {
     public static List<Person> getDoctors() {
         List<Person> doctors = new ArrayList<>();
         for (Person doctor : Person.getExtent().values()) {
-            if (doctor.getRole() == PersonRole.DOCTOR) doctors.add(doctor);
+            if (doctor.getCurrentRole() == PersonRole.DOCTOR) doctors.add(doctor);
         }
         return doctors;
     }
@@ -43,7 +43,7 @@ public class DoctorController {
 
     public static Person getDoctorByPesel(String PESEL) {
         for (Person doctor : Person.getExtent().values()) {
-            if (doctor.getRole() == PersonRole.DOCTOR && doctor.getPESEL().equals(PESEL)) return doctor;
+            if (doctor.getCurrentRole() == PersonRole.DOCTOR && doctor.getPESEL().equals(PESEL)) return doctor;
         }
         return null;
     }

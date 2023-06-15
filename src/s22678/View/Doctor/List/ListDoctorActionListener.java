@@ -7,7 +7,7 @@ public class ListDoctorActionListener {
     public static void reload() {
         ListDoctorTable.getDefaultTableModel().setRowCount(0);
         for (Person person : Person.getExtent().values()) {
-            if (person.getRole() == PersonRole.DOCTOR)
+            if (person.getCurrentRole() == PersonRole.DOCTOR)
                 ListDoctorTable.getDefaultTableModel().addRow(person.getDoctorTableData());
         }
     }

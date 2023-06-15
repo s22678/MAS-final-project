@@ -7,7 +7,7 @@ public class ListPatientActionListener {
     public static void reload() {
         ListPatientTable.getDefaultTableModel().setRowCount(0);
         for (Person person : Person.getExtent().values()) {
-            if (person.getRole() == PersonRole.PATIENT)
+            if (person.getCurrentRole() == PersonRole.PATIENT)
                 ListPatientTable.getDefaultTableModel().addRow(person.getPatientTableData());
         }
     }

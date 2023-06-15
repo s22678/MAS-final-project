@@ -48,17 +48,19 @@ public class FileMenu extends JMenu {
                         }
 
                         System.out.println("łóżka");
-                        java.util.List<Bed> beds = Bed.getExtent();
-                        System.out.println(beds);
+                        System.out.println(Bed.getExtent());
+
                         System.out.println("karty pacjenta");
-                        PatientCard.printExtent();
+                        System.out.println(PatientCard.getExtent());
+
                         System.out.println("osoby");
-                        Person.printExtent();
+                        System.out.println(Person.getExtent());
+
                         System.out.println("pokoje");
-                        Room.printExtent();
+                        System.out.println(Room.getExtent());
+
                         System.out.println("leczenia");
-                        List<Treatment> treatments = Treatment.getExtent();
-                        System.out.println(treatments);
+                        System.out.println( Treatment.getExtent());
 
                         reloadData();
                     }

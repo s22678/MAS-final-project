@@ -31,17 +31,25 @@ public class Bed implements Serializable {
         extent.add(this);
     }
 
+    /**
+     * Remove all Bed objects from the extent.
+     */
     public static void newFile() {
         getExtent().removeAll(getExtent());
     }
 
+    /**
+     * Save the Bed objects from the extent to the save file.
+     * @param stream stream of data for a save file.
+     * @throws IOException
+     */
     public static void save(ObjectOutputStream stream) throws IOException {
         stream.writeObject(Bed.getExtent());
     }
 
     /**
-     *
-     * @param stream
+     * Load data from file and save it in the Bed extent.
+     * @param stream stream of data from the save file.
      * @throws IOException
      * @throws ClassNotFoundException
      */

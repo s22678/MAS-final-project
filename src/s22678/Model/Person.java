@@ -1,7 +1,5 @@
 package s22678.Model;
 
-import s22678.Controller.PersonController;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,7 +22,18 @@ public class Person implements Serializable {
     private Patient patient;
     private PersonRole currentRole;
 
-    // Add doctor
+    /**
+     * This constructor creates a Person of type Doctor who treats patients. A doctor can become a patient.
+     * When doctor is a patient, he can't treat patients. All patients assigned to this doctor end their treatment
+     * and must start another treatment (and be assigned to a new doctor)
+     * @param PESEL
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param salary
+     * @param specialization
+     * @param doctorFields
+     */
     public Person(String PESEL, String firstName, String lastName, String address, int salary, String specialization, DoctorField... doctorFields) {
         if(addDoctorRoleToPerson(salary, specialization, doctorFields)) {
             this.PESEL = PESEL;
@@ -35,8 +44,18 @@ public class Person implements Serializable {
         }
     }
 
-    // Constructors
-    // Add Patient
+    /**
+     * This constructor creates a Person of type Patient. A patient must not be treated to be considered a doctor
+     * in this system.
+     * @param PESEL
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param bloodType
+     * @param allergies
+     * @param isContagious
+     * @param patientCard
+     */
     public Person(String PESEL, String firstName, String lastName, String address, String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
         if(addPatientRoleToPerson(bloodType, allergies, isContagious, patientCard)) {
             this.PESEL = PESEL;
@@ -47,6 +66,13 @@ public class Person implements Serializable {
         }
     }
 
+    /**
+     * If a person has a patient only, this method allows to add a doctor attributes and make patient a doctor.
+     * @param salary
+     * @param specialization
+     * @param doctorFields
+     * @return
+     */
     public boolean addDoctorRoleToPerson(int salary, String specialization, DoctorField... doctorFields) {
         if (this.doctor == null) {
             this.doctor = new Doctor(salary, specialization, doctorFields);
@@ -56,17 +82,14 @@ public class Person implements Serializable {
         return false;
     }
 
-    public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious) {
-        if (this.patient == null) {
-            currentRole = PersonRole.PATIENT;
-            PatientCard patientCard = new PatientCard();
-            this.patient = new Patient(bloodType, allergies, isContagious);
-            this.patient.setPatientCard(patientCard);
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * If a person has a doctor role only, this method allows to add a patient's attributes and make doctor a patient.
+     * @param bloodType
+     * @param allergies
+     * @param isContagious
+     * @param patientCard
+     * @return
+     */
     public boolean addPatientRoleToPerson(String bloodType, String allergies, boolean isContagious, PatientCard patientCard) {
         if (this.patient == null) {
             currentRole = PersonRole.PATIENT;
@@ -77,14 +100,56 @@ public class Person implements Serializable {
         return false;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
+    /**
+     * Remove all Person objects from the extent.
+     */
     public static void newFile() {
         extent.clear();
     }
 
+    /**
+     * Save the Person objects from the extent to the save file.
+     * @param stream stream of data for a save file.
+     * @throws IOException
+     */
+    public static void save(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(minTrainingsRequired);
+        stream.writeObject(extent);
+    }
+
+    /**
+     * Load data from file and save it in the Person extent.
+     * @param stream stream of data from the save file.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        minTrainingsRequired = (int) stream.readObject();
+        extent = (HashMap<String, Person>) stream.readObject();
+    }
+
+    /**
+     * Simple getter for Person extent
+     * @return List of all Person objects created so far, saved in an extent.
+     */
+    public static HashMap<String, Person> getExtent() {
+        return extent;
+    }
+
+    /**
+     * Remove a Person from the extent. This allows to remove unwanted patients or doctors removed from the system.
+     * @param PESEL of the person that needs to be removed from the system.
+     */
+    public void removeFromExtent(int PESEL) {
+        extent.remove(PESEL);
+    }
+
+    /**
+     * When adding a new patient it's good to check if some fields were left empty. If so - return false to indicate
+     * that few TextFields are empty and need to be filled out.
+     * @param textFields list of TextFields with the patient's information.
+     * @return whether the information in TextFields is too short (less than 2 characters).
+     */
     public static boolean isTextFieldDataIncorrect(String... textFields) {
         for(String field : textFields) {
             if (field.length() < 2) {
@@ -95,6 +160,90 @@ public class Person implements Serializable {
         return false;
     }
 
+    /**
+     * Get a Person object from the extent given his pesel, first and last name.
+     * @param PESEL person's pesel.
+     * @param firstName person's first name.
+     * @param lastName person's last name.
+     * @return person
+     */
+    public static Person getPersonByFullNameandPesel(String PESEL, String firstName, String lastName) {
+        for (Person person : extent.values()) {
+            if (person.PESEL == PESEL && person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Change minimum amount of trainings completed required for all doctors.
+     * @param newMin new amount of minimum trainings.
+     */
+    public static void changeMinTrainingsRequired(int newMin) {
+        minTrainingsRequired = newMin;
+    }
+
+    /**
+     * Get the minimum amount of trainings that must be completed by all doctors.
+     * @return minimum number of trainings.
+     */
+    public int getMinTrainingsRequired() {
+        return minTrainingsRequired;
+    }
+
+    /**
+     * Get the Person's first name.
+     * @return first name.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Get the Person's last name.
+     * @return last name.
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Get the Person's pesel.
+     * @return pesesl.
+     */
+    public String getPESEL() {
+        return PESEL;
+    }
+
+    /**
+     * Get the person's address
+     * @return address as a String.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Get the doctor 'subclass' of the Person.
+     * @return Doctor object
+     */
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    /**
+     * Get the patient 'subclass' of the Person.
+     * @return Patient object
+     */
+    public Patient getPatient() {
+        return patient;
+    }
+
+    /**
+     * Get birthday of the Person object.
+     * @return birthday as a String type.
+     */
     public String getBirthday() {
         String birthday = getPESEL();
         if (Character.getNumericValue(birthday.charAt(2)) > 1) {
@@ -106,106 +255,174 @@ public class Person implements Serializable {
         }
     }
 
+    /**
+     * Get birthday of the Person Subject.
+     * @return birthday as a LocalDate type.
+     */
     public LocalDate getBirthdayDate() {
         String birthday = getBirthday();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         return LocalDate.parse(birthday, formatter);
     }
 
+    /**
+     * Get age of the Person object.
+     * @return age as an integer.
+     */
     public int getAge() {
         return Period.between(getBirthdayDate(), LocalDate.now()).getYears();
     }
 
-    public static void save(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(minTrainingsRequired);
-        stream.writeObject(extent);
-    }
-
-    public static void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        minTrainingsRequired = (int) stream.readObject();
-        extent = (HashMap<String, Person>) stream.readObject();
-    }
-
+    /**
+     * This method aggregates pesel, first, last name, admission date and optionally a patient's doctor if the patient
+     * is being treated. This allows to read the patient's data in the JTable.
+     * @return Array consisting of patient's personal data.
+     */
     public String[] getPatientTableData() {
         if (patient.getTreatment() == null) {
-            return new String[]{getPESEL(), getFirstName(), getLastName(), getAdmissionDate().toString().substring(0, 16), ""};
+            return new String[]{getPESEL(), getFirstName(), getLastName(), getPatientAdmissionDate().toString().substring(0, 16), ""};
         }
-        return new String[]{getPESEL(), getFirstName(), getLastName(), getAdmissionDate().toString().substring(0, 16), patient.getTreatment().getTreatingDoctor()};
+        return new String[]{getPESEL(), getFirstName(), getLastName(), getPatientAdmissionDate().toString().substring(0, 16), patient.getTreatment().getTreatingDoctor()};
     }
 
+    /**
+     * This method aggregates pesel, first, last name, and doctor's specialization.
+     * This allows to read the doctor's data in the JTable.
+     * @return Array consisting of doctor's personal data.
+     */
     public String[] getDoctorTableData() {
         String[] data = {getPESEL(), getFirstName(), getLastName(), getDoctorSpecialization()};
         return data;
     }
 
-    public static HashMap<String, Person> getExtent() {
-        return extent;
-    }
-
-    public static Person getPersonByFullName(String firstName, String lastName) {
-        for (Person person : extent.values()) {
-            if (person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public static Person getPersonByFullNameandPesel(String PESEL, String firstName, String lastName) {
-        for (Person person : extent.values()) {
-            if (person.PESEL == PESEL && person.firstName.equals(firstName) && person.lastName.equals(lastName)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public static void changeMinTrainingsRequired(int newMin) {
-        minTrainingsRequired = newMin;
-    }
-
-    public int getMinTrainingsRequired() {
-        return minTrainingsRequired;
-    }
-
-    public static void printExtent() {
-        for (String PESEL : extent.keySet()) {
-            System.out.println("PESEL: " + PESEL + " Osoba: " + extent.get(PESEL));
-        }
-    }
-
-    public void removeFromExtent(int PESEL) {
-        extent.remove(PESEL);
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getPESEL() {
-        return PESEL;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
+    /**
+     * Get current role that's assigned to the Person - either a Doctor or a Patient.
+     * @return Person's role.
+     */
     public PersonRole getCurrentRole() {
         return currentRole;
     }
 
+    /**
+     * Change the role of the Person from Doctor to Patient and vice versa.
+     * @return bool whether the change was successful or not.
+     */
+    public boolean switchRole() {
+        if (currentRole == PersonRole.PATIENT && doctor != null) {
+            currentRole = PersonRole.DOCTOR;
+            return true;
+        }
+
+        if (currentRole == PersonRole.DOCTOR && patient != null ){
+            currentRole = PersonRole.PATIENT;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get Doctor's specialization
+     * @return specialization, or 'not a doctor' information when Person is not a Doctor.
+     */
+    public String getDoctorSpecialization() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getSpecialization();
+        }
+        return "not a doctor";
+    }
+
+    /**
+     * Set Doctor's salary if the Person is a Doctor.
+     * @param salary new Doctor's salary.
+     */
+    public void setDoctorSalary(int salary) {
+        if (currentRole == PersonRole.DOCTOR) {
+            doctor.setSalary(salary);
+        }
+    }
+
+    /**
+     * If the Person is a Doctor, get his salary
+     * @return salary or 0 if the person is not a Doctor.
+     */
+    public int getDoctorSalary() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getSalary();
+        }
+        return 0;
+    }
+
+    /**
+     * If the Person is a Doctor, get successful operations.
+     * @return list with successful operations
+     */
+    public List<String> getDoctorSuccessfulOperations() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getSuccessfulOperations();
+        }
+        return null;
+    }
+
+    /**
+     * Get the fields of the Doctor. Possible values are SURGEON or DIAGNOSTICIAN.
+     * @return field of the Doctor
+     */
+    public EnumSet<DoctorField> getDoctorFields() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getFields();
+        }
+        return null;
+    }
+
+    /**
+     * Get all the Treatments the Doctor is involved in.
+     * @return list of Treatments.
+     */
+    public List<Treatment> getDoctorTreatments() {
+        if (currentRole == PersonRole.DOCTOR) {
+            return doctor.getTreatments();
+        }
+        return null;
+    }
+
+    /**
+     * Add new Treatment to the Doctor's queue.
+     * @param treatment new Treatment.
+     */
+    public void addDoctorTreatments(Treatment treatment) {
+        if (currentRole == PersonRole.DOCTOR) {
+            doctor.addTreatment(treatment);
+        }
+    }
+
+    /**
+     * If the Treatment is over - remove the Treatment from the Doctor's queue.
+     * @param treatment that is to be removed from the Treatments list.
+     */
+    public void removeDoctorTreatments(Treatment treatment) {
+        if (currentRole == PersonRole.DOCTOR) {
+            doctor.removeTreatment(treatment);
+        }
+    }
+
+    /**
+     * Set the Bed where Patient is being treated. Creates a double association.
+     * @param bed which will be assigned to Patient.
+     */
+    public void setPatientBed(Bed bed)  {
+        if (currentRole == PersonRole.PATIENT) {
+            patient.bed = bed;
+        }
+
+        if (bed != null) {
+            bed.setPatient(this);
+        }
+    }
+
+    /**
+     * Get the Bed that is assigned to the Patient.
+     * @return Bed object.
+     */
     public Bed getPatientBed() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.getBed();
@@ -213,6 +430,10 @@ public class Person implements Serializable {
         return null;
     }
 
+    /**
+     * Return Patient's parents information (names and last name).
+     * @return Patient's parents' names.
+     */
     public String getPatientParentsInfo() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.getParentsInfo();
@@ -220,6 +441,10 @@ public class Person implements Serializable {
         return "";
     }
 
+    /**
+     * Set the Patient's parents information.
+     * @param parentsInfo 
+     */
     public void setPatientParentsInfo(String parentsInfo) {
         if (currentRole == PersonRole.PATIENT) {
             patient.setParentsInfo(parentsInfo);
@@ -235,88 +460,7 @@ public class Person implements Serializable {
 
     public void setPatientParentsContactInfo(String parentsContactInfo) {
         if (currentRole == PersonRole.PATIENT) {
-                patient.setParentsContactInfo(parentsContactInfo);
-        }
-    }
-
-    public String getDoctorSpecialization() {
-        if (currentRole == PersonRole.DOCTOR) {
-            return doctor.getSpecialization();
-        }
-        return "not a doctor";
-    }
-
-    public void setDoctorSalary(int salary) {
-        if (currentRole == PersonRole.DOCTOR) {
-            doctor.setSalary(salary);
-        }
-    }
-
-
-    public int getDoctorSalary() {
-        if (currentRole == PersonRole.DOCTOR) {
-            return doctor.getSalary();
-        }
-        return 0;
-    }
-
-    public List<String> getDoctorSuccessfulOperations() {
-        if (currentRole == PersonRole.DOCTOR) {
-            return doctor.getSuccessfulOperations();
-        }
-        return null;
-    }
-
-    public EnumSet<DoctorField> getDoctorFields() {
-        if (currentRole == PersonRole.DOCTOR) {
-            return doctor.getFields();
-        }
-        return null;
-    }
-
-    public void setPatientBed(Bed bed)  {
-        if (currentRole == PersonRole.PATIENT) {
-            patient.bed = bed;
-        }
-
-        if (bed != null) {
-            bed.setPatient(this);
-        }
-    }
-
-    public boolean switchRole() {
-        if (currentRole == PersonRole.PATIENT && doctor != null) {
-            currentRole = PersonRole.DOCTOR;
-            return true;
-        }
-
-        if (currentRole == PersonRole.DOCTOR && patient != null ){
-            currentRole = PersonRole.PATIENT;
-            return true;
-        }
-        return false;
-    }
-
-    public PersonRole getRole() {
-        return currentRole;
-    }
-
-    public List<Treatment> getDoctorTreatments() {
-        if (currentRole == PersonRole.DOCTOR) {
-            return doctor.getTreatments();
-        }
-        return null;
-    }
-
-    public void addDoctorTreatments(Treatment treatment) {
-        if (currentRole == PersonRole.DOCTOR) {
-            doctor.addTreatment(treatment);
-        }
-    }
-
-    public void removeDoctorTreatments(Treatment treatment) {
-        if (currentRole == PersonRole.DOCTOR) {
-            doctor.removeTreatment(treatment);
+            patient.setParentsContactInfo(parentsContactInfo);
         }
     }
 
@@ -378,7 +522,7 @@ public class Person implements Serializable {
         return true;
     }
 
-    public LocalDateTime getAdmissionDate() {
+    public LocalDateTime getPatientAdmissionDate() {
         if (currentRole == PersonRole.PATIENT) {
             return patient.getAdmissionDate();
         }

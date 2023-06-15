@@ -111,7 +111,7 @@ public class Treatment implements Serializable {
             if (role == PersonRole.DOCTOR) doctor = null;
             return true;
         }
-        if (role == person.getRole()) {
+        if (role == person.getCurrentRole()) {
             if (role == PersonRole.PATIENT && patient == null) {
                 patient = person;
                 if (patient.getPatientTreatment() == null) {
