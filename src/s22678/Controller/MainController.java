@@ -13,7 +13,7 @@ public class MainController {
     public static void save(String absolutePath) throws IOException {
         ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(absolutePath));
 
-        Bed.save(stream);
+        BedController.save(stream);
         PatientCard.save(stream);
         Person.save(stream);
         Room.save(stream);
@@ -25,7 +25,7 @@ public class MainController {
     public static void load(String absolutePath) throws IOException, ClassNotFoundException {
         ObjectInputStream stream = new ObjectInputStream(new FileInputStream(absolutePath));
 
-        Bed.load(stream);
+        BedController.load(stream);
         PatientCard.load(stream);
         Person.load(stream);
         Room.load(stream);
@@ -35,7 +35,7 @@ public class MainController {
     }
 
     public static void newFile() {
-        Bed.newFile();
+        BedController.newFile();
         PatientCard.newFile();
         Person.newFile();
         Room.newFile();
