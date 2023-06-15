@@ -68,7 +68,6 @@ public class PatientCard implements Serializable {
     @Override
     public String toString() {
         return "PatientCard{" +
-//                "patient=" + patient.getFirstName() + patient.getLastName() +
                 "treatments= " + patientHistory.stream().count() +
                 '}';
     }

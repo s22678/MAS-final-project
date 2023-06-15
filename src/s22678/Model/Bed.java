@@ -31,6 +31,37 @@ public class Bed implements Serializable {
         extent.add(this);
     }
 
+    public static void newFile() {
+        getExtent().removeAll(getExtent());
+    }
+
+    public static void save(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(Bed.getExtent());
+    }
+
+    /**
+     *
+     * @param stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        setExtent((ArrayList<Bed>) stream.readObject());
+    }
+
+    /**
+     * Find and return the first available Bed out of all Beds.
+     * @return unoccupied Bed.
+     */
+    public static Bed getAvailableBed() {
+        for (Bed bed : getExtent()) {
+            if (!bed.isOccupied()) {
+                return bed;
+            }
+        }
+        return null;
+    }
+
     /**
      * Simple getter for Bed extent
      * @return List of all Bed objects created so far, saved in an extent.
@@ -112,8 +143,8 @@ public class Bed implements Serializable {
     }
 
     /**
-     * 
-     * @return
+     * Get the unique ID assigned to each bed.
+     * @return Bed ID.
      */
     private int getNewBedId() {
         if (extent.size() == 0) {
@@ -131,6 +162,12 @@ public class Bed implements Serializable {
         return ++largest;
     }
 
+    /**
+     * When the patient's treatment is over, this method allows to set the bed, so it's no longer occupied.
+     * <p>
+     *     This method removes the patient from the bed, making it available to be used by another patient.
+     * </p>
+     */
     public void freeBed() {
         this.patient.setPatientBed(null);
         this.patient = null;

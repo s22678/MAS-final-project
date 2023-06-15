@@ -1,7 +1,5 @@
 package s22678.Model;
 
-import s22678.Controller.BedController;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -148,7 +146,7 @@ public class Treatment implements Serializable {
 
     public boolean setOperationNeeded(boolean operationNeeded) {
         if (operationNeeded) {
-            Bed availableBed = BedController.getAvailableBed();
+            Bed availableBed = Bed.getAvailableBed();
             if (availableBed == null ) {
                 return false;
             }
